@@ -1,14 +1,17 @@
 <template>
   <div class="container pt-5">
     <div class="row">
-      <div class="col-sm">
-        <img src="/img/buy-egg-q.png"
-              class="rounded float-left">
+
+      <div class="col-md">
+        <div class="glow">
+          <img src="/img/buy-egg-q.png"
+               class="rounded float-left">   
+        </div>     
       </div>
 
       <div class="jumbotron col-lg">
         <h2 class="text-lightviolet text-center">
-          33 <span class="text-warning">EGGS SOLD</span>
+          {{values.eggsSold}} <span class="text-warning">EGGS SOLD</span>
         </h2>
         <hr class="my-4 bg-lightviolet">
         <div class="p-3">
@@ -25,24 +28,29 @@
           </p>
           <p class="text-indigo">
             The cost of each new egg will be increased by: 
-            <span class="text-ightindigo">0.00002</span> 
+            <span class="text-ightindigo">{{values.buyCost}}</span> 
             <span class="text-warning"> {{currency}}</span>
           </p>
         </div>
 
         <hr class="my-4 bg-lightviolet">
 
-        <h3 class="text-pink">
-          Current Price: 
-          <span class="text-ightindigo">0.01066</span> 
-          <span class="text-warning"> {{currency}}</span>
-        </h3>
-        
-        <Range/>
+        <div class="p-3">
+          <h3 class="text-pink">
+            Current Price: 
+            <span class="text-ightindigo">{{values.currentPrice}}</span> 
+            <span class="text-warning"> {{currency}}</span>
+          </h3>
+          
+          <Range :storeKey="storeKey"/>
+        </div>
 
         <div class="row p-3">
           <div class="form-group col">
-            <input type="number" class="form-control text-ightindigo p-1">
+            <input :value="values.range"
+                   @change="eggAmountUpdate"
+                   type="text"
+                   class="form-control text-ightindigo p-1">
             <br>
             <small id="emailHelp" class="form-text text-muted">Number of eggs:</small>
           </div>
@@ -85,7 +93,23 @@ export default {
   data() {
     return {
       switchTitle: 'Guarantee my order.',
-      currency: 'TRX'
+      currency: 'TRX',
+      storeKey: 'BUYFORM'
+    }
+  },
+  computed: {
+    values() {
+      return this.$store.getters[this.storeKey];
+    }
+  },
+  methods: {
+    eggAmountUpdate(el) {
+      let newRange = el.target.value;
+      let payload = this.$store.getters[this.storeKey];
+
+      payload.range = newRange;
+      
+      this.$store.commit(this.storeKey, payload);
     }
   }
 }
@@ -99,5 +123,18 @@ input {
 button.btn-buy {
   min-width: 200px;
   margin-bottom: 3%;
+}
+
+.glow  {
+  border-radius: 100%;
+  height: 50px;
+  width: 50px;
+  margin: 22%;
+  box-shadow: 0 0 60px 30px #2c3035,
+              0 0 100px 60px #3a4149,
+              0 0 140px 90px #3d444d;
+  img {
+    margin: -250%;
+  }
 }
 </style>

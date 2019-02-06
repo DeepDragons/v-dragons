@@ -1,7 +1,7 @@
 <template>
   <div class="range-slider">
     <input class="range-slider__range"
-           type="range"
+           type="range" @input="update"
            v-model="rangeValue" :min="min" :max="max">
     <span class="range-slider__value">{{rangeValue}}</span>
   </div>
@@ -19,10 +19,7 @@ export default {
       type: Number,
       default: 20
     },
-    value: {
-      type: Number,
-      default: 2
-    }
+    storeKey: String
   },
   data() {
     return {
@@ -30,7 +27,14 @@ export default {
     }
   },
   mounted() {
-    this.rangeValue = this.value;
+    this.rangeValue = this.$store.getters[this.storeKey].range;
+  },
+  methods: {
+    update() {
+      let payload = this.$store.getters[this.storeKey];
+      payload.range = this.rangeValue;
+      this.$store.commit(this.storeKey, payload);
+    }
   }
 }
 </script>

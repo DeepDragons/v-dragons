@@ -9,23 +9,48 @@ export default new Vuex.Store({
       range: 2,
       currentPrice: '444434343',
       eggsSold: '33',
-      buyCost: '3122321'
+      buyCost: '3122321',
+      isCheck: true
+    },
+    myDragon: {
+      currentPage: 1
+    },
+    market: {
+      currentPage: 1
+    },
+    fightingGround: {
+      currentPage: 1
     }
   },
-  mutations: {
-
-  },
   actions: {
-
+    
   },
   getters: {
     BUYFORM: state => {
       return state.buyForm;
+    },
+    MYDRAGON: state => {
+      return state.myDragon;
+    },
+    MARKET: state => {
+      return state.market;
+    },
+    FIGHTINGGROUND: state => {
+      return state.fightingGround;
     }
   },
   mutations: {
     BUYFORM: (state, payload) => {
       state.buyForm = payload;
+    },
+    MYDRAGON: (state, payload) => {
+      state.myDragon = payload;
+    },
+    MARKET: (state, payload) => {
+      state.market = payload;
+    },
+    FIGHTINGGROUND: (state, payload) => {
+      state.fightingGround = payload;
     }
   }
 })

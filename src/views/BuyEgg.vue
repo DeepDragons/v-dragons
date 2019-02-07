@@ -10,8 +10,8 @@
       </div>
 
       <div class="jumbotron col-lg">
-        <h2 class="text-lightviolet text-center">
-          {{values.eggsSold}} <span class="text-warning">EGGS SOLD</span>
+        <h2 class="text-warning text-center">
+          {{values.eggsSold}} <span class="text-lightviolet">EGGS SOLD</span>
         </h2>
         <hr class="my-4 bg-lightviolet">
         <div class="p-3">
@@ -28,7 +28,7 @@
           </p>
           <p class="text-indigo">
             The cost of each new egg will be increased by: 
-            <span class="text-ightindigo">{{values.buyCost}}</span> 
+            <span class="text-ightindigo">{{values.buyCost | symbol}}</span>
             <span class="text-warning"> {{currency}}</span>
           </p>
         </div>
@@ -38,7 +38,7 @@
         <div class="p-3">
           <h3 class="text-pink">
             Current Price: 
-            <span class="text-ightindigo">{{values.currentPrice}}</span> 
+            <span class="text-ightindigo">{{values.currentPrice | symbol}}</span> 
             <span class="text-warning"> {{currency}}</span>
           </h3>
           
@@ -52,13 +52,13 @@
                    type="text"
                    class="form-control text-ightindigo p-1">
             <br>
-            <small id="emailHelp" class="form-text text-muted">Number of eggs:</small>
+            <small id="emailHelp" class="form-text text-muted">Number of eggs</small>
           </div>
           <div class="col"></div>
           <div class="form-group col">
             <input type="number" class="form-control text-ightindigo p-1">
             <br>
-            <small id="emailHelp" class="form-text text-muted">Price:</small>
+            <small id="emailHelp" class="form-text text-muted">Price</small>
           </div>
         </div>
 
@@ -71,7 +71,9 @@
           <div class="col"></div>
         </div>
         
-        <SwitchMT :title="switchTitle"/>
+        <SwitchMT :isCheck="values.isCheck"
+                  :storeKey="storeKey"
+                  :title="switchTitle"/>
 
         <p class="text-indigo">
           We will increase the amount of {{currency}} you send by 0.0001 ETH to ensure your order in case if somebody will buy an egg before you do. All unused {{currency}} will return to your wallet.
@@ -130,11 +132,11 @@ button.btn-buy {
   height: 50px;
   width: 50px;
   margin: 22%;
-  box-shadow: 0 0 60px 30px #2c3035,
-              0 0 100px 60px #3a4149,
-              0 0 140px 90px #3d444d;
+  box-shadow: 0 0 60px 30px #212529,
+              0 0 100px 60px #212529,
+              0 0 100px 90px #8c76d8;
   img {
-    margin: -250%;
+    margin: -260%;
   }
 }
 </style>

@@ -1,6 +1,10 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import BuyEgg from './views/BuyEgg'
+import MyDragons from './views/MyDragons'
+import MarketPlace from './views/MarketPlace'
+import FightingGround from './views/FightingGround'
+import Dragon from './views/Dragon'
 
 Vue.use(Router)
 
@@ -13,6 +17,26 @@ export default new Router({
       name: 'buy egg',
       component: BuyEgg
     },
+    {
+      path: '/dragons',
+      name: 'My Dragons',
+      component: MyDragons,
+    },
+    {
+      path: '/dragons/:id',
+      name: false,
+      component: Dragon
+    },
+    {
+      path: '/market',
+      name: 'Market Place',
+      component: MarketPlace
+    },
+    {
+      path: '/fightingground',
+      name: 'Fighting Ground',
+      component: FightingGround
+    }
     // {
     //   path: '/about',
     //   name: 'about',

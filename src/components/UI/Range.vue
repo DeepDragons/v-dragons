@@ -17,13 +17,13 @@ export default {
     },
     max: {
       type: Number,
-      default: 20
+      default: 15
     },
     storeKey: String
   },
   data() {
     return {
-      rangeValue: 0
+      rangeValue: 1
     }
   },
   mounted() {

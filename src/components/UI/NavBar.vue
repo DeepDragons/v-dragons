@@ -4,10 +4,14 @@
       
       <a class="navbar-brand" href="/">Dragontrx</a>
       <div class="col-lg"></div>
-      <button type="button"
-              class="btn btn-outline-warning">
-              BUY EGG
-      </button>
+
+      <router-link tag="button"
+                   class="btn btn-outline-warning"
+                   v-for="link of routers"
+                   :key="link.name"
+                   :to="link.path">
+        {{link.name}}
+      </router-link>
     
     </div>
   </nav>
@@ -18,7 +22,14 @@
 export default {
   name: 'NavBar',
   data() {
-    return {
+    return { }
+  },
+  computed: {
+    routers() {
+      return this.$router
+                 .options
+                 .routes
+                 .filter(el => el.name !== false);
     }
   }
 }
@@ -27,5 +38,8 @@ export default {
 <style lang="scss">
 .navbar-collapse {
   padding: 0 3%;
+}
+.btn {
+  margin: 0 0.5%;
 }
 </style>

@@ -19,15 +19,23 @@ export default {
     isCheck: {
       type: Boolean,
       default: true
-    }
+    },
+    storeKey: String
   },
   data() {
     return {
-      isCheckModel: null
+      isCheckModel: false
     }
   },
   mounted() {
-    this.isCheckModel = this.isCheck;
+    this.isCheckModel = this.$store.getters[this.storeKey].isCheck;
+  },
+  watch: {
+    isCheckModel(value) {
+      let payload = this.$store.getters[this.storeKey];
+      payload.isCheck = value;
+      this.$store.commit(this.storeKey, payload);
+    }
   }
 }
 </script>

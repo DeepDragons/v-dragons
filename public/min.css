@@ -7,3 +7,9 @@ body {
   background: -ms-linear-gradient(top left, #06101ff2, #061222f2);
   background: linear-gradient(to bottom right, #06101ff2, #061222f2);
 }
+::-webkit-scrollbar{ width: 10px;}
+::-webkit-scrollbar:horizontal{ height: 10px; }
+::-webkit-scrollbar-button {background: #06101ff2;}
+::-webkit-scrollbar-track {background: #06101ff2;}
+::-webkit-scrollbar-track-piece { background: #06101ff2;}
+::-webkit-scrollbar-thumb {background: #f261ee; border-radius: 10px; -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);}

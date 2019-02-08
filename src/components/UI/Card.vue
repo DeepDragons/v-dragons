@@ -1,6 +1,7 @@
 <template>
   <div class="s-myeggs__item">
     <div class="s-myeggs__circle bg-violet"
+         @click="goTo"
          :class="[hover]">
     <img :src="url"
          onerror="this.onerror=null; this.src='http://res.cloudinary.com/dragonseth/image/upload/sub.png'"
@@ -21,7 +22,18 @@ export default {
       type: String,
       default: 'default'
     },
-    url: String
+    url: String,
+    paramPath: Number
+  },
+  methods: {
+    goTo() {
+      if (!this.paramPath) {
+        return null;
+      }
+
+      let currentPath = this.$router.history.current.path;
+      this.$router.replace(`${currentPath}/${this.paramPath}`);
+    }
   }
 }
 </script>
@@ -29,48 +41,48 @@ export default {
 <style lang="scss">
 
 .s-myeggs__item {
-    margin: 10px;
-    flex-direction: column;
+  margin: 10px;
+  flex-direction: column;
 }
 .s-myeggs__circle {
-    width: 250px;
-    height: 250px;
-    // border: 3px solid #382435;
-    border-radius: 100%;
-    position: relative;
-    transition: 0.5s;
-    cursor: pointer;
+  width: 250px;
+  height: 250px;
+  // border: 3px solid #382435;
+  border-radius: 100%;
+  position: relative;
+  transition: 0.5s;
+  cursor: pointer;
 }
 
 .default:hover {
-    border: 2px solid #8c76d8;
-    box-shadow: 0px 0px 40px #8c76d8;
+  // border: 3px solid #8c76d8;
+  box-shadow: inset 0px 0px 40px #8c76d8;
 }
 
 .flip div img.s-myeggs__eggpic {
-    -webkit-transform: scaleX(-1);
-    transform: scaleX(-1);
+  -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
 }
 
 .s-myeggs__eggpic {
-    position: relative;
-    top: 21px;
-    left: 22px;
-    z-index: 2;
+  position: relative;
+  top: 21px;
+  left: 22px;
+  z-index: 2;
 }
 .s-myeggs__eggpic img {
-    z-index: 2;
-    position: relative;
+  z-index: 2;
+  position: relative;
 }
 img.s-myeggs__eggpic { width: 82%; }
 
 div.card-body {
-    text-align: center;
-    width: 250px;
-    height: 120px;
+  text-align: center;
+  width: 250px;
+  height: 120px;
 
   h1 {
-      color: #382435;
+    color: #382435;
   }
 }
 </style>

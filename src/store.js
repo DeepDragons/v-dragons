@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import CONFIG from './mixins/config'
 
 Vue.use(Vuex)
 
@@ -7,9 +8,9 @@ export default new Vuex.Store({
   state: {
     buyForm: {
       range: 2,
-      currentPrice: '444434343',
-      eggsSold: '33',
-      buyCost: '3122321',
+      currentPrice: CONFIG.currentPrice,
+      eggsSold: CONFIG.eggsSold,
+      buyCost: CONFIG.buyCost,
       isCheck: true
     },
     myDragon: {
@@ -20,7 +21,9 @@ export default new Vuex.Store({
     },
     fightingGround: {
       currentPage: 1
-    }
+    },
+    mutagen: 32,
+    currentAddress: '0x68a8191add50d107BB8b25f3Feea172c35Cf2685'
   },
   actions: {
     
@@ -37,7 +40,15 @@ export default new Vuex.Store({
     },
     FIGHTINGGROUND: state => {
       return state.fightingGround;
-    }
+    },
+    MUTAGEN: state => {
+      return state.mutagen;
+    },
+    CURRENTADDRESS: state => {
+      return state.currentAddress;
+    },
+    CLOUD: () => CONFIG.cloud,
+    CURRENCY: () => CONFIG.currency
   },
   mutations: {
     BUYFORM: (state, payload) => {
@@ -51,6 +62,12 @@ export default new Vuex.Store({
     },
     FIGHTINGGROUND: (state, payload) => {
       state.fightingGround = payload;
+    },
+    MUTAGEN: (state, payload) => {
+      state.mutagen = payload;
+    },
+    CURRENTADDRESS: (state, payload) => {
+      state.currentAddress = payload;
     }
   }
 })

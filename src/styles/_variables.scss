@@ -38,7 +38,7 @@ $grays: map-merge(
 $blue:    #007bff !default;
 $indigo:  #686896 !default;
 $purple:  #6f42c1 !default;
-$pink:    #f261ee !default;
+$pink:    #ea77e6 !default;
 $red:     #dc3545 !default;
 $orange:  #fd7e14 !default;
 $yellow:  #ffc107 !default;
@@ -50,6 +50,7 @@ $violet:       #061222f2 !default;
 $darkviolet:   #07080d   !default;
 $lightviolet:  #8c76d8   !default;
 $ightindigo:   #c5bfed   !default;
+$lightping:    #d528d0   !default;
 
 $colors: () !default;
 // stylelint-disable-next-line scss/dollar-variable-default
@@ -287,7 +288,7 @@ $embed-responsive-aspect-ratios: join(
 // Font, line-height, and color for body text, headings, and more.
 
 // stylelint-disable value-keyword-case
-$font-family-sans-serif:      -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !default;
+$font-family-sans-serif:      -apple-system, BlinkMacSystemFont, "Open Sans", Roboto, "Roboto", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !default;
 $font-family-monospace:       SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace !default;
 $font-family-base:            $font-family-sans-serif !default;
 // stylelint-enable value-keyword-case

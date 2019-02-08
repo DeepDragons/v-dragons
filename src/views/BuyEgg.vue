@@ -1,12 +1,12 @@
 <template>
-  <div class="container pt-5">
+  <div class="container pt-5 px-lg-12">
     <div class="row">
 
-      <div class="col-md">
+      <div class="col col-md eggglow">
         <div class="glow">
           <img src="/img/buy-egg-q.png"
                class="rounded float-left">   
-        </div>     
+        </div>  
       </div>
 
       <div class="jumbotron col-lg">
@@ -19,17 +19,17 @@
           <p class="lead text-indigo">
             Price of last egg: 
             <span class="text-ightindigo">0.01064</span> 
-            <span class="text-warning"> {{currency}}</span>
+            <span class="text-warning"> {{$store.getters.CURRENCY}}</span>
           </p>
           <p class="lead text-indigo">
             Price of next egg:
             <span class="text-ightindigo">0.01068</span> 
-            <span class="text-warning"> {{currency}}</span>
+            <span class="text-warning"> {{$store.getters.CURRENCY}}</span>
           </p>
           <p class="text-indigo">
             The cost of each new egg will be increased by: 
             <span class="text-ightindigo">{{values.buyCost | symbol}}</span>
-            <span class="text-warning"> {{currency}}</span>
+            <span class="text-warning"> {{$store.getters.CURRENCY}}</span>
           </p>
         </div>
 
@@ -39,14 +39,14 @@
           <h3 class="text-pink">
             Current Price: 
             <span class="text-ightindigo">{{values.currentPrice | symbol}}</span> 
-            <span class="text-warning"> {{currency}}</span>
+            <span class="text-warning"> {{$store.getters.CURRENCY}}</span>
           </h3>
           
           <Range :storeKey="storeKey"/>
         </div>
 
         <div class="row p-3">
-          <div class="form-group col">
+          <div class="form-group col-lg">
             <input :value="values.range"
                    @change="eggAmountUpdate"
                    type="text"
@@ -55,7 +55,7 @@
             <small id="emailHelp" class="form-text text-muted">Number of eggs</small>
           </div>
           <div class="col"></div>
-          <div class="form-group col">
+          <div class="form-group col-lg">
             <input type="number" class="form-control text-ightindigo p-1">
             <br>
             <small id="emailHelp" class="form-text text-muted">Price</small>
@@ -65,7 +65,7 @@
         <div class="row">
           <div class="col"></div>
           <button type="button"
-                class="btn btn-outline-warning col btn-buy">
+                class="btn btn-outline-warning col-lg btn-buy">
             BUY
           </button>
           <div class="col"></div>
@@ -76,7 +76,7 @@
                   :title="switchTitle"/>
 
         <p class="text-indigo">
-          We will increase the amount of {{currency}} you send by 0.0001 ETH to ensure your order in case if somebody will buy an egg before you do. All unused {{currency}} will return to your wallet.
+          We will increase the amount of {{$store.getters.CURRENCY}} you send by 0.0001 ETH to ensure your order in case if somebody will buy an egg before you do. All unused {{$store.getters.CURRENCY}} will return to your wallet.
         </p>
 
       </div>
@@ -95,7 +95,6 @@ export default {
   data() {
     return {
       switchTitle: 'Guarantee my order.',
-      currency: 'TRX',
       storeKey: 'BUYFORM'
     }
   },
@@ -118,6 +117,10 @@ export default {
 </script>
 
 <style lang="scss">
+div.eggglow {
+  margin-top: 10%;
+  margin-bottom: 30%;
+}
 input {
   background-color: transparent;
   border: 1px solid #8484be;
@@ -134,7 +137,7 @@ button.btn-buy {
   margin: 22%;
   box-shadow: 0 0 60px 30px #212529,
               0 0 100px 60px #212529,
-              0 0 100px 90px #8c76d8;
+              0 0 100px 80px #8c76d8;
   img {
     margin: -260%;
   }

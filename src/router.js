@@ -1,9 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import BuyEgg from './views/BuyEgg'
-import MyDragons from './views/MyDragons'
-import MarketPlace from './views/MarketPlace'
-import FightingGround from './views/FightingGround'
+// import BuyEgg from './views/BuyEgg'
+// import MyDragons from './views/MyDragons'
+// import MarketPlace from './views/MarketPlace'
+// import FightingGround from './views/FightingGround'
 import Dragon from './views/Dragon'
 
 Vue.use(Router)
@@ -15,27 +15,38 @@ export default new Router({
     {
       path: '/',
       name: 'buy egg',
-      component: BuyEgg
+      // component: BuyEgg
+      component: () => import('./views/BuyEgg')
     },
     {
       path: '/dragons',
       name: 'My Dragons',
-      component: MyDragons,
+      // component: MyDragons
+      component: () => import('./views/MyDragons')
     },
+    // ******** selected dragon ************ //
     {
       path: '/dragons/:id',
       name: false,
       component: Dragon
     },
     {
+      path: '/market/:id',
+      name: false,
+      component: Dragon
+    },
+    // ******** selected dragon ************ //
+    {
       path: '/market',
       name: 'Market Place',
-      component: MarketPlace
+      // component: MarketPlace
+      component: () => import('./views/MarketPlace')
     },
     {
       path: '/fightingground',
       name: 'Fighting Ground',
-      component: FightingGround
+      // component: FightingGround
+      component: () => import('./views/FightingGround')
     }
     // {
     //   path: '/about',

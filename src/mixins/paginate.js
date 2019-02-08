@@ -2,8 +2,10 @@ export default {
   data() {
     return {
       currentPage: 1,
-      totalRows: 100,
-      perPage: 10
+      totalRows: 10,
+      perPage: 10,
+      prevText: '<',
+      nextText: '>'
     }
   },
   mounted() {

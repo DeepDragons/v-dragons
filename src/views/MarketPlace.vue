@@ -5,21 +5,24 @@
             v-for="el of cards"
             :key="el.id"
             :hover="hover"
+            :paramPath="el.id"
             :url="el.url">
         <h3 class="text-lightviolet">#{{el.id}}</h3>
         <router-link tag="a"
                      class="btn btn-outline-info"
                      :to="'/dragon/' + el.id">
-          Buy {{el.price}} TRX
+          BUY {{el.price}} {{$store.getters.CURRENCY}}
         </router-link>
       </card>
     </div>
 
-      <b-pagination size="md"
-                    :total-rows="totalRows"
-                    v-model="currentPage"
-                    :per-page="perPage">
-      </b-pagination>
+    <paginate v-model="currentPage"
+              :page-count="totalRows"
+              :page-range="perPage"
+              :prev-text="prevText"
+              :next-text="nextText"
+              :container-class="'pagination'">
+    </paginate>
   </div>
 </template>
 
@@ -37,34 +40,34 @@ export default {
       hover: 'pinck',
       cards: [
         {
-          id: '1',
+          id: 1,
           price: '0.01',
-          url: 'http://res.cloudinary.com/dragonseth/image/upload/egg_1.png'
+          url: this.$store.getters.CLOUD + 'egg_1.png'
         },
         {
-          id: '2',
+          id: 2,
           price: '0.31',
-          url: 'http://res.cloudinary.com/dragonseth/image/upload/egg_2.png'
+          url: this.$store.getters.CLOUD + 'egg_2.png'
         },
         {
-          id: '3',
+          id: 3,
           price: '1.01',
-          url: 'http://res.cloudinary.com/dragonseth/image/upload/egg_3.png'
+          url: this.$store.getters.CLOUD + 'egg_3.png'
         },
         {
-          id: '4',
+          id: 4,
           price: '0.51',
-          url: 'http://res.cloudinary.com/dragonseth/image/upload/egg_4.png'
+          url: this.$store.getters.CLOUD + 'egg_4.png'
         },
         {
-          id: '5',
+          id: 5,
           price: '0.06',
-          url: 'http://res.cloudinary.com/dragonseth/image/upload/egg_5.png'
+          url: this.$store.getters.CLOUD + 'egg_5.png'
         },
         {
-          id: '6',
+          id: 6,
           price: '0.08',
-          url: 'http://res.cloudinary.com/dragonseth/image/upload/egg_6.png'
+          url: this.$store.getters.CLOUD + 'egg_6.png'
         },
       ]
     }
@@ -74,7 +77,7 @@ export default {
 
 <style lang="scss">
 .pinck:hover {
-    border: 2px solid #f261ee;
-    box-shadow: 0px 0px 40px #f261ee;
+    // border: 2px solid #f261ee;
+    box-shadow: inset 0px 0px 40px #f261ee;
 }
 </style>

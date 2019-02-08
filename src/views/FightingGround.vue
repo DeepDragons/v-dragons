@@ -5,8 +5,9 @@
             v-for="el of cards"
             :key="el.id"
             :hover="hover"
+            :paramPath="el.id"
             :url="el.url">
-        <h3 class="text-lightviolet">{{el.id}}</h3>
+        <h3 class="text-lightviolet">#{{el.id}}</h3>
         <router-link tag="a"
                      class="btn btn-outline-danger"
                      :to="'/fight/' + el.id">
@@ -15,11 +16,15 @@
       </card>
     </div>
 
-    <b-pagination size="md"
-                  :total-rows="totalRows"
-                  v-model="currentPage"
-                  :per-page="perPage">
-    </b-pagination>
+    <div class="row">
+    <paginate v-model="currentPage"
+              :page-count="totalRows"
+              :page-range="perPage"
+              :prev-text="prevText"
+              :next-text="nextText"
+              :container-class="'pagination'">
+    </paginate>
+    </div>
   </div>
 </template>
 
@@ -37,28 +42,28 @@ export default {
       hover: 'red',
       cards: [
         {
-          id: '#1',
-          url: 'http://res.cloudinary.com/dragonseth/image/upload/egg_1.png'
+          id: 1,
+          url: this.$store.getters.CLOUD + 'dragon_1.png'
         },
         {
-          id: '#2',
-          url: 'http://res.cloudinary.com/dragonseth/image/upload/egg_2.png'
+          id: 2,
+          url: this.$store.getters.CLOUD + 'dragon_2.png'
         },
         {
-          id: '#3',
-          url: 'http://res.cloudinary.com/dragonseth/image/upload/egg_3.png'
+          id: 3,
+          url: this.$store.getters.CLOUD + 'dragon_3.png'
         },
         {
-          id: '#4',
-          url: 'http://res.cloudinary.com/dragonseth/image/upload/egg_4.png'
+          id: 4,
+          url: this.$store.getters.CLOUD + 'dragon_4.png'
         },
         {
-          id: '#5',
-          url: 'http://res.cloudinary.com/dragonseth/image/upload/egg_5.png'
+          id: 5,
+          url: this.$store.getters.CLOUD + 'dragon_5.png'
         },
         {
-          id: '#6',
-          url: 'http://res.cloudinary.com/dragonseth/image/upload/egg_6.png'
+          id: 6,
+          url: this.$store.getters.CLOUD + 'dragon_6.png'
         },
       ]
     }
@@ -68,7 +73,7 @@ export default {
 
 <style lang="scss">
 .red:hover {
-    border: 2px solid #E52B50;
-    box-shadow: 0px 0px 40px #E52B50;
+    // border: 2px solid #E52B50;
+    box-shadow: inset 0px 0px 40px #E52B50;
 }
 </style>

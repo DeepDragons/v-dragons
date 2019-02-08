@@ -4,17 +4,19 @@
       <Card class="col-sm col-md"
             v-for="el of cards"
             :key="el.id"
+            :paramPath="el.id"
             :url="el.url">
         <h3 class="text-lightviolet">#{{el.id}}</h3>
-        <router-link :to="'/dragons/' + el.id">About</router-link>
       </card>
     </div>
 
-    <b-pagination size="md"
-                  :total-rows="totalRows"
-                  v-model="currentPage"
-                  :per-page="perPage">
-    </b-pagination>
+    <paginate v-model="currentPage"
+              :page-count="totalRows"
+              :page-range="perPage"
+              :prev-text="prevText"
+              :next-text="nextText"
+              :container-class="'pagination'">
+    </paginate>
   </div>
 </template>
 
@@ -31,28 +33,28 @@ export default {
       storeKey: 'MYDRAGON',
       cards: [
         {
-          id: '1',
-          url: 'http://res.cloudinary.com/dragonseth/image/upload/egg_1.png'
+          id: 1,
+          url: this.$store.getters.CLOUD + 'egg_1.png'
         },
         {
-          id: '2',
-          url: 'http://res.cloudinary.com/dragonseth/image/upload/egg_2.png'
+          id: 2,
+          url: this.$store.getters.CLOUD + 'egg_2.png'
         },
         {
-          id: '3',
-          url: 'http://res.cloudinary.com/dragonseth/image/upload/egg_3.png'
+          id: 3,
+          url: this.$store.getters.CLOUD + 'egg_3.png'
         },
         {
-          id: '4',
-          url: 'http://res.cloudinary.com/dragonseth/image/upload/egg_4.png'
+          id: 4,
+          url: this.$store.getters.CLOUD + 'egg_4.png'
         },
         {
-          id: '5',
-          url: 'http://res.cloudinary.com/dragonseth/image/upload/egg_5.png'
+          id: 5,
+          url: this.$store.getters.CLOUD + 'egg_5.png'
         },
         {
-          id: '6',
-          url: 'http://res.cloudinary.com/dragonseth/image/upload/egg_6.png'
+          id: 6,
+          url: this.$store.getters.CLOUD + 'egg_6.png'
         },
       ]
     }
@@ -61,18 +63,4 @@ export default {
 </script>
 
 <style lang="scss">
-ul {
-  li.page-item {
-    margin: 0 0.5%;
-    * {
-      color: #8c76d8;
-       border-radius: 50% !important;
-      background-color: #061222f2 !important;
-      border: #8c76d8;
-    }
-    *:hover {
-      box-shadow: 0px 0px 5px #493e70;
-    }
-  }
-}
 </style>

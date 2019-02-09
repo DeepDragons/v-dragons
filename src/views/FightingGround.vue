@@ -25,6 +25,7 @@
               :container-class="'pagination'">
     </paginate>
     </div>
+
   </div>
 </template>
 
@@ -76,4 +77,5 @@ export default {
     // border: 2px solid #E52B50;
     box-shadow: inset 0px 0px 40px #E52B50;
 }
+
 </style>

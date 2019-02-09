@@ -52,13 +52,13 @@
                    type="text"
                    class="form-control text-ightindigo p-1">
             <br>
-            <small id="emailHelp" class="form-text text-muted">Number of eggs</small>
+            <small class="form-text text-muted">Number of eggs</small>
           </div>
           <div class="col"></div>
           <div class="form-group col-lg">
             <input type="number" class="form-control text-ightindigo p-1">
             <br>
-            <small id="emailHelp" class="form-text text-muted">Price</small>
+            <small class="form-text text-muted">Price</small>
           </div>
         </div>
 

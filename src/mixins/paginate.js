@@ -3,7 +3,7 @@ export default {
     return {
       currentPage: 1,
       totalRows: 10,
-      perPage: 10,
+      perPage: 3,
       prevText: '<',
       nextText: '>'
     }

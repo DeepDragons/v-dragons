@@ -1,0 +1,11 @@
+
+@media screen and (max-width: 989px) {
+  .col {
+    margin-left: 25%;
+  }
+}
+@media screen and (max-width: 750px) {
+  .col-sm, .col-md {
+    margin-left: 10% !important;
+  }
+}

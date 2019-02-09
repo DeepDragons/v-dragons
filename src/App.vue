@@ -37,6 +37,7 @@ export default {
 
 <style lang="scss">
 @import "./styles/bootstrap";
+@import "./styles/arrow";
 a {
   cursor: pointer;
   text-decoration: none;
@@ -52,16 +53,5 @@ a:hover {
 
 .container {
   margin-bottom: 3%;
-}
-
-@media screen and (max-width: 989px) {
-  .col {
-    margin-left: 25%;
-  }
-}
-@media screen and (max-width: 750px) {
-  .col-sm, .col-md {
-    margin-left: 10% !important;
-  }
 }
 </style>

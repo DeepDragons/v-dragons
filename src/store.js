@@ -22,6 +22,9 @@ export default new Vuex.Store({
     fightingGround: {
       currentPage: 1
     },
+    cemetery: {
+      currentPage: 1
+    },
     mutagen: 32,
     currentAddress: '0x68a8191add50d107BB8b25f3Feea172c35Cf2685'
   },
@@ -40,6 +43,9 @@ export default new Vuex.Store({
     },
     FIGHTINGGROUND: state => {
       return state.fightingGround;
+    },
+    CEMETERY: state => {
+      return state.cemetery;
     },
     MUTAGEN: state => {
       return state.mutagen;
@@ -62,6 +68,9 @@ export default new Vuex.Store({
     },
     FIGHTINGGROUND: (state, payload) => {
       state.fightingGround = payload;
+    },
+    CEMETERY: (state, payload) => {
+      state.cemetery = payload;
     },
     MUTAGEN: (state, payload) => {
       state.mutagen = payload;

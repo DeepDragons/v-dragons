@@ -26,57 +26,44 @@ export default new Vuex.Store({
       currentPage: 1
     },
     mutagen: 32,
-    currentAddress: '0x68a8191add50d107BB8b25f3Feea172c35Cf2685'
+    currentAddress: '0x68a8191add50d107BB8b25f3Feea172c35Cf2685',
+    MetaMask: {
+      netID: CONFIG.netID,
+      currentAddress: '',
+      access: false,
+      msg: ''
+    }
   },
   actions: {
     
   },
   getters: {
-    BUYFORM: state => {
-      return state.buyForm;
-    },
-    MYDRAGON: state => {
-      return state.myDragon;
-    },
-    MARKET: state => {
-      return state.market;
-    },
-    FIGHTINGGROUND: state => {
-      return state.fightingGround;
-    },
-    CEMETERY: state => {
-      return state.cemetery;
-    },
-    MUTAGEN: state => {
-      return state.mutagen;
-    },
-    CURRENTADDRESS: state => {
-      return state.currentAddress;
-    },
+    BUYFORM: state => state.buyForm,
+    MYDRAGON: state => state.myDragon,
+    MARKET: state => state.market,
+    FIGHTINGGROUND: state => state.fightingGround,
+    CEMETERY: state => state.cemetery,
+    MUTAGEN: state => state.mutagen,
+    CURRENTADDRESS: state => state.currentAddress,
+    METAMASK: state => state.MetaMask,
     CLOUD: () => CONFIG.cloud,
-    CURRENCY: () => CONFIG.currency
+    CURRENCY: () => CONFIG.currency,
+    WEB3: () => {
+      if (window.ethereum) {
+        return window.ethereum;
+      } else {
+        return new window.Web3(CONFIG.providers);
+      }
+    }
   },
   mutations: {
-    BUYFORM: (state, payload) => {
-      state.buyForm = payload;
-    },
-    MYDRAGON: (state, payload) => {
-      state.myDragon = payload;
-    },
-    MARKET: (state, payload) => {
-      state.market = payload;
-    },
-    FIGHTINGGROUND: (state, payload) => {
-      state.fightingGround = payload;
-    },
-    CEMETERY: (state, payload) => {
-      state.cemetery = payload;
-    },
-    MUTAGEN: (state, payload) => {
-      state.mutagen = payload;
-    },
-    CURRENTADDRESS: (state, payload) => {
-      state.currentAddress = payload;
-    }
+    BUYFORM: (state, payload) => state.buyForm = payload,
+    MYDRAGON: (state, payload) => state.myDragon = payload,
+    MARKET: (state, payload) => state.market = payload,
+    FIGHTINGGROUND: (state, payload) => state.fightingGround = payload,
+    CEMETERY: (state, payload) => state.cemetery = payload,
+    MUTAGEN: (state, payload) => state.mutagen = payload,
+    CURRENTADDRESS: (state, payload) => state.currentAddress = payload,
+    METAMASK: (state, payload) => state.MetaMask = payload
   }
 })

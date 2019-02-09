@@ -1,0 +1,115 @@
+[
+  {
+      "constant": true,
+      "inputs": [
+          {
+              "name": "",
+              "type": "uint256"
+          }
+      ],
+      "name": "dragonStats",
+      "outputs": [
+          {
+              "name": "fightWin",
+              "type": "uint32"
+          },
+          {
+              "name": "fightLose",
+              "type": "uint32"
+          },
+          {
+              "name": "children",
+              "type": "uint32"
+          },
+          {
+              "name": "fightToDeathWin",
+              "type": "uint32"
+          },
+          {
+              "name": "mutagenFace",
+              "type": "uint32"
+          },
+          {
+              "name": "mutagenFight",
+              "type": "uint32"
+          },
+          {
+              "name": "genLabFace",
+              "type": "uint32"
+          },
+          {
+              "name": "genLabFight",
+              "type": "uint32"
+          }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+  },
+  {
+      "constant": true,
+      "inputs": [
+          {
+              "name": "",
+              "type": "uint256"
+          }
+      ],
+      "name": "lastActions",
+      "outputs": [
+          {
+              "name": "lastActionID",
+              "type": "uint8"
+          },
+          {
+              "name": "lastActionDragonID",
+              "type": "uint248"
+          }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+  },
+  {
+      "constant": true,
+      "inputs": [
+          {
+              "name": "",
+              "type": "uint256"
+          }
+      ],
+      "name": "parents",
+      "outputs": [
+          {
+              "name": "parentOne",
+              "type": "uint128"
+          },
+          {
+              "name": "parentTwo",
+              "type": "uint128"
+          }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+  }
+,
+  {
+      "constant": true,
+      "inputs": [
+          {
+              "name": "",
+              "type": "uint256"
+          }
+      ],
+      "name": "birthBlock",
+      "outputs": [
+          {
+              "name": "",
+              "type": "uint256"
+          }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+  }
+]

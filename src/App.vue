@@ -9,14 +9,14 @@
 <script>
 import NavBar from './components/UI/NavBar'
 import Footer from './components/UI/Footer'
+import web3Enable from './mixins/ETH/web3Enable'
 
 export default {
-  components: {
-    NavBar,
-    Footer
-  },
+  components: { NavBar, Footer },
   mounted() {
     this.showApp();
+    web3Enable();
+    console.log(this.$store.getters.WEB3);
   },
   methods: {
     showApp() {

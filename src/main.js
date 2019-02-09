@@ -11,7 +11,6 @@ import Symbol from './filters/symbol'
 Vue.component('paginate', Paginate)
 Vue.filter('Symbol', Symbol);
 Vue.use(Modal);
-
 Vue.config.productionTip = false
 
 new Vue({

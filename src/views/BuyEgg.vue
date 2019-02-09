@@ -18,12 +18,12 @@
           <h3 class="text-pink">Price</h3>
           <p class="lead text-indigo">
             Price of last egg: 
-            <span class="text-ightindigo">0.01064</span> 
+            <span class="text-ightindigo">{{last | symbol}}</span> 
             <span class="text-warning"> {{$store.getters.CURRENCY}}</span>
           </p>
           <p class="lead text-indigo">
             Price of next egg:
-            <span class="text-ightindigo">0.01068</span> 
+            <span class="text-ightindigo">{{next | symbol}}</span> 
             <span class="text-warning"> {{$store.getters.CURRENCY}}</span>
           </p>
           <p class="text-indigo">
@@ -88,10 +88,12 @@
 <script>
 import Range from '../components/UI/Range'
 import SwitchMT from '../components/UI/SwitchMT'
+import EthInstance from '../mixins/ethInstance'
 
 export default {
   name: 'BuyEgg',
   components: { Range, SwitchMT },
+  mixins: [EthInstance],
   data() {
     return {
       switchTitle: 'Guarantee my order.',
@@ -101,6 +103,22 @@ export default {
   computed: {
     values() {
       return this.$store.getters[this.storeKey];
+    },
+    last() {
+      let payload = this.$store.getters[this.storeKey];
+      let web3 = this.$store.getters.WEB3;
+      let currentPrice = web3.toBigNumber(payload.currentPrice);
+      let buyCost = web3.toBigNumber(payload.buyCost);
+      
+      return currentPrice.sub(buyCost).toString();
+    },
+    next() {
+      let payload = this.$store.getters[this.storeKey];
+      let web3 = this.$store.getters.WEB3;
+      let currentPrice = web3.toBigNumber(payload.currentPrice);
+      let buyCost = web3.toBigNumber(payload.buyCost);
+      
+      return currentPrice.add(buyCost).toString();
     }
   },
   methods: {
@@ -112,6 +130,9 @@ export default {
       
       this.$store.commit(this.storeKey, payload);
     }
+  },
+  mounted() {
+    this.commonUpdate();
   }
 }
 </script>

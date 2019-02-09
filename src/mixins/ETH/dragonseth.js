@@ -2,13 +2,9 @@ var CONFIG = window.contracts;
 
 export default class {
   
-  constructor(address=CONFIG.dragonseth, abi) {
-    if (!address || !abi) {
-      throw new Error();
-    }
-
+  constructor(address=CONFIG.crowdsale, abi) {
     this.address = address;
-    this.abi = abi;
+    this.dragonseth = window.web3.eth.contract(abi).at(this.address);
   }
 
   totalDragons() {
@@ -64,5 +60,4 @@ export default class {
      * @return owner: address;
      */
   }
-
 }

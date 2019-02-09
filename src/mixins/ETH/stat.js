@@ -1,14 +1,12 @@
+import ABI from './ABI/stat'
+
 var CONFIG = window.contracts;
 
 export default class {
 
-  constructor(address=CONFIG.stat, abi) {
-    if (!address || !abi) {
-      throw new Error();
-    }
-
+  constructor(address=CONFIG.crowdsale, abi=ABI) {
     this.address = address;
-    this.abi = abi;
+    this.stat = window.web3.eth.contract(abi).at(this.address);
   }
 
   dragonStats(_dragonID) {

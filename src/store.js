@@ -49,10 +49,12 @@ export default new Vuex.Store({
     CLOUD: () => CONFIG.cloud,
     CURRENCY: () => CONFIG.currency,
     WEB3: () => {
-      if (window.ethereum) {
+      if (window.ethereum && window.ethereum.selectedAddress) {
         return window.ethereum;
       } else {
-        return new window.Web3(CONFIG.providers);
+        return new window.Web3(
+          new window.Web3.providers.HttpProvider(CONFIG.providers)
+        );
       }
     }
   },

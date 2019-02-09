@@ -12,6 +12,7 @@ export default async function() {
     try {
         // Request account access if needed
         await ethereum.enable();
+        window.web3 = window.ethereum;
         msg = 'DETECT';
     } catch (error) {
         // User denied account access

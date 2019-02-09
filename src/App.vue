@@ -16,7 +16,6 @@ export default {
   mounted() {
     this.showApp();
     web3Enable();
-    console.log(this.$store.getters.WEB3);
   },
   methods: {
     showApp() {

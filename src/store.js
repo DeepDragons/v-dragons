@@ -1,6 +1,13 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import CONFIG from './mixins/config'
+
+import {
+  isAddress, enable, isNet
+} from './mixins/ETH/web3'
+import Crowdsale from './mixins/ETH/crowdsale'
+
+
+var CONFIG = window.config;
 
 Vue.use(Vuex)
 
@@ -14,7 +21,8 @@ export default new Vuex.Store({
       isCheck: true
     },
     myDragon: {
-      currentPage: 1
+      currentPage: 1,
+      elements: []
     },
     market: {
       currentPage: 1
@@ -25,17 +33,25 @@ export default new Vuex.Store({
     cemetery: {
       currentPage: 1
     },
-    mutagen: 32,
+    mutagen: 0,
     currentAddress: '0x68a8191add50d107BB8b25f3Feea172c35Cf2685',
     MetaMask: {
-      netID: CONFIG.netID,
+      netID: null,
       currentAddress: '',
-      access: false,
       msg: ''
     }
   },
   actions: {
-    
+    isAddress, enable, isNet,
+    buyEgg: ({ state, getters }) => {
+      let payload = state.buyForm;
+      let crowdsale = new Crowdsale(getters.WEB3);
+
+      crowdsale.buy(
+        payload.range,
+        payload.isCheck
+      );
+    }
   },
   getters: {
     BUYFORM: state => state.buyForm,
@@ -49,13 +65,9 @@ export default new Vuex.Store({
     CLOUD: () => CONFIG.cloud,
     CURRENCY: () => CONFIG.currency,
     WEB3: () => {
-      if (window.ethereum && window.ethereum.selectedAddress) {
-        return window.ethereum;
-      } else {
-        return new window.Web3(
-          new window.Web3.providers.HttpProvider(CONFIG.providers)
-        );
-      }
+      return new window.Web3(
+        new window.Web3.providers.HttpProvider(CONFIG.providers)
+      );
     }
   },
   mutations: {

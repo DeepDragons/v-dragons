@@ -23,7 +23,7 @@ export default {
       default: 'default'
     },
     url: String,
-    paramPath: Number
+    paramPath: String
   },
   methods: {
     goTo() {

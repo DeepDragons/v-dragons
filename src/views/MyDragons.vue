@@ -23,41 +23,30 @@
 <script>
 import Card from '../components/UI/Card'
 import Paginate from '../mixins/paginate'
+import DragonMixin from '../mixins/ETH/mixins/dragonseth'
 
 export default {
   name: 'MyDragons',
   components: { Card },
-  mixins: [Paginate],
+  mixins: [Paginate, DragonMixin],
+  computed: {
+    cards() {
+      let cloud = this.$store.getters.CLOUD;
+      let { elements } = this.$store.getters[this.storeKey];
+      let tokensOwner = elements.map(id => {
+        return { id: id, url: `${cloud}egg_${id}.png` }
+      });
+
+      return this.pageChanged(tokensOwner);
+    }
+  },
   data() {
     return {
-      storeKey: 'MYDRAGON',
-      cards: [
-        {
-          id: 1,
-          url: this.$store.getters.CLOUD + 'egg_1.png'
-        },
-        {
-          id: 2,
-          url: this.$store.getters.CLOUD + 'egg_2.png'
-        },
-        {
-          id: 3,
-          url: this.$store.getters.CLOUD + 'egg_3.png'
-        },
-        {
-          id: 4,
-          url: this.$store.getters.CLOUD + 'egg_4.png'
-        },
-        {
-          id: 5,
-          url: this.$store.getters.CLOUD + 'egg_5.png'
-        },
-        {
-          id: 6,
-          url: this.$store.getters.CLOUD + 'egg_6.png'
-        },
-      ]
+      storeKey: 'MYDRAGON'
     }
+  },
+  mounted() {
+    // this.tokensOf();
   }
 }
 </script>

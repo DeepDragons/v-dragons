@@ -9,13 +9,15 @@
 <script>
 import NavBar from './components/UI/NavBar'
 import Footer from './components/UI/Footer'
-import web3Enable from './mixins/ETH/web3Enable'
+import MutagenMixin from './mixins/ETH/mixins/watcher'
 
 export default {
   components: { NavBar, Footer },
+  mixins: [MutagenMixin],
   mounted() {
     this.showApp();
-    web3Enable();
+    this.web3Detect();
+    this.goWachAddress();
   },
   methods: {
     showApp() {
@@ -27,6 +29,14 @@ export default {
             .getElementById('app')
             .style
             .display = 'block';
+    },
+    web3Detect() {
+      this.$store.dispatch('enable');
+      this.$store.dispatch('isAddress');
+      this.$store.dispatch({
+        type: 'isNet',
+        web3: this.$store.getters.WEB3
+      });
     }
   }
 }

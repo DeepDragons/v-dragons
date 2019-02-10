@@ -18,17 +18,17 @@
           <h3 class="text-pink">Price</h3>
           <p class="lead text-indigo">
             Price of last egg: 
-            <span class="text-ightindigo">{{last | symbol}}</span> 
+            <span class="text-ightindigo">{{last | fromWei}}</span> 
             <span class="text-warning"> {{$store.getters.CURRENCY}}</span>
           </p>
           <p class="lead text-indigo">
             Price of next egg:
-            <span class="text-ightindigo">{{next | symbol}}</span> 
+            <span class="text-ightindigo">{{next | fromWei}}</span> 
             <span class="text-warning"> {{$store.getters.CURRENCY}}</span>
           </p>
           <p class="text-indigo">
             The cost of each new egg will be increased by: 
-            <span class="text-ightindigo">{{values.buyCost | symbol}}</span>
+            <span class="text-ightindigo">{{values.buyCost | fromWei}}</span>
             <span class="text-warning"> {{$store.getters.CURRENCY}}</span>
           </p>
         </div>
@@ -38,7 +38,7 @@
         <div class="p-3">
           <h3 class="text-pink">
             Current Price: 
-            <span class="text-ightindigo">{{values.currentPrice | symbol}}</span> 
+            <span class="text-ightindigo">{{values.currentPrice | fromWei}}</span> 
             <span class="text-warning"> {{$store.getters.CURRENCY}}</span>
           </h3>
           
@@ -47,16 +47,19 @@
 
         <div class="row p-3">
           <div class="form-group col-lg">
-            <input :value="values.range"
-                   @change="eggAmountUpdate"
-                   type="text"
+            <input v-model.lazy="tokenAmount"
+                   type="number"
+                   :max="maxEgg"
                    class="form-control text-ightindigo p-1">
             <br>
             <small class="form-text text-muted">Number of eggs</small>
           </div>
           <div class="col"></div>
           <div class="form-group col-lg">
-            <input type="number" class="form-control text-ightindigo p-1">
+            <input v-model.lazy="priceAmount"
+                   :step="values.currentPrice | fromWei"
+                   type="number"
+                   class="form-control text-ightindigo p-1">
             <br>
             <small class="form-text text-muted">Price</small>
           </div>
@@ -65,7 +68,8 @@
         <div class="row">
           <div class="col"></div>
           <button type="button"
-                class="btn btn-outline-warning col-lg btn-buy">
+                  @click="$store.dispatch('buyEgg')"
+                  class="btn btn-outline-warning col-lg btn-buy">
             BUY
           </button>
           <div class="col"></div>
@@ -86,18 +90,23 @@
 </template>
 
 <script>
+import Utils from 'web3/lib/utils/utils'
+
 import Range from '../components/UI/Range'
 import SwitchMT from '../components/UI/SwitchMT'
-import EthInstance from '../mixins/ethInstance'
+import EthInstance from '../mixins/ETH/mixins/crowdsale'
+import fromWei from '../filters/fromWei'
 
 export default {
   name: 'BuyEgg',
   components: { Range, SwitchMT },
   mixins: [EthInstance],
+  filters: { fromWei },
   data() {
     return {
       switchTitle: 'Guarantee my order.',
-      storeKey: 'BUYFORM'
+      storeKey: 'BUYFORM',
+      maxEgg: 15
     }
   },
   computed: {
@@ -106,29 +115,65 @@ export default {
     },
     last() {
       let payload = this.$store.getters[this.storeKey];
-      let web3 = this.$store.getters.WEB3;
-      let currentPrice = web3.toBigNumber(payload.currentPrice);
-      let buyCost = web3.toBigNumber(payload.buyCost);
+      let currentPrice = Utils.toBigNumber(payload.currentPrice);
+      let buyCost = Utils.toBigNumber(payload.buyCost);
       
       return currentPrice.sub(buyCost).toString();
     },
     next() {
       let payload = this.$store.getters[this.storeKey];
-      let web3 = this.$store.getters.WEB3;
-      let currentPrice = web3.toBigNumber(payload.currentPrice);
-      let buyCost = web3.toBigNumber(payload.buyCost);
+      let currentPrice = Utils.toBigNumber(payload.currentPrice);
+      let buyCost = Utils.toBigNumber(payload.buyCost);
       
       return currentPrice.add(buyCost).toString();
-    }
-  },
-  methods: {
-    eggAmountUpdate(el) {
-      let newRange = el.target.value;
-      let payload = this.$store.getters[this.storeKey];
+    },
+    tokenAmount: {
+      get: function() {
+        return this.values.range;
+      },
+      set: function(value) {
+        let payload = this.values;
+        
+        value = (+value).toFixed();
+        value = +value;
 
-      payload.range = newRange;
-      
-      this.$store.commit(this.storeKey, payload);
+        if (value > this.maxEgg) {
+          value = this.maxEgg;
+        } else if (value < 1) {
+          value = 1;
+        }
+
+        payload.range = value;
+
+        this.$store.commit(this.storeKey, payload);
+      }
+    },
+    priceAmount: {
+      get: function() {
+        let price;
+        let payload = this.values;
+        let buyCost = Utils.toBigNumber(payload.buyCost);
+        let currentPrice = Utils.toBigNumber(payload.currentPrice);
+
+        if (payload.isCheck) {
+          currentPrice = currentPrice.add(buyCost);
+        }
+
+        price = currentPrice.mul(payload.range);
+
+        return fromWei(price);
+      },
+      set: function(value) {
+        let tokenAmount;
+        let currentPrice = Utils.toBigNumber(this.values.currentPrice);
+
+        value = Utils.toWei(value);
+        value = Utils.toBigNumber(value);
+        tokenAmount = value.div(currentPrice);
+        tokenAmount = tokenAmount.toString();
+
+        this.tokenAmount = tokenAmount;
+      }
     }
   },
   mounted() {

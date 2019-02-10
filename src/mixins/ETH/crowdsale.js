@@ -1,11 +1,11 @@
+/* eslint-disable */
 import ABI from './ABI/crowdsale'
 
-
-var CONFIG = window.contracts;
+var addreses = window.contracts;
 
 export default class {
 
-  constructor(web3, address=CONFIG.crowdsale, abi=ABI) {
+  constructor(web3, address=addreses.crowdsale, abi=ABI) {
     this.address = address;
     this.web3 = web3;
     this.crowdsale = this.web3.eth.contract(abi).at(this.address);
@@ -25,10 +25,11 @@ export default class {
     });
   });
 
-  buy(_amount, _dragonPrice, _ref=null) {
+  async buy(_amount, _isCheck=true, _ref=null) {
     /**
      * @param _amount: max 15, uint8;
      * @param _ref: address || option;
+     * @param _isCheck: bool || Guarantee order.;
      */
 
     let data = {
@@ -36,10 +37,13 @@ export default class {
       data: _ref
     };
 
-    this.crowdSaleDragonPrice.then(dragonPrice => {
-      data.value = dragonPrice.mul(_amount);
-      return this.fallback(data);
-    });
+    let crowdSaleDragonPrice = await this.crowdSaleDragonPrice();
+    let guarantee = _isCheck ? 0 : await this.priceChanger();
+
+    data.value = crowdSaleDragonPrice.add(guarantee);
+    data.value = data.value.mul(_amount);
+
+    return this.fallback(data);
   }
 
   fallback(_data) {
@@ -47,7 +51,8 @@ export default class {
      * @param _data: transaction object;
      */
     return new Promise((resolve, reject) => {
-      window.ethereum.eth.sendTransaction(_data, (err, hash) => {
+      let web3 = new Web3(ethereum);
+      web3.eth.sendTransaction(_data, (err, hash) => {
         if (err) return reject(err); 
         return resolve(hash);
       });

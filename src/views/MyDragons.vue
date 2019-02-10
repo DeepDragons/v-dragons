@@ -33,8 +33,9 @@ export default {
     cards() {
       let cloud = this.$store.getters.CLOUD;
       let { elements } = this.$store.getters[this.storeKey];
-      let tokensOwner = elements.map(id => {
-        return { id: id, url: `${cloud}egg_${id}.png` }
+      let tokensOwner = elements.map(el => {
+        let stage = el.stage > 1 ? 'dragon' : 'egg';
+        return { id: el.id, url: `${cloud}${stage}_${el.id}.png` }
       });
 
       return this.pageChanged(tokensOwner);

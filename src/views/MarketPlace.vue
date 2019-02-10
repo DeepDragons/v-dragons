@@ -29,48 +29,54 @@
 <script>
 import Card from '../components/UI/Card'
 import Paginate from '../mixins/paginate'
+import MarketPlaceMixin from '../mixins/ETH/mixins/marketPlace'
 
 export default {
   name: 'MarketPlace',
   components: { Card },
-  mixins: [Paginate],
+  mixins: [Paginate, MarketPlaceMixin],
   data() {
     return {
       storeKey: 'MARKET',
       hover: 'pinck',
       cards: [
         {
-          id: 1,
+          id: '1',
           price: '0.01',
           url: this.$store.getters.CLOUD + 'egg_1.png'
         },
         {
-          id: 2,
+          id: '2',
           price: '0.31',
           url: this.$store.getters.CLOUD + 'egg_2.png'
         },
         {
-          id: 3,
+          id: '3',
           price: '1.01',
           url: this.$store.getters.CLOUD + 'egg_3.png'
         },
         {
-          id: 4,
+          id: '4',
           price: '0.51',
           url: this.$store.getters.CLOUD + 'egg_4.png'
         },
         {
-          id: 5,
+          id: '5',
           price: '0.06',
           url: this.$store.getters.CLOUD + 'egg_5.png'
         },
         {
-          id: 6,
+          id: '6',
           price: '0.08',
           url: this.$store.getters.CLOUD + 'egg_6.png'
         },
       ]
     }
+  },
+  mounted() {
+    // this.marketPlace.getSlicedDragonsSale(1, 699).then(els => {
+    //   return this.marketPlace.getFewDragons(els);
+    // }).then(console.log);
   }
 }
 </script>

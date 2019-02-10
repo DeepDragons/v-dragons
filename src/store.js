@@ -22,10 +22,13 @@ export default new Vuex.Store({
     },
     myDragon: {
       currentPage: 1,
-      elements: []
+      elements: [],
+      totalItems: 0
     },
     market: {
-      currentPage: 1
+      currentPage: 1,
+      elements: [],
+      totalItems: 0
     },
     fightingGround: {
       currentPage: 1

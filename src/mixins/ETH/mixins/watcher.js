@@ -1,10 +1,11 @@
 import DragonMixin from './dragonseth'
+import MarketPlaceMixin from './marketPlace'
 import Mutagen from '../mutagen'
 import CODE from '../code'
 
 
 export default {
-  mixins: [DragonMixin],
+  mixins: [DragonMixin, MarketPlaceMixin],
   computed: {
     mutagen() {
       let web3 = this.$store.getters.WEB3;

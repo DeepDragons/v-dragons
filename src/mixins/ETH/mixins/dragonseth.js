@@ -1,7 +1,9 @@
 import dragonseth from '../dragonseth'
+import MarketPlaceMixin from './marketPlace'
 
 
 export default {
+  mixins: [MarketPlaceMixin],
   computed: {
     dragonseth() {
       let web3 = this.$store.getters.WEB3;
@@ -10,17 +12,16 @@ export default {
   },
   methods: {
     async tokensOf() {
-      let amount;
+      let dragonsIds;
       let payload = this.$store.getters.MYDRAGON;
       let { currentAddress } = this.$store.getters.METAMASK;
       
-      amount = await this.dragonseth.tokensOf(currentAddress);
-      amount = amount.map(id => id.toString());
-      payload.elements = amount;
+      dragonsIds = await this.dragonseth.tokensOf(currentAddress);
+      payload.elements = await this.marketPlace.getFewDragons(dragonsIds);
 
       this.$store.commit('MYDRAGON', payload);
 
-      return amount;
+      return payload.elements;
     }
   }
 }

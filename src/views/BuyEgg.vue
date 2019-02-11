@@ -90,7 +90,7 @@
 </template>
 
 <script>
-import Utils from 'web3/lib/utils/utils'
+import { toBigNumber, toWei } from 'web3/lib/utils/utils'
 
 import Range from '../components/UI/Range'
 import SwitchMT from '../components/UI/SwitchMT'
@@ -115,15 +115,15 @@ export default {
     },
     last() {
       let payload = this.$store.getters[this.storeKey];
-      let currentPrice = Utils.toBigNumber(payload.currentPrice);
-      let buyCost = Utils.toBigNumber(payload.buyCost);
+      let currentPrice = toBigNumber(payload.currentPrice);
+      let buyCost = toBigNumber(payload.buyCost);
       
       return currentPrice.sub(buyCost).toString();
     },
     next() {
       let payload = this.$store.getters[this.storeKey];
-      let currentPrice = Utils.toBigNumber(payload.currentPrice);
-      let buyCost = Utils.toBigNumber(payload.buyCost);
+      let currentPrice = toBigNumber(payload.currentPrice);
+      let buyCost = toBigNumber(payload.buyCost);
       
       return currentPrice.add(buyCost).toString();
     },
@@ -152,8 +152,8 @@ export default {
       get: function() {
         let price;
         let payload = this.values;
-        let buyCost = Utils.toBigNumber(payload.buyCost);
-        let currentPrice = Utils.toBigNumber(payload.currentPrice);
+        let buyCost = toBigNumber(payload.buyCost);
+        let currentPrice = toBigNumber(payload.currentPrice);
 
         if (payload.isCheck) {
           currentPrice = currentPrice.add(buyCost);
@@ -165,10 +165,10 @@ export default {
       },
       set: function(value) {
         let tokenAmount;
-        let currentPrice = Utils.toBigNumber(this.values.currentPrice);
+        let currentPrice = toBigNumber(this.values.currentPrice);
 
-        value = Utils.toWei(value);
-        value = Utils.toBigNumber(value);
+        value = toWei(value);
+        value = toBigNumber(value);
         tokenAmount = value.div(currentPrice);
         tokenAmount = tokenAmount.toString();
 

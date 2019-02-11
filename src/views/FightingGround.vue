@@ -10,60 +10,59 @@
         <h3 class="text-lightviolet">#{{el.id}}</h3>
         <router-link tag="a"
                      class="btn btn-outline-danger"
-                     :to="'/fight/' + el.id">
+                     :to="'/dragon/' + el.id">
           FIGHT
         </router-link>
       </card>
     </div>
 
-    <div class="row">
-    <paginate v-model="currentPage"
+    <!-- <paginate v-if="isShow"
+              v-model="currentPage"
               :page-count="totalRows"
               :page-range="perPage"
               :prev-text="prevText"
               :next-text="nextText"
               :container-class="'pagination'">
-    </paginate>
-    </div>
+    </paginate> -->
 
   </div>
 </template>
 
 <script>
 import Card from '../components/UI/Card'
-import Paginate from '../mixins/paginate'
+// import Paginate from '../mixins/paginate'
 
 export default {
   name: 'FightingGround',
   components: { Card },
-  mixins: [Paginate],
+  mixins: [],
   data() {
     return {
       storeKey: 'FIGHTINGGROUND',
       hover: 'red',
       cards: [
         {
-          id: 1,
+          id: '1',
           url: this.$store.getters.CLOUD + 'dragon_1.png'
         },
         {
-          id: 2,
+          id: '2',
           url: this.$store.getters.CLOUD + 'dragon_2.png'
         },
         {
-          id: 3,
+          id: '3',
           url: this.$store.getters.CLOUD + 'dragon_3.png'
         },
         {
-          id: 4,
+          id: '4',
           url: this.$store.getters.CLOUD + 'dragon_4.png'
         },
         {
-          id: 5,
+          id: '5',
           url: this.$store.getters.CLOUD + 'dragon_5.png'
         },
         {
-          id: 6,
+          id: '6',
           url: this.$store.getters.CLOUD + 'dragon_6.png'
         },
       ]
@@ -73,9 +72,4 @@ export default {
 </script>
 
 <style lang="scss">
-.red:hover {
-    // border: 2px solid #E52B50;
-    box-shadow: inset 0px 0px 40px #E52B50;
-}
-
 </style>

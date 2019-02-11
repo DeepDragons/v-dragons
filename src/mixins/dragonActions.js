@@ -1,4 +1,10 @@
+import { toWei } from 'web3/lib/utils/utils'
+
+
 export default {
+  props: {
+    id: String
+  },
   data() {
     return {
       gift: {
@@ -35,7 +41,11 @@ export default {
     },
     makeSell() {
       this.isSellModal();
-      console.log('send to trade for', this.sell.price);
+      this.$store.dispatch({
+        type: 'toSell',
+        tokenId: this.id,
+        dragonPrice: toWei(this.sell.price, 'ether')
+      });
     },
     isShowSuicide() {
       this.suicide.show = !this.suicide.show;

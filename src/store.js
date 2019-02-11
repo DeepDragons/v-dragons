@@ -5,6 +5,8 @@ import {
   isAddress, enable, isNet
 } from './mixins/ETH/web3'
 import Crowdsale from './mixins/ETH/crowdsale'
+import MarketPlace from './mixins/ETH/marketPlace'
+import Dragonseth from './mixins/ETH/dragonseth'
 
 
 var CONFIG = window.config;
@@ -36,8 +38,11 @@ export default new Vuex.Store({
     cemetery: {
       currentPage: 1
     },
+    dragon: {
+      
+    },
     mutagen: 0,
-    currentAddress: '0x68a8191add50d107BB8b25f3Feea172c35Cf2685',
+    currentAddress: null,
     MetaMask: {
       netID: null,
       currentAddress: '',
@@ -54,6 +59,23 @@ export default new Vuex.Store({
         payload.range,
         payload.isCheck
       );
+    },
+    async buyFromMarket({ getters }, { tokenId }) {
+      let ownersPrice;
+      let marketPlace = new MarketPlace(getters.WEB3);
+      let priceForToken = await marketPlace.dragonPrices(tokenId);
+      let ownersPercent = await marketPlace.ownersPercent();
+
+      ownersPercent = ownersPercent.div(10);
+      ownersPrice = priceForToken.mul(ownersPercent).div(100);
+      ownersPrice = ownersPrice.toFixed();
+      priceForToken = priceForToken.add(ownersPrice).toString();
+
+      await marketPlace.buyDragon(tokenId, priceForToken);
+    },
+    async toSell({ getters }, { tokenId, dragonPrice }) {
+      let dragonseth = new Dragonseth(getters.WEB3);
+      dragonseth.add2MarketPlace(tokenId, dragonPrice);
     }
   },
   getters: {

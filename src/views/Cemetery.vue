@@ -10,7 +10,8 @@
       </card>
     </div>
 
-    <paginate v-model="currentPage"
+    <paginate v-if="isShow"
+              v-model="currentPage"
               :page-count="totalRows"
               :page-range="perPage"
               :prev-text="prevText"

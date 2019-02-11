@@ -64,3 +64,17 @@ export function isNet({ commit, state }, { web3 }) {
     }
   }, 500);
 }
+
+
+export function fallback(_data) {
+  /**
+   * @param _data: transaction object;
+   */
+  return new Promise((resolve, reject) => {
+    let web3 = new Web3(ethereum);
+    web3.eth.sendTransaction(_data, (err, hash) => {
+      if (err) return reject(err); 
+      return resolve(hash);
+    });
+  });
+}

@@ -1,8 +1,10 @@
 /* eslint-disable */
-import Utils from 'web3/lib/utils/utils'
 import ABI from './ABI/marketPlace'
+import { fallback } from './web3'
+
 
 var addreses = window.contracts;
+
 
 export default class {
 
@@ -35,13 +37,11 @@ export default class {
      */
     
     let data = {
-      value: price
+      value: price,
+      to: this.address,
+      data: this.marketPlace.buyDragon.getData(_dragonID)
     };
-
-    this.dragonseth.buyDragon(_dragonID).send(data, (err, hash) => {
-      if (err) return reject(err);
-      return resolve(hash);
-    });
+    return fallback(data);
   });
 
   totalDragonsToSale = () => new Promise((resolve, reject) => {
@@ -105,6 +105,17 @@ export default class {
 
       return resolve(data);
 
+    });
+  });
+
+  dragonsOwner = _dragonIDs => new Promise((resolve, reject) => {
+   /**
+     * @param _dragonIDs: uint256[];
+     * @return address;
+     */
+    this.marketPlace.dragonsOwner.call(_dragonIDs, (err, ownerAddress) => {
+      if (err) return reject(err);
+      return resolve(ownerAddress);
     });
   });
 }

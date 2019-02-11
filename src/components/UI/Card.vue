@@ -15,6 +15,7 @@
 </template>
 
 <script>
+
 export default {
   name: 'Card',
   props: {
@@ -31,8 +32,7 @@ export default {
         return null;
       }
 
-      let currentPath = this.$router.history.current.path;
-      this.$router.replace(`${currentPath}/${this.paramPath}`);
+      this.$router.replace(this.paramPath);
     }
   }
 }
@@ -52,11 +52,6 @@ export default {
   position: relative;
   transition: 0.5s;
   cursor: pointer;
-}
-
-.default:hover {
-  // border: 3px solid #8c76d8;
-  box-shadow: inset 0px 0px 40px #8c76d8;
 }
 
 .flip div img.s-myeggs__eggpic {

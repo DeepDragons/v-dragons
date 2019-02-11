@@ -1,8 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
-import Dragon from './views/Dragon'
-
 Vue.use(Router)
 
 export default new Router({
@@ -21,14 +19,9 @@ export default new Router({
     },
     // ******** selected dragon ************ //
     {
-      path: '/dragons/:id',
+      path: '/dragon/:id',
       name: false,
-      component: Dragon
-    },
-    {
-      path: '/market/:id',
-      name: false,
-      component: Dragon
+      component: () => import('./views/Dragon')
     },
     // ******** selected dragon ************ //
     {

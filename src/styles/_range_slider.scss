@@ -1,8 +1,7 @@
+@import "./colors";
+
 // Base Colors
 $shade-10: #2c3e50 !default;
-$shade-1: #8c76d8 !default;
-$shade-0: #ffffff !default;
-$teal: #8c76d8 !default;
 
 .range-slider {
   margin: 60px 0 0 0%;
@@ -13,10 +12,10 @@ $teal: #8c76d8 !default;
 $range-width: 100% !default;
 
 $range-handle-color: $shade-10 !default;
-$range-handle-color-hover: $teal !default;
+$range-handle-color-hover: $lightviolet !default;
 $range-handle-size: 20px !default;
 
-$range-track-color: $shade-1 !default;
+$range-track-color: $lightviolet !default;
 $range-track-height: 1px !default;
 
 $range-label-color: $shade-10 !default;
@@ -71,15 +70,6 @@ $range-label-width: 60px !default;
   &:active::-moz-range-thumb {
     background: $range-handle-color-hover;
   }
-  
-  // Focus state
-  // &:focus {
-    
-  //   &::-webkit-slider-thumb {
-  //     box-shadow: 0 0 0 3px $shade-0,
-  //                 0 0 0 6px $teal;
-  //   }
-  // }
 }
 
 
@@ -88,7 +78,7 @@ $range-label-width: 60px !default;
   display: inline-block;
   position: relative;
   width: $range-label-width;
-  color: $shade-0;
+  color: $white;
   line-height: 20px;
   text-align: center;
   border-radius: 3px;

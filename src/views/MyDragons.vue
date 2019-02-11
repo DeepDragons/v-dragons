@@ -1,16 +1,17 @@
 <template>
-  <div class="container pt-5">
-    <div class="row">
-      <Card class="col-sm col-md"
+  <div class="container broader pt-5">
+    <div class="row align-items-start">
+      <Card class="col-sm"
             v-for="el of cards"
             :key="el.id"
-            :paramPath="el.id"
+            :paramPath="'/dragon/' + el.id"
             :url="el.url">
         <h3 class="text-lightviolet">#{{el.id}}</h3>
       </card>
     </div>
 
-    <paginate v-model="currentPage"
+    <paginate v-if="isShow"
+              v-model="currentPage"
               :page-count="totalRows"
               :page-range="perPage"
               :prev-text="prevText"
@@ -23,21 +24,17 @@
 <script>
 import Card from '../components/UI/Card'
 import Paginate from '../mixins/paginate'
+import DefUtils from '../mixins/utils'
 import DragonMixin from '../mixins/ETH/mixins/dragonseth'
 
 export default {
   name: 'MyDragons',
   components: { Card },
-  mixins: [Paginate, DragonMixin],
+  mixins: [Paginate, DragonMixin, DefUtils],
+  directives: { },
   computed: {
     cards() {
-      let cloud = this.$store.getters.CLOUD;
-      let { elements } = this.$store.getters[this.storeKey];
-      let tokensOwner = elements.map(el => {
-        let stage = el.stage > 1 ? 'dragon' : 'egg';
-        return { id: el.id, url: `${cloud}${stage}_${el.id}.png` }
-      });
-
+      let tokensOwner = this.sortElements();
       return this.pageChanged(tokensOwner);
     }
   },
@@ -45,9 +42,6 @@ export default {
     return {
       storeKey: 'MYDRAGON'
     }
-  },
-  mounted() {
-    // this.tokensOf();
   }
 }
 </script>

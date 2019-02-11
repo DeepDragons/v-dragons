@@ -8,5 +8,28 @@ export default {
       return new MarketPlace(web3);
     }
   },
-  methods: { }
+  methods: {
+    async getDragonsToSale() {
+      let totalDragonsToSale;
+      let totalDragonIds;
+      let payload = this.$store.getters.MARKET;
+      
+      totalDragonsToSale = await this.marketPlace.totalDragonsToSale();
+
+      if (totalDragonsToSale < 1) return [];
+
+      totalDragonIds = await this.marketPlace.getSlicedDragonsSale(0, totalDragonsToSale++);
+      payload.elements = await this.marketPlace.getFewDragons(totalDragonIds);
+
+      this.$store.commit('MARKET', payload);
+
+      return payload.elements;
+    },
+    buyFromMarket(id) {
+      this.$store.dispatch({
+        type: 'buyFromMarket',
+        tokenId: id
+      });
+    }
+  }
 }

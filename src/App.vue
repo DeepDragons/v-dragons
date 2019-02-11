@@ -46,7 +46,7 @@ export default {
 
 <style lang="scss">
 @import "./styles/bootstrap";
-@import "./styles/arrow";
+
 a {
   cursor: pointer;
   text-decoration: none;

@@ -13,11 +13,20 @@ export default {
   computed: {
     totalRows() {
       let { elements } = this.$store.getters[this.storeKey];
-      let count = elements.length / this.perPage;
+      let count = elements.length;
 
-      count = count.toFixed();
+      if (count < 1) {
+        return null;
+      }
 
-      return +count;
+      count = count / this.perPage;
+      count = +count.toFixed();
+
+      return count + 1;
+    },
+    isShow() {
+      let { elements } = this.$store.getters[this.storeKey];
+      return elements.length > this.perPage;
     }
   },
   watch: {

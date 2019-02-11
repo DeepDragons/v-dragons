@@ -73,3 +73,15 @@ ul.pagination {
     outline:none;
   }
 }
+
+// cards hover // 
+.default:hover {
+  box-shadow: inset 0px 0px 40px $lightviolet;
+}
+.pinck:hover {
+  box-shadow: inset 0px 0px 40px $lightping;
+}
+.red:hover {
+  box-shadow: inset 0px 0px 40px $red;
+}
+// cards hover // 

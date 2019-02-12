@@ -31,7 +31,6 @@ export default {
   name: 'MyDragons',
   components: { Card },
   mixins: [Paginate, DragonMixin, DefUtils],
-  directives: { },
   computed: {
     cards() {
       let tokensOwner = this.sortElements();
@@ -41,6 +40,17 @@ export default {
   data() {
     return {
       storeKey: 'MYDRAGON'
+    }
+  },
+  mounted() {
+    this.preStart();
+  },
+  methods: {
+    async preStart() {
+      if (this.cards.length > 0) return null;
+      this.loaderShow();
+      await this.tokensOf();
+      this.loaderHide()
     }
   }
 }

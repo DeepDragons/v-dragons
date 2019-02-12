@@ -4,15 +4,17 @@
     <h3 class="text-left text-ightindigo">
       Name:
       <input type="text" id="dragon-name"
-             disabled
+             :disabled="!values.isOwner"
              class="form-control text-pink"
              value="test" v-model.lazy="dragonName">
     </h3>
     <h3 class="text-left text-ightindigo">
-      Owner: <span class="text-pink">{{onwer}}</span>
+      Owner: <a :href="addressUrl"
+                target="_blanck"
+                class="text-pink">{{owner}}</a>
     </h3>
     <h3 class="text-left text-ightindigo pb-5">
-      Current action: <span class="text-pink">{{currentAction}}</span>
+      Current action: <span class="text-pink">{{values.currentAction}}</span>
     </h3>
     
     <div class="row pt-2 pb-2">
@@ -28,13 +30,7 @@
       </card>
     </div>
 
-    <ActionPanel v-if="isOwner" :id="id"/>
-
-    <a v-if="!isOwner  && price"
-       class="btn btn-outline-info text-info"
-       @click="buyFromMarket(id)">
-      BUY {{price | fromWei($store.getters.CURRENCY)}}
-    </a>
+    <ActionPanel :id="id" :keyStore="keyStore"/>
   </div>
 </template>
 
@@ -50,75 +46,76 @@ export default {
   name: 'Dragon',
   components: { Card, ActionPanel },
   mixins: [Charts, DragonMixin, DefUtils],
-    filters: { fromWei },
+  filters: { fromWei },
   data() {
     return {
-      cardHover: 'none',
-      dragonName: 'no name',
-      isOwner: null,
-      addressOwner: '',
-      stage: null,
-      nextBlock2Action: null,
-      currentAction: null,
-      price: 0
+      keyStore: 'DRAGON'
     }
   },
   computed: {
+    values() {
+      return this.$store.getters[this.keyStore];
+    },
     id() {
       return this.$router.history.current['params']['id'];
     },
     url() {
-      return this.getUrl(this.stage, this.id);
+      return this.getUrl(this.values.stage, this.id);
     },
-    onwer() {
-      return this.addressOwner;
+    owner() {
+      let { currentAddress } = this.$store.getters.METAMASK;
+      let { addressOwner } = this.values;
+
+      if (currentAddress == addressOwner) {
+        // document.getElementById('dragon-name').disabled = false;
+        return 'you';
+      } else {
+        return addressOwner.substr(0, 8) + '...';
+      }
+    },
+    cardHover() {
+      let { currentAction } = this.values;
+      let defClass = 'none';
+      let newClass = `${defClass} ${currentAction.replace(' ', '')}`;
+      return newClass.toLocaleLowerCase();
+    },
+    addressUrl() {
+      return this.viewAddressUrl(this.values.addressOwner);
+    },
+    dragonName: {
+      get: function() {
+        if (!this.values.dragonName) {
+          return 'no name'
+        } else {
+          return this.values.dragonName;
+        }
+      },
+      set: function(value) {
+        if (value && value != this.dragonName) {
+          this.$store.dispatch({
+            type: 'addDragonName',
+            tokenId: this.id,
+            name: value
+          });
+        }
+      }
     }
   },
   mounted() {
-    this.preView();
+    this.loaderShow();
+    this.getAllTheTokenData(this.id).then(data => {
+      this.loaderHide();
+      this.paintChart(data.gensFight);
+    });
+
+    if (this.values.dragonName) {
+      this.dragonName = this.values.dragonName;
+    }
   },
   methods: {
     paintChart(values) {
       let ctx = window.document.getElementById('combat');
       this.createCombatChart(ctx, values);
-    },
-    subAddress(address) {
-      return address.substr(0, 8) + '...';
-    },
-    async preView() {
-      let dragonData;
-      let { currentAddress } = this.$store.getters.METAMASK;
-
-      try {
-        dragonData = await this.dragonInfo(this.id);
-      } catch (err) {
-        window.location.reload();
-        return null;
-      }
-
-      if (dragonData.owner == currentAddress) {
-        this.isOwner = true;
-        this.addressOwner = 'you';
-        document.getElementById('dragon-name').disabled = false;
-      } else if (dragonData.owner == this.marketPlace.address) {
-        this.addressOwner = await this.marketPlace.dragonsOwner(this.id);
-        this.addressOwner = this.subAddress(this.addressOwner);
-        this.price = await this.marketPlace.dragonPrices(this.id);
-      } else {
-        this.addressOwner = this.subAddress(dragonData.owner);
-      }
-
-      this.dragonName = dragonData.dragonName || this.dragonName;
-      this.stage = dragonData.gens.stage;
-      this.nextBlock2Action = dragonData.gens.nextBlock2Action;
-      this.currentAction = dragonData.gens.currentAction;
-
-      this.paintChart(dragonData.gens.fightsGenes);
-    }
-  },
-  watch: {
-    dragonName(value) {
-      console.log('setDragonName', value);
     }
   }
 }
@@ -135,21 +132,37 @@ export default {
   right: 0;
   z-index: 99;
 }
-
 .none {
   animation: shadow 2s infinite alternate;
-  border: 2px solid $lightviolet;
-  -webkit-box-shadow: 0px 0px 40px $lightviolet;
-  box-shadow: 0px 0px 40px $lightviolet;
   cursor: default;
   height: 400px;
   width: 400px;
   img { margin: 4%; }
 }
 
+.fightplace {
+  border: 2px solid $red;
+  -webkit-box-shadow: 0px 0px 40px $red;
+  box-shadow: 0px 0px 40px $red;
+}
+.marketplace {
+  border: 2px solid $lightping;
+  -webkit-box-shadow: 0px 0px 40px $lightping;
+  box-shadow: 0px 0px 40px $lightping;
+}
+.free {
+  border: 2px solid $lightviolet;
+  -webkit-box-shadow: 0px 0px 40px $lightviolet;
+  box-shadow: 0px 0px 40px $lightviolet;
+}
+.necropolis {
+  animation: none;
+  filter: grayscale(100%);
+}
+
 @keyframes shadow {
-  from {box-shadow: 0 0 50px 10px $lightviolet}
-  to {text-shadow: 0 0 60px 15px $lightping }
+  from {box-shadow: 0 0 40px 5px $lightviolet}
+  to {text-shadow: 0 0 40px 10px $lightping }
 }
 
 @media screen and (max-width: 991px) {

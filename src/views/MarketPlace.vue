@@ -8,10 +8,10 @@
             :paramPath="'/dragon/' + el.id"
             :url="el.url">
         <h3 class="text-lightviolet">#{{el.id}}</h3>
-        <a class="btn btn-outline-info text-info"
-           @click="buyFromMarket(el.id)">
+        <button v-btn=""
+                @click="buyFromMarket(el.id)">
           BUY {{el.price | fromWei($store.getters.CURRENCY)}}
-        </a>
+        </button>
       </card>
     </div>
 
@@ -30,14 +30,17 @@
 import Card from '../components/UI/Card'
 import Paginate from '../mixins/paginate'
 import DefUtils from '../mixins/utils'
+import DragonActions from '../mixins/dragonActions'
 import MarketPlaceMixin from '../mixins/ETH/mixins/marketPlace'
 import fromWei from '../filters/fromWei'
+import btn from '../directives/btn'
 
 export default {
   name: 'MarketPlace',
   components: { Card },
-  mixins: [Paginate, MarketPlaceMixin, DefUtils],
+  mixins: [Paginate, DragonActions, DefUtils, MarketPlaceMixin],
   filters: { fromWei },
+  directives: { btn },
   data() {
     return {
       storeKey: 'MARKET',
@@ -50,9 +53,16 @@ export default {
       return this.pageChanged(tokensForSale);
     }
   },
-  methods: { },
   mounted() {
-    this.getDragonsToSale();
+    this.preStart();
+  },
+  methods: {
+    async preStart() {
+      if (this.cards.length > 0) return null;
+      this.loaderShow();
+      await this.getDragonsToSale();
+      this.loaderHide()
+    }
   }
 }
 </script>

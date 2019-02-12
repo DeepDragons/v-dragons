@@ -40,6 +40,47 @@ export default {
           nextBlock2Action: dragonInfo[4].toString()
         }
       };
+    },
+    async getAllTheTokenData(_DragonId) {
+      let dragonData;
+      let payload = this.$store.getters.DRAGON;
+
+      try {
+        dragonData = await this.dragonInfo(_DragonId);
+      } catch (err) {
+        window.location.reload();
+        return null;
+      }
+
+      payload.tokenId = _DragonId;
+      payload.stage = dragonData.gens.stage;
+      payload.nextBlock2Action = dragonData.gens.nextBlock2Action;
+      payload.currentAction = dragonData.gens.currentAction;
+      payload.gensFight = dragonData.gens.fightsGenes;
+      payload.addressOwner = dragonData.owner;
+      payload.dragonName = dragonData.dragonName;
+
+      this.$store.commit('DRAGON', payload);
+      this.isOwnerToken();
+
+      return payload;
+    },
+    async isOwnerToken() {
+      let payload = this.$store.getters.DRAGON;
+      let { currentAddress } = this.$store.getters.METAMASK;
+
+      if (payload.addressOwner == this.marketPlace.address) {
+        payload.addressOwner = await this.marketPlace.dragonsOwner(payload.tokenId);
+        payload.price = await this.marketPlace.dragonPrices(payload.tokenId);
+      }
+
+      if (payload.addressOwner == currentAddress) {
+        payload.isOwner = true;
+      } else {
+        payload.isOwner = false;
+      }
+
+      this.$store.commit('DRAGON', payload);
     }
   }
 }

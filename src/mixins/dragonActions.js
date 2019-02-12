@@ -1,4 +1,4 @@
-import { toWei } from 'web3/lib/utils/utils'
+import { toWei, isAddress } from 'web3/lib/utils/utils'
 
 
 export default {
@@ -33,29 +33,50 @@ export default {
       this.gift.show = !this.gift.show;
     },
     makeGift() {
+      let addressTo = this.gift.giftAddress;
+      if (!isAddress(addressTo)) return null;
+      this.$store.dispatch({
+        type: 'transfer',
+        to: addressTo,
+        tokenId: this.id
+      });
       this.isGiftModal();
-      console.log(this.gift.giftAddress, 'transfer');
     },
     isSellModal() {
       this.sell.show = !this.sell.show;
     },
     makeSell() {
-      this.isSellModal();
       this.$store.dispatch({
         type: 'toSell',
         tokenId: this.id,
         dragonPrice: toWei(this.sell.price, 'ether')
       });
+      this.isSellModal();
     },
     isShowSuicide() {
       this.suicide.show = !this.suicide.show;
     },
     makeSuicide() {
+      this.$store.dispatch({
+        type: 'killDragon',
+        tokenId: this.id
+      });
       this.isShowSuicide();
-      console.log('make Suicide');
     },
     toFight() {
       console.log('make a fight');
+    },
+    birth() {
+      this.$store.dispatch({
+        type: 'birth',
+        tokenId: this.id
+      });
+    },
+    buyFromMarket(id) {
+      this.$store.dispatch({
+        type: 'buyFromMarket',
+        tokenId: id
+      });
     }
   }
 }

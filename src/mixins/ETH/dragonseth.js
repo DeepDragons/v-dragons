@@ -57,7 +57,6 @@ export default class {
     return fallback(data);
   }
 
-
   dragons = _dragonID => new Promise((resolve, reject) => {
     /**
      * @parma _dragonID: uint256;
@@ -81,27 +80,29 @@ export default class {
     });
   });
 
-  birthDragon = _dragonID => new Promise((resolve, reject) => {
+  birthDragon = _dragonID => {
     /**
      * @param _dragonID: uint256;
      */
-    this.dragonseth.birthDragon.send(_dragonID, (err, hash) => {
-      if (err) return reject(err);
-      return resolve(hash);
-    });
-  });
+    let code = this.dragonseth.birthDragon.getData(
+      _dragonID
+    );
+    let data = { to: this.address, data: code };
+    return fallback(data);
+  }
 
-  safeTransferFrom = (_from, _to, _tokenId) => new Promise((resolve, reject) => {
+  safeTransferFrom = (_from, _to, _tokenId) => {
     /**
      * @param _from: address;
      * @param _to: address;
      * @param _tokenId: uint256;
      */
-    this.dragonseth.safeTransferFrom.send(_from, _to, _tokenId, (err, hash) => {
-      if (err) return reject(err);
-      return resolve(hash);
-    });
-  });
+    let code = this.dragonseth.safeTransferFrom.getData(
+      _from, _to, _tokenId
+    );
+    let data = { to: this.address, data: code };
+    return fallback(data);
+  };
 
   ownerOf = _tokenId => new Promise((resolve, reject) => {
     /**
@@ -113,4 +114,27 @@ export default class {
       return resolve(address);
     });
   });
+
+  addDragonName = (_dragonID, _newName) => {
+    /**
+     * @param _dragonID: uint256;
+     * @param _newName: String;
+     */
+    let code = this.dragonseth.addDragonName.getData(
+      _dragonID, _newName
+    );
+    let data = { to: this.address, data: code };
+    return fallback(data);
+  }
+
+  killDragon = _dragonID => {
+    /**
+     * @param _dragonID: uint256;
+     */
+    let code = this.dragonseth.killDragon.getData(
+      _dragonID
+    );
+    let data = { to: this.address, data: code };
+    return fallback(data);
+  }
 }

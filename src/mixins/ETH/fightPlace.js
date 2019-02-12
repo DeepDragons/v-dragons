@@ -2,7 +2,7 @@ var CONFIG = window.contracts;
 
 export default class {
 
-  constructor(address=CONFIG.crowdsale, abi) {
+  constructor(address=CONFIG.fightPlace, abi) {
     this.address = address;
     this.fightPlace = window.web3.eth.contract(abi).at(this.address);
   }

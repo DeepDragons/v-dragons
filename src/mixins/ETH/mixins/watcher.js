@@ -29,6 +29,7 @@ export default {
         if (mutation.type === 'METAMASK' && state.MetaMask.msg === CODE[3]) {
           this.updateBalanceMutagen();
           this.tokensOf();
+          this.isOwnerToken();
         }
       });
     }

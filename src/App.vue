@@ -1,8 +1,8 @@
 <template>
   <div id="app">
     <NavBar/>
-    <router-view/>
-    <Footer/>
+    <router-view v-show="$store.getters.CONTENTSHOW"/>
+    <Footer v-show="$store.getters.CONTENTSHOW"/>
   </div>
 </template>
 
@@ -29,6 +29,9 @@ export default {
             .getElementById('app')
             .style
             .display = 'block';
+      window.document
+            .getElementById('loaderlogo')
+            .remove();
     },
     web3Detect() {
       this.$store.dispatch('enable');

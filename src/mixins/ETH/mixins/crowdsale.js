@@ -22,6 +22,8 @@ export default {
       payload.buyCost = payload.buyCost.toString();
       
       this.$store.commit('BUYFORM', payload);
+      
+      return payload;
     }
   }
 }

@@ -67,9 +67,8 @@
 
         <div class="row">
           <div class="col"></div>
-          <button type="button"
-                  @click="$store.dispatch('buyEgg')"
-                  class="btn btn-outline-warning col-lg btn-buy">
+          <button v-btn="'warning col-lg btn-buy'"
+                  @click="$store.dispatch('buyEgg')">
             BUY
           </button>
           <div class="col"></div>
@@ -94,14 +93,18 @@ import { toBigNumber, toWei } from 'web3/lib/utils/utils'
 
 import Range from '../components/UI/Range'
 import SwitchMT from '../components/UI/SwitchMT'
-import EthInstance from '../mixins/ETH/mixins/crowdsale'
+import Crowdsale from '../mixins/ETH/mixins/crowdsale'
 import fromWei from '../filters/fromWei'
+import btn from '../directives/btn'
+import DefUtils from '../mixins/utils'
+
 
 export default {
   name: 'BuyEgg',
   components: { Range, SwitchMT },
-  mixins: [EthInstance],
+  mixins: [Crowdsale, DefUtils],
   filters: { fromWei },
+  directives: { btn },
   data() {
     return {
       switchTitle: 'Guarantee my order.',

@@ -39,10 +39,18 @@ export default new Vuex.Store({
       currentPage: 1
     },
     dragon: {
-      
+      dragonName: 'no name',
+      isOwner: false,
+      addressOwner: '',
+      stage: null,
+      nextBlock2Action: null,
+      currentAction: '',
+      price: 0,
+      gensFight: [],
+      tokenId: null
     },
     mutagen: 0,
-    currentAddress: null,
+    contentShow: true,
     MetaMask: {
       netID: null,
       currentAddress: '',
@@ -76,6 +84,35 @@ export default new Vuex.Store({
     async toSell({ getters }, { tokenId, dragonPrice }) {
       let dragonseth = new Dragonseth(getters.WEB3);
       dragonseth.add2MarketPlace(tokenId, dragonPrice);
+    },
+    async addDragonName({ getters }, { tokenId, name }) {
+      let dragonseth = new Dragonseth(getters.WEB3);
+      let hash = await dragonseth.addDragonName(tokenId, name);
+      console.log(hash);
+    },
+    async birth({ state, getters }, { tokenId }) {
+      let payload = state.dragon;
+      let dragonseth = new Dragonseth(getters.WEB3);
+      let hash = await dragonseth.birthDragon(tokenId);
+      console.log(hash);
+      payload.stage = 2;
+      this.$store.commit('DRAGON', payload);
+    },
+    async transfer({ state, getters }, { to, tokenId }) {
+      let payload = state.dragon;
+      let { currentAddress } = state.MetaMask;
+      let dragonseth = new Dragonseth(getters.WEB3);
+      let hash = await dragonseth.safeTransferFrom(
+        currentAddress, to, tokenId
+      );
+      console.log(hash);
+      payload.addressOwner = to;
+      this.$store.commit('DRAGON', payload); 
+    },
+    async killDragon({ getters }, { tokenId }) {
+      let dragonseth = new Dragonseth(getters.WEB3);
+      let hash = await dragonseth.killDragon(tokenId);
+      console.log(hash);
     }
   },
   getters: {
@@ -84,10 +121,13 @@ export default new Vuex.Store({
     MARKET: state => state.market,
     FIGHTINGGROUND: state => state.fightingGround,
     CEMETERY: state => state.cemetery,
+    DRAGON: state => state.dragon,
     MUTAGEN: state => state.mutagen,
     CURRENTADDRESS: state => state.currentAddress,
     METAMASK: state => state.MetaMask,
+    CONTENTSHOW: state => state.contentShow,
     CLOUD: () => CONFIG.cloud,
+    BLOCKEXPLORERURL: () => CONFIG.blockExplorer,
     CURRENCY: () => CONFIG.currency,
     WEB3: () => {
       return new window.Web3(
@@ -101,8 +141,10 @@ export default new Vuex.Store({
     MARKET: (state, payload) => state.market = payload,
     FIGHTINGGROUND: (state, payload) => state.fightingGround = payload,
     CEMETERY: (state, payload) => state.cemetery = payload,
+    DRAGON: (state, payload) => state.dragon = payload,
     MUTAGEN: (state, payload) => state.mutagen = payload,
     CURRENTADDRESS: (state, payload) => state.currentAddress = payload,
-    METAMASK: (state, payload) => state.MetaMask = payload
+    METAMASK: (state, payload) => state.MetaMask = payload,
+    CONTENTSHOW: (state, payload) => state.contentShow = payload
   }
 })

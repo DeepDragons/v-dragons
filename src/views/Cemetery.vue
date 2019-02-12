@@ -1,7 +1,7 @@
 <template>
   <div class="container pt-5">
     <div class="row">
-      <Card class="col-sm col-md dead"
+      <Card class="col-sm col-md necropolis"
             v-for="el of cards"
             :key="el.id"
             :paramPath="el.id"
@@ -64,8 +64,4 @@ export default {
 </script>
 
 <style lang="scss">
-div.dead {
-  filter: grayscale(100%);
-  // img { filter: grayscale(100%); }
-}
 </style>

@@ -24,12 +24,6 @@ export default {
       this.$store.commit('MARKET', payload);
 
       return payload.elements;
-    },
-    buyFromMarket(id) {
-      this.$store.dispatch({
-        type: 'buyFromMarket',
-        tokenId: id
-      });
     }
   }
 }

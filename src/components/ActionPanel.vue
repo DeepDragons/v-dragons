@@ -1,21 +1,30 @@
 <template>
   <div>
     <div class="container">
-      <div class="row">
+      <div v-if="iShow" class="row">
         <div class="btn-group col-lg">
-          <button type="button"
-                  class="btn btn-outline-info"
+          <button v-btn
                   @click="isGiftModal">GIFT</button>
-          <button type="button"
-                  class="btn btn-outline-info"
+          <button v-if="!isEgg"
+                  v-btn
                   @click="toFight">TO FIGHT</button>
-          <button type="button"
-                  class="btn btn-outline-info"
+          <button v-btn
                   @click="isSellModal">TO SELL</button>
-          <button type="button"
-                  class="btn btn-outline-danger"
+          <button v-if="!isEgg"
+                  v-btn="'danger'"
                   @click="isShowSuicide">SUICIDE</button>
+          <button v-if="isEgg"
+                  v-btn="'success'"
+                  @click="birth">birth</button>
         </div>
+      </div>
+
+      <div class="row">
+        <button v-if="!values.isOwner && values.price"
+                v-btn
+                @click="buyFromMarket(values.tokenId)">
+          BUY {{values.price | fromWei($store.getters.CURRENCY)}}
+        </button>
       </div>
     </div>
 
@@ -37,8 +46,7 @@
       </div>
 
       <div slot="modal-footer" class="w-100 justify-content-md-center">
-        <button type="button"
-                class="btn btn-outline-info col-xs-12 p-2"
+        <button v-btn="'info col-xs-12 p-2'"
                 @click="makeGift">GIFT</button>
       </div>
     </b-modal>
@@ -66,8 +74,7 @@
       </div>
 
       <div slot="modal-footer" class="w-100 justify-content-md-center">
-        <button type="button"
-                class="btn btn-outline-info col-xs-12 p-2"
+        <button v-btn="'info col-xs-12 p-2'"
                 @click="makeSell">TRADE</button>
       </div>
     </b-modal>
@@ -84,8 +91,7 @@
       </p>
 
       <div slot="modal-footer" class="w-100 justify-content-md-center">
-        <button type="button"
-                class="btn btn-outline-danger col-xs-12 p-2"
+        <button v-btn="'danger col-xs-12 p-2'"
                 @click="makeSuicide">MAKE IT</button>
       </div>
     </b-modal>
@@ -94,10 +100,28 @@
 
 <script>
 import DragonActions from '../mixins/dragonActions'
+import DefUtils from '../mixins/utils'
+import btn from '../directives/btn'
+import fromWei from '../filters/fromWei'
 
 export default {
   name: 'ActionPanel',
-  mixins: [DragonActions]
+  mixins: [DragonActions, DefUtils],
+  directives: { btn },
+  filters: { fromWei },
+  props: { keyStore: String },
+  computed: {
+    values() {
+      return this.$store.getters[this.keyStore];
+    },
+    iShow() {
+      return this.values.isOwner && 
+             this.values.currentAction == this.actions[0];
+    },
+    isEgg() {
+      return this.values.stage == 1; 
+    }
+  }
 }
 </script>
 

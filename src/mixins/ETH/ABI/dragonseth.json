@@ -162,5 +162,37 @@
 		"payable": false,
 		"stateMutability": "nonpayable",
 		"type": "function"
+    },
+    {
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_dragonID",
+				"type": "uint256"
+			},
+			{
+				"name": "_newName",
+				"type": "string"
+			}
+		],
+		"name": "addDragonName",
+		"outputs": [],
+		"payable": true,
+		"stateMutability": "payable",
+		"type": "function"
+    },
+    {
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_dragonID",
+				"type": "uint256"
+			}
+		],
+		"name": "killDragon",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
 	}
 ]

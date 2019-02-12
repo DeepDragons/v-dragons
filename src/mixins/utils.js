@@ -4,7 +4,7 @@ export default {
   data() {
     return {
       stages: {
-        0: 'dead',
+        0: 'dragon',
         1: 'egg',
         2: 'dragon'
       },
@@ -23,6 +23,9 @@ export default {
   computed: {
     cloud() {
       return this.$store.getters.CLOUD;
+    },
+    blockexplorer() {
+      return this.$store.getters.BLOCKEXPLORERURL;
     }
   },
   methods: {
@@ -61,6 +64,20 @@ export default {
       gens = gens.filter(el => !isNaN(el));
 
       return gens;
+    },
+    viewAddressUrl(address) {
+      return `${this.blockexplorer}address/${address}`;
+    },
+    loaderShow() {
+      this.$store.commit('CONTENTSHOW', false);
+      window.document
+            .getElementById('fountainG')
+            .style
+            .display = 'block';
+    },
+    loaderHide() {
+      window.document.getElementById('fountainG').style.display = 'none';
+      this.$store.commit('CONTENTSHOW', true);
     }
   }
 }

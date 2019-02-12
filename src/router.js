@@ -17,13 +17,6 @@ export default new Router({
       name: 'My Dragons',
       component: () => import('./views/MyDragons')
     },
-    // ******** selected dragon ************ //
-    {
-      path: '/dragon/:id',
-      name: false,
-      component: () => import('./views/Dragon')
-    },
-    // ******** selected dragon ************ //
     {
       path: '/market',
       name: 'Market Place',
@@ -38,6 +31,18 @@ export default new Router({
       path: '/cemetery',
       name: 'Cemetery',
       component: () => import('./views/Cemetery')
+    },
+    // ******** selected dragon ************ //
+    {
+      path: '/dragon/:id',
+      name: false,
+      component: () => import('./views/Dragon')
+    },
+    {
+      path: '/battle/:id',
+      name: false,
+      component: () => import('./views/Battle')
     }
+    // ******** selected dragon ************ //
   ]
 })

@@ -186,13 +186,15 @@ export default {
 </script>
 
 <style lang="scss">
+@import "../styles/colors";
+
 div.eggglow {
   margin-top: 10%;
   margin-bottom: 30%;
 }
 input {
   background-color: transparent;
-  border: 1px solid #8484be;
+  border: 1px solid $shade-10;
 }
 button.btn-buy {
   min-width: 200px;
@@ -204,9 +206,10 @@ button.btn-buy {
   height: 50px;
   width: 50px;
   margin: 22%;
-  box-shadow: 0 0 60px 30px #212529,
-              0 0 100px 60px #212529,
-              0 0 100px 80px #8c76d8;
+  box-shadow: inset
+              $lightviolet
+              0 0 100px 50px,
+              $lightviolet-1 0 0 200px 100px;
   img {
     margin: -260%;
   }

@@ -1,13 +1,11 @@
 <template>
   <footer class="page-footer font-small indigo bg-darkviolet">
 
-    <div class="container text-center text-md-left">
+    <div class="container text-center text-md-left pt-5">
 
       <div class="row">
 
         <div class="col-md-2 mx-auto">
-
-          <h5 class="font-weight-bold text-uppercase mt-3 mb-4 text-warning">Links</h5>
 
           <ul class="list-unstyled">
             <li>
@@ -23,8 +21,6 @@
         <hr class="clearfix w-100 d-md-none">
 
         <div class="col-md-1 mx-auto">
-
-          <h5 class="font-weight-bold text-uppercase mt-3 mb-4 text-warning">Links</h5>
 
           <ul class="list-unstyled">
             <li>

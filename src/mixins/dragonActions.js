@@ -1,10 +1,10 @@
 import { toWei, isAddress } from 'web3/lib/utils/utils'
+import FightPlace from './ETH/mixins/fightPlace'
 
 
 export default {
-  props: {
-    id: String
-  },
+  mixins: [FightPlace],
+  props: { id: String },
   data() {
     return {
       gift: {
@@ -64,7 +64,10 @@ export default {
       this.isShowSuicide();
     },
     toFight() {
-      console.log('make a fight');
+      this.$store.dispatch({
+        type: 'addToFight',
+        tokenId: this.id
+      });
     },
     birth() {
       this.$store.dispatch({

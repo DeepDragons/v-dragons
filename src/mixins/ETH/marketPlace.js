@@ -31,7 +31,7 @@ export default class {
     });
   });
 
-  buyDragon = (_dragonID, price) => new Promise((resolve, reject) => {
+  buyDragon = (_dragonID, price) => {
     /**
      * @param: _dragonID: uint256;
      */
@@ -42,7 +42,7 @@ export default class {
       data: this.marketPlace.buyDragon.getData(_dragonID)
     };
     return fallback(data);
-  });
+  };
 
   totalDragonsToSale = () => new Promise((resolve, reject) => {
     /**

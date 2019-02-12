@@ -1,0 +1,44 @@
+[
+  {
+    "constant": false,
+    "inputs": [
+        {
+            "name": "_dragonID",
+            "type": "uint256"
+        }
+    ],
+    "name": "addToFightPlace",
+    "outputs": [],
+    "payable": true,
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "priceToAdd",
+    "outputs": [
+        {
+            "name": "",
+            "type": "uint256"
+        }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "getAllDragonsFight",
+    "outputs": [
+        {
+            "name": "",
+            "type": "uint256[]"
+        }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  }
+]

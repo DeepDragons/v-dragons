@@ -8,7 +8,7 @@
             :paramPath="'/dragon/' + el.id"
             :url="el.url">
         <h3 class="text-lightviolet">#{{el.id}}</h3>
-        <button v-btn=""
+        <button v-btn
                 @click="buyFromMarket(el.id)">
           BUY {{el.price | fromWei($store.getters.CURRENCY)}}
         </button>

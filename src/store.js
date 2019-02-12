@@ -7,6 +7,7 @@ import {
 import Crowdsale from './mixins/ETH/crowdsale'
 import MarketPlace from './mixins/ETH/marketPlace'
 import Dragonseth from './mixins/ETH/dragonseth'
+import FightPlace from './mixins/ETH/fightPlace'
 
 
 var CONFIG = window.config;
@@ -33,7 +34,9 @@ export default new Vuex.Store({
       totalItems: 0
     },
     fightingGround: {
-      currentPage: 1
+      currentPage: 1,
+      elements: [],
+      totalItems: 0
     },
     cemetery: {
       currentPage: 1
@@ -113,6 +116,11 @@ export default new Vuex.Store({
       let dragonseth = new Dragonseth(getters.WEB3);
       let hash = await dragonseth.killDragon(tokenId);
       console.log(hash);
+    },
+    async addToFight({ getters }, { tokenId }) {
+      let fightPlace = new FightPlace(getters.WEB3);
+      let price = await fightPlace.priceToAdd();
+      fightPlace.addToFightPlace(tokenId, price);
     }
   },
   getters: {

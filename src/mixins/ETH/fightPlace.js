@@ -1,63 +1,87 @@
-var CONFIG = window.contracts;
+/* eslint-disable */
+import ABI from './ABI/fightPlace'
+import { fallback } from './web3'
+
+var addreses = window.contracts;
+
 
 export default class {
 
-  constructor(address=CONFIG.fightPlace, abi) {
+  constructor(web3, address=addreses.fightPlace, abi=ABI) {
     this.address = address;
-    this.fightPlace = window.web3.eth.contract(abi).at(this.address);
+    this.web3 = web3;
+    this.fightPlace = this.web3.eth.contract(abi).at(this.address);
   }
 
-  getAllDragonsFight() {
+  getAllDragonsFight = () => new Promise((resolve, reject) => {
     /**
      * @return uint256;
      */
-  }
+    this.fightPlace.getAllDragonsFight.call((err, tokens) => {
+      if (err) return reject(err);
+      return resolve(tokens);
+    });
+  });
 
-  priceToAdd() {
+  priceToAdd = () => new Promise((resolve, reject) => {
     /**
      * @return uint256;
      */
-  }
 
-  delFromFightPlace(_dragonID) {
-    /**
-     * @param _dragonID: uint256;
-     */
-  }
+    this.fightPlace.priceToAdd.call((err, amount) => {
+      if (err) return reject(err);
+      return resolve(amount.toString());
+    });
+  });
 
-  getAddressDragons(_owner) {
-    /**
-     * @param _owner: address;
-     */
-  }
+  // delFromFightPlace(_dragonID) {
+  //   /**
+  //    * @param _dragonID: uint256;
+  //    */
+  // }
 
-  addToFightPlace(_dragonID) {
+  // getAddressDragons(_owner) {
+  //   /**
+  //    * @param _owner: address;
+  //    */
+  // }
+
+  addToFightPlace = (_dragonID, price) => {
     /**
      * @param _dragonID: uint256;
      * @type payable;
      */
+    let code = this.fightPlace.addToFightPlace.getData(
+      _dragonID
+    );
+    let data = {
+      value: price,
+      to: this.address,
+      data: code
+    };
+    return fallback(data);
   }
 
-  changePrices(_priceToFight, _priceToAdd) {
-    /**
-     * @param _priceToFight: uint256;
-     * @param _priceToAdd: uint256;
-     * @type nonpayable;
-     */
-  }
+  // changePrices(_priceToFight, _priceToAdd) {
+  //   /**
+  //    * @param _priceToFight: uint256;
+  //    * @param _priceToAdd: uint256;
+  //    * @type nonpayable;
+  //    */
+  // }
 
-  fightWithDragon(_yourDragonID, _thisDragonID) {
-    /**
-     * @param _yourDragonID: uint256;
-     * @param _thisDragonID: uint256;
-     * @type: payable;
-     */
-  }
+  // fightWithDragon(_yourDragonID, _thisDragonID) {
+  //   /**
+  //    * @param _yourDragonID: uint256;
+  //    * @param _thisDragonID: uint256;
+  //    * @type: payable;
+  //    */
+  // }
 
-  priceToFight() {
-    /**
-     * @type view;
-     * @return uint256;
-     */
-  }
+  // priceToFight() {
+  //   /**
+  //    * @type view;
+  //    * @return uint256;
+  //    */
+  // }
 }

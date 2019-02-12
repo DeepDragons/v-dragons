@@ -102,21 +102,23 @@ export default {
     }
   },
   mounted() {
-    this.loaderShow();
-    this.getAllTheTokenData(this.id).then(data => {
-      this.loaderHide();
-      this.paintChart(data.gensFight);
-    });
-
-    if (this.values.dragonName) {
-      this.dragonName = this.values.dragonName;
-    }
+    this.preStart();
   },
   methods: {
     paintChart(values) {
       let ctx = window.document.getElementById('combat');
       this.createCombatChart(ctx, values);
-    }
+    },
+    async preStart() {
+      let data;
+      this.loaderShow();
+      data = await this.getAllTheTokenData(this.id);
+      this.loaderHide();
+      this.paintChart(data.gensFight);
+      if (this.values.dragonName) {
+        this.dragonName = this.values.dragonName;
+      }
+    } 
   }
 }
 </script>

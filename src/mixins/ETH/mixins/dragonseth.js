@@ -1,5 +1,6 @@
-import dragonseth from '../dragonseth'
+import Dragonseth from '../dragonseth'
 import MarketPlaceMixin from './marketPlace'
+import Stat from '../stat'
 import DefUtils from '../../utils'
 
 
@@ -8,7 +9,11 @@ export default {
   computed: {
     dragonseth() {
       let web3 = this.$store.getters.WEB3;
-      return new dragonseth(web3);
+      return new Dragonseth(web3);
+    },
+    dragonStat() {
+      let web3 = this.$store.getters.WEB3;
+      return new Stat(web3);
     }
   },
   methods: {

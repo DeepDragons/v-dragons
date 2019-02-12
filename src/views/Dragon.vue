@@ -31,21 +31,37 @@
     </div>
 
     <ActionPanel :id="id" :keyStore="keyStore"/>
+
+
+    <div v-if="tableShow" class="row">
+      <b-table class="text-ightindigo text-center col-sm-12"
+               :fields="stat.fight.fields"
+               :items="stat.fight.items"></b-table>
+
+      <div class="col-sm-3"></div>
+
+      <b-table class="text-ightindigo text-center col-sm-6 mt-5"
+               :fields="stat.lab.fields"
+               :items="stat.lab.items"></b-table>
+    </div>
   </div>
 </template>
 
 <script>
+import bTable from 'bootstrap-vue/es/components/table/table';
 import Card from '../components/UI/Card'
 import Charts from '../mixins/charts'
 import ActionPanel from '../components/ActionPanel'
 import DragonMixin from '../mixins/ETH/mixins/dragonseth'
 import DefUtils from '../mixins/utils'
 import fromWei from '../filters/fromWei'
+import Table from '../mixins/table'
+
 
 export default {
   name: 'Dragon',
-  components: { Card, ActionPanel },
-  mixins: [Charts, DragonMixin, DefUtils],
+  components: { Card, ActionPanel, bTable },
+  mixins: [Charts, DragonMixin, DefUtils, Table],
   filters: { fromWei },
   data() {
     return {
@@ -111,6 +127,7 @@ export default {
     },
     async preStart() {
       let data;
+      let stats;
       this.loaderShow();
       data = await this.getAllTheTokenData(this.id);
       this.loaderHide();
@@ -118,6 +135,10 @@ export default {
       if (this.values.dragonName) {
         this.dragonName = this.values.dragonName;
       }
+      stats = await this.dragonStat.dragonStats(this.id);
+      this.stat.fight.items[0] = stats;
+      this.stat.lab.items[0] = stats;
+      this.tableShow = true;
     } 
   }
 }

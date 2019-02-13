@@ -139,6 +139,7 @@ export default {
       this.stat.fight.items[0] = stats;
       this.stat.lab.items[0] = stats;
       this.tableShow = true;
+      console.log(this.values);
     } 
   }
 }

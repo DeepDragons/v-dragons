@@ -19,9 +19,8 @@
               class="mr-auto p-2 bd-highlight"
               id="gens"></canvas>
     </div>
-
       
-      <vue-glide v-model="active"
+      <vue-glide v-if="cards.length > 1"
                  :perView="slideAmount"
                  :rewind="true"
                  :keyboard="true"
@@ -35,8 +34,8 @@
           </card>
         </vue-glide-slide>
         <template slot="control">
-          <img src="/img/arrow.png" class="arrow" data-glide-dir="<">
-          <img src="/img/arrow.png" class="arrow flip" data-glide-dir=">">
+          <img src="/img/arrow.png" class="arrow flip" data-glide-dir="<">
+          <img src="/img/arrow.png" class="arrow" data-glide-dir=">">
         </template>
       </vue-glide>
 
@@ -61,7 +60,6 @@ export default {
   data() {
     return {
       storeKey: 'MYDRAGON',
-      active: 1,
       slideAmount: 5,
       peek: 200,
       hover: 'red',

@@ -18,6 +18,16 @@
               :next-text="nextText"
               :container-class="'pagination'">
     </paginate>
+
+    <div v-if="isNotDragons" class="row">
+      <div class="jumbotron">
+        <h1 class="display-4">Hello, world!</h1>
+        <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
+        <hr class="my-4">
+        <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+        <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -39,7 +49,8 @@ export default {
   },
   data() {
     return {
-      storeKey: 'MYDRAGON'
+      storeKey: 'MYDRAGON',
+      isNotDragons: null
     }
   },
   mounted() {
@@ -50,7 +61,10 @@ export default {
       if (this.cards.length > 0) return null;
       this.loaderShow();
       await this.tokensOf();
-      this.loaderHide()
+      setTimeout(() => {
+        this.loaderHide();
+        if (!this.cards)  this.isNotDragons = true;
+      }, 500);
     }
   }
 }

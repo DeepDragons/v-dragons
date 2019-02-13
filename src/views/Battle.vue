@@ -1,8 +1,8 @@
 <template>
   <div>
-    <div class="row">
-      <img height="600" :src="urlOpponent" class="col-xs">
-      <div class="col btn-group">
+    <div class="row justify-content-md-center m-auto">
+      <img height="600" :src="urlOpponent" class="col-xs-auto">
+      <div class="col-lg-auto btn-group">
         <button v-if="urlMe"
                 @click="fight"
                 type="button"
@@ -11,16 +11,15 @@
           <span class="b-menu__item-name"></span>
         </button>
       </div>
-      <img v-if="urlMe" height="600" :src="urlMe" class="col-xs flip">
+      <img v-if="urlMe" height="600" :src="urlMe" class="col-md-auto flip">
     </div>
 
-    <div class="row">
+    <div class="row justify-content-md-center m-auto">
       <canvas width="800" height="300"
               class="mr-auto p-2 bd-highlight"
               id="gens"></canvas>
     </div>
 
-    <div v-if="cards.length > 1" class="d-flex flex-column bd-highlight">
       
       <vue-glide v-model="active"
                  :perView="slideAmount"
@@ -41,7 +40,6 @@
         </template>
       </vue-glide>
 
-    </div>
   </div>
 </template>
 
@@ -125,7 +123,7 @@ export default {
         );
       }
 
-      this.loaderHide()
+      this.loaderHide();
       this.createTowCharts(ctx, combatData);
     },
     fight() {
@@ -142,9 +140,6 @@ export default {
 <style lang="scss">
 @import "../styles/colors";
 
-.fixed-top {
-  z-index: -1;
-}
 img.flip {
   -webkit-transform: scaleX(-1);
   transform: scaleX(-1);
@@ -206,9 +201,5 @@ img[data-glide-dir="<"] {
     background: url("/img/battle-active.png") center center no-repeat;
     transition: .3s ease;
     transform: scale(1.5, 1.5);
-}
-.b-menu__item {
-  margin-left: 40%;
-  margin-top: 10%;
 }
 </style>

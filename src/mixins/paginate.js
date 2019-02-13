@@ -22,7 +22,7 @@ export default {
       count = count / this.perPage;
       count = +count.toFixed();
 
-      return count + 1;
+      return count;
     },
     isShow() {
       let { elements } = this.$store.getters[this.storeKey];

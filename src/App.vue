@@ -1,6 +1,8 @@
 <template>
   <div id="app">
     <NavBar/>
+    <img class="smoke-left" src="/img/bc_cloud_left-p-500.png">
+    <img class="smoke-right" src="/img/bc_cloud_right.png">
     <router-view v-show="$store.getters.CONTENTSHOW"/>
     <Footer v-show="$store.getters.CONTENTSHOW"/>
   </div>
@@ -15,7 +17,7 @@ export default {
   components: { NavBar, Footer },
   mixins: [MutagenMixin],
   mounted() {
-    this.showApp();
+    setTimeout(() => this.showApp(), 500);
     this.web3Detect();
     this.goWachAddress();
   },
@@ -65,5 +67,21 @@ a:hover {
 
 .container {
   margin-bottom: 3%;
+}
+
+.smoke-right {
+  position: absolute;
+  right: 0;
+  z-index: -1;
+}
+.smoke-left {
+  position: absolute;
+  // left: auto;
+  z-index: -1;
+}
+@media screen and (max-width: 1024px) {
+  .smoke-left, .smoke-right {
+    display: none;
+  }
 }
 </style>

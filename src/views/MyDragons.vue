@@ -1,7 +1,7 @@
 <template>
   <div class="container broader pt-5">
-    <div class="row align-items-start">
-      <Card class="col-sm"
+    <div class="row justify-content-sm-center">
+      <Card class="col-md-3 pl-auto"
             v-for="el of cards"
             :key="el.id"
             :paramPath="'/dragon/' + el.id"

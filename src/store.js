@@ -121,6 +121,11 @@ export default new Vuex.Store({
       let fightPlace = new FightPlace(getters.WEB3);
       let price = await fightPlace.priceToAdd();
       fightPlace.addToFightPlace(tokenId, price);
+    },
+    async fightWithDragon({ getters }, { youId, oponentId }) {
+      let fightPlace = new FightPlace(getters.WEB3);
+      let price = await fightPlace.priceToFight();
+      fightPlace.fightWithDragon(youId, oponentId, price);
     }
   },
   getters: {

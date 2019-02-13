@@ -96,7 +96,7 @@ export default class {
         if (dragons[index]) {
           data.push({
             id: dragons[index].toString(),
-            stage: dragons[index + 1].toString(),
+            stage: +dragons[index + 1],
             owner: this.web3.toHex(dragons[index + 2]),
             price: dragons[index + 3].toString()
           });

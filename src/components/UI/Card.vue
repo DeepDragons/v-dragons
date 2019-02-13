@@ -54,11 +54,6 @@ export default {
   cursor: pointer;
 }
 
-.flip div img.s-myeggs__eggpic {
-  -webkit-transform: scaleX(-1);
-  transform: scaleX(-1);
-}
-
 .s-myeggs__eggpic {
   position: relative;
   top: 21px;

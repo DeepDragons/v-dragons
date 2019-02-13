@@ -2,9 +2,9 @@ import Chart from 'chart.js'
 
 var options = {
   text: 'dragon fighting genes',
+  position: 'left',
   legend: {
-    display: true,
-    
+    display: true,    
     labels: {
         fontColor: '#f261ee'
     }
@@ -36,6 +36,15 @@ export default {
       combatChart = new Chart(ctx, {
         type: 'radar',
         data: combatData,
+        options
+      });
+
+      return combatChart;
+    },
+    createTowCharts(ctx, data, options=options) {
+      let combatChart = new Chart(ctx, {
+        type: 'radar',
+        data: data,
         options
       });
 

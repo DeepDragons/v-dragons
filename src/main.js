@@ -6,6 +6,10 @@ import store from './store'
 import Paginate from 'vuejs-paginate'
 import { Modal } from 'bootstrap-vue/es/components';
 
+import VueGlide from 'vue-glide-js/dist/vue-glide.css'
+
+Vue.use(VueGlide)
+
 Vue.component('paginate', Paginate)
 Vue.use(Modal);
 Vue.config.productionTip = false

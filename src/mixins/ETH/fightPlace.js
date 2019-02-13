@@ -62,26 +62,33 @@ export default class {
     return fallback(data);
   }
 
-  // changePrices(_priceToFight, _priceToAdd) {
-  //   /**
-  //    * @param _priceToFight: uint256;
-  //    * @param _priceToAdd: uint256;
-  //    * @type nonpayable;
-  //    */
-  // }
+  fightWithDragon(_yourDragonID, _thisDragonID, price) {
+    /**
+     * @param _yourDragonID: uint256;
+     * @param _thisDragonID: uint256;
+     * @type: payable;
+     */
 
-  // fightWithDragon(_yourDragonID, _thisDragonID) {
-  //   /**
-  //    * @param _yourDragonID: uint256;
-  //    * @param _thisDragonID: uint256;
-  //    * @type: payable;
-  //    */
-  // }
+    let code = this.fightPlace.fightWithDragon.getData(
+      _yourDragonID, _thisDragonID
+    );
+    let data = {
+      value: price,
+      to: this.address,
+      data: code
+    };
+    return fallback(data);
+  }
 
-  // priceToFight() {
-  //   /**
-  //    * @type view;
-  //    * @return uint256;
-  //    */
-  // }
+  priceToFight = () => new Promise((resolve, reject) => {
+    /**
+     * @type view;
+     * @return uint256;
+     */
+
+    this.fightPlace.priceToFight.call((err, amount) => {
+      if (err) return reject(err);
+      return resolve(amount.toString());
+    });
+  });
 }

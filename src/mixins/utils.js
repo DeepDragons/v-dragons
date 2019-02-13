@@ -36,6 +36,7 @@ export default {
       return this.stages[_stage];
     },
     getUrl(_stage, _dragonId) {
+      if (!_stage) return null; 
       let stage = this.getStage(_stage);
       return `${this.cloud}${stage}_${_dragonId}.png`;
     },
@@ -46,7 +47,8 @@ export default {
           id: el.id,
           url: this.getUrl(el.stage, el.id),
           price: el.price,
-          owner: el.owner
+          owner: el.owner,
+          stage: el.stage
         };
       });
     },

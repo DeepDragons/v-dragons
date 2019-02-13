@@ -25,6 +25,12 @@
                 @click="buyFromMarket(values.tokenId)">
           BUY {{values.price | fromWei($store.getters.CURRENCY)}}
         </button>
+        <router-link v-if="!isEgg && values.currentAction == actions[1]"
+                     tag="a"
+                     class="btn btn-outline-danger"
+                     :to="'/battle/' + id">
+            FIGHT WITH
+        </router-link>
       </div>
     </div>
 

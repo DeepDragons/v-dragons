@@ -62,6 +62,10 @@ export default {
 }
 </script>
 
-<style>
-
+<style lang="scss">
+@media screen and (max-width: 1024px) {
+  footer {
+    margin-top: 20%;
+  }
+}
 </style>

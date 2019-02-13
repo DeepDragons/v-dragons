@@ -1,7 +1,7 @@
 <template>
   <div class="container pt-5">
-    <div class="row">
-      <Card class="col-sm col-md necropolis"
+    <div class="row justify-content-md-center">
+      <Card class="col-md-3 necropolis"
             v-for="el of cards"
             :key="el.id"
             :paramPath="el.id"

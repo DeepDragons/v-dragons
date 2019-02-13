@@ -20,7 +20,7 @@ export default {
       }
 
       count = count / this.perPage;
-      count = +count.toFixed();
+      count = Math.ceil(+count);
 
       return count;
     },

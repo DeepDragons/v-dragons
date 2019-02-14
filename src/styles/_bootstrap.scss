@@ -56,7 +56,9 @@ ul.pagination {
     padding: .5rem .90rem;
     border: 1px solid $lightviolet;
     border-radius: 100%;
+    text-decoration: none;
     line-height: 1.25;
+    color: $lightviolet;
   }
   .active {
     a {
@@ -66,11 +68,6 @@ ul.pagination {
   }
   li {
     margin: 0 0.2%;
-  }
-  a:not(a.active):hover {
-    background-color: $violet;
-    text-decoration: none;
-    outline:none;
   }
 }
 

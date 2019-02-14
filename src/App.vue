@@ -55,16 +55,16 @@ export default {
 <style lang="scss">
 @import "./styles/bootstrap";
 
-a {
-  cursor: pointer;
-  text-decoration: none;
-  color: $lightviolet;
-}
-a:hover {
-  color: $pink;
-  text-decoration: none;
-  text-shadow: 0 0 11px $lightping;
-}
+// a {
+//   cursor: pointer;
+//   text-decoration: none;
+//   color: $lightviolet;
+// }
+// a:hover {
+//   color: $pink;
+//   text-decoration: none;
+//   text-shadow: 0 0 11px $lightping;
+// }
 
 * { outline:none; }
 

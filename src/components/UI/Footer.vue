@@ -51,7 +51,7 @@
 
     </div>
 
-    <div class="footer-copyright text-center py-3 text-warning">© 2018 Copyright: Dragon{{$store.getters.CURRENCY}}.com</div>
+    <div class="footer-copyright text-center py-3 text-lightgray">© Dragon{{$store.getters.CURRENCY}} 2018</div>
 
   </footer>
 </template>
@@ -63,9 +63,22 @@ export default {
 </script>
 
 <style lang="scss">
+@import "../../styles/colors";
+
 @media screen and (max-width: 1024px) {
   footer {
     margin-top: 20%;
   }
+}
+.links-item {
+  color: $white;
+  font-family: 'Open Sans',sans-serif;
+  text-decoration: none;
+}
+
+.links-item:hover {
+    color: $pink;
+    text-decoration: underline;
+    text-shadow: 0 0 11px $lightping;
 }
 </style>

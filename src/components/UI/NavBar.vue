@@ -2,7 +2,11 @@
   <nav class="navbar navbar-expand-lg navbar-violet bg-violet">
     <div class="collapse navbar-collapse row navbar-nav mt-2 mt-lg-0">
       
-      <a class="navbar-brand col-sm" href="/">Dragon{{$store.getters.CURRENCY}}</a>
+      <a class="navbar-brand col-xs logo_text ml-5"
+         href="https://dragoneth.com/">
+        <img src="/img/logo_img.png" height="50">
+        Dragon {{$store.getters.CURRENCY}}
+      </a>
       <div class="col-lg"></div>
 
       <router-link tag="button"
@@ -56,5 +60,17 @@ export default {
     padding-left: 44px;
     background-image: url('/img/icons.svg');
     background-repeat: no-repeat;
+}
+.logo_text {
+    position: relative;
+    display: inline-block;
+    font-size: 20px;
+    line-height: 24px;
+    font-weight: 700;
+}
+.logo_text {
+    background: linear-gradient(to right,#BBB 0%,#D0D0D0 12%,#DDD 33%,#FFF 52%,#BBB 63%,#797979 78%,#CECECE 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 </style>

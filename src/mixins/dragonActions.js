@@ -80,6 +80,9 @@ export default {
         type: 'buyFromMarket',
         tokenId: id
       });
+    },
+    wakeUp() {
+      this.$store.dispatch('wakeUp');
     }
   }
 }

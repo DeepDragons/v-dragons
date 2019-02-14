@@ -1,54 +1,69 @@
 import Chart from 'chart.js'
 
-var options = {
-  text: 'dragon fighting genes',
-  position: 'left',
+var defaultOptions = {
   legend: {
-    display: true,    
-    labels: {
-        fontColor: '#f261ee'
+    display: true
+  },
+  scale:{
+    pointLabels:{
+       fontColor:"#d528d0",
     }
   }
 };
 
 
 export default {
-  methods: {
-    createCombatChart(ctx, values) {
-      let combatChart;
-      let combatData = {
+  data() {
+    return {
+      attacName: 'A',
+      defName: 'D',
+      radarChartData: {
         labels: [],
-        datasets: [
-            {
-              label: 'dragon combat gens',
-              borderColor: '#7568B0',
-              pointHoverBackgroundColor: '#f261ee',
-              data: [],
-              borderWidth: 1
-            }
-        ]
-      };
+        datasets: []
+      }
+    }
+  },
+  computed: {
+    combatGensLabels() {
+      let amountAttackGens = 14;
+      let amountAllGens = 30;
+      let array = [];
 
-      values.forEach((item, index) => {
-        combatData.labels.push(index);
-        combatData.datasets[0].data.push(item);
-      });
-      combatChart = new Chart(ctx, {
+      for (let index = 0; index < amountAllGens; index++) {
+        if (index <= amountAttackGens) {
+          array.push(`${this.attacName} ${index}`);
+        } else {
+          array.push(`${this.defName} ${index}`);
+        }
+      }
+
+      return array;
+    }
+  },
+  mounted() {
+    this.radarChartData.labels = this.combatGensLabels;
+  },
+  methods: {
+    generateCharts(ctx, options=defaultOptions) {
+      let combatChart = new Chart(ctx, {
         type: 'radar',
-        data: combatData,
+        data: this.radarChartData,
         options
       });
 
       return combatChart;
     },
-    createTowCharts(ctx, data, options=options) {
-      let combatChart = new Chart(ctx, {
-        type: 'radar',
-        data: data,
-        options
-      });
+    parseGens(id, gensArray, label, borderColor,
+                    pointHoverBackgroundColor, borderWidth=2) {
+      let dataset = {
+        label: `${label} #${id}`,
+        borderColor: borderColor,
+        pointHoverBackgroundColor: pointHoverBackgroundColor,
+        data: gensArray,
+        borderWidth: borderWidth
+      };
 
-      return combatChart;
+      return dataset;
     }
   }
 };

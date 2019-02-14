@@ -194,5 +194,33 @@
 		"payable": false,
 		"stateMutability": "nonpayable",
 		"type": "function"
+    },
+    {
+		"constant": true,
+		"inputs": [],
+		"name": "priceDecraseTime2Action",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+    },
+    {
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_dragonID",
+				"type": "uint256"
+			}
+		],
+		"name": "decraseTimeToAction",
+		"outputs": [],
+		"payable": true,
+		"stateMutability": "payable",
+		"type": "function"
 	}
 ]

@@ -42,16 +42,17 @@ export default {
           fightsGenes: this.genParse(dragonInfo[3], 62),
           currentAction: this.actions[dragonInfo[2]],
           stage: dragonInfo[1].toString(),
-          nextBlock2Action: dragonInfo[4].toString()
+          nextBlock2Action: +dragonInfo[4]
         }
       };
     },
     async getAllTheTokenData(_DragonId) {
       let dragonData;
+      let { currentBlockNUmber } = this.$store.getters.METAMASK;
       let payload = this.$store.getters.DRAGON;
 
       try {
-        dragonData = await this.dragonInfo(_DragonId);
+        dragonData = await this.dragonInfo(_DragonId); 
       } catch (err) {
         window.location.reload();
         return null;
@@ -64,6 +65,10 @@ export default {
       payload.gensFight = dragonData.gens.fightsGenes;
       payload.addressOwner = dragonData.owner;
       payload.dragonName = dragonData.dragonName;
+
+      if (currentBlockNUmber < payload.nextBlock2Action) {
+        payload.currentAction = this.actions[99];
+      }
 
       this.$store.commit('DRAGON', payload);
       this.isOwnerToken();

@@ -65,7 +65,6 @@ export function isNet({ commit, state }, { web3 }) {
   }, 500);
 }
 
-
 export function fallback(_data) {
   /**
    * @param _data: transaction object;
@@ -77,4 +76,13 @@ export function fallback(_data) {
       return resolve(hash);
     });
   });
+}
+
+export function getBlockNumber(web3) {
+ return new Promise((resolve, reject) => {
+    web3.eth.getBlockNumber((err, blockNumber) => {
+      if (err) return reject(err);
+      resolve(blockNumber);
+    });
+ }); 
 }

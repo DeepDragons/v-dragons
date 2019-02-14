@@ -25,6 +25,11 @@
                 @click="buyFromMarket(values.tokenId)">
           BUY {{values.price | fromWei($store.getters.CURRENCY)}}
         </button>
+        <button v-if="values.currentAction == actions[99]"
+                v-btn
+                @click="wakeUp">
+          WAKE UP
+        </button>
         <router-link v-if="!isEgg && values.currentAction == actions[1]"
                      tag="a"
                      class="btn btn-outline-danger"

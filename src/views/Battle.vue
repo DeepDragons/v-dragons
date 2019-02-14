@@ -29,7 +29,7 @@
                          :key="el.id">
           <Card :hover="hover"
                 :url="el.url"
-                @click.native="dragonGens(el.id, 'gens')">
+                @click.native="dragonGens(el.id)">
             <h3 class="text-lightviolet">#{{el.id}}</h3>
           </card>
         </vue-glide-slide>
@@ -60,10 +60,10 @@ export default {
   data() {
     return {
       storeKey: 'MYDRAGON',
-      slideAmount: 5,
       peek: 200,
       hover: 'red',
-      dragonId: false
+      dragonId: false,
+      canvosId: 'gens'
     }
   },
   computed: {
@@ -80,49 +80,77 @@ export default {
     cards() {
       let tokensOwner = this.sortElements();
       return tokensOwner.filter(el => el.stage > 1);
+    },
+    slideAmount() {
+      let slideAmount;
+      let numberOfDiv;
+      let screenWidth = window.screen.width;
+
+      if (screenWidth > 1024) {
+        numberOfDiv = 350;
+      } else {
+        numberOfDiv = 900;
+      }
+      
+      slideAmount = screenWidth / numberOfDiv;
+      return +slideAmount.toFixed() || 1;
     }
   },
-  mounted() { },
+  mounted() {
+    this.preStart();
+  },
   methods: {
-    async dragonGens(_DragonId, canvosId) {
+    async dragonGens(_DragonId) {
       this.loaderShow();
       this.dragonId = _DragonId;
-      let opponentGens = await this.dragonInfo(this.id);
-      let selectDragonGens = await this.dragonInfo(_DragonId);
-      let length = opponentGens.gens.fightsGenes.length;
-      let ctx = window.document.getElementById(canvosId);
-      let combatData = {
-        labels: [],
-        datasets: [
-            {
-              label: 'opponent gens #' + this.id,
-              borderColor: '#dc3545',
-              pointHoverBackgroundColor: '#dc3545',
-              data: [],
-              borderWidth: 2
-            },
-            {
-              label: 'you gens #' + _DragonId,
-              borderColor: '#7568B0',
-              pointHoverBackgroundColor: '#f261ee',
-              data: [],
-              borderWidth: 2
-            }
-        ]
-      };
 
-      for (let index = 0; index < length; index++) {
-        combatData.labels.push(index);
-        combatData.datasets[0].data.push(
-          opponentGens.gens.fightsGenes[index]
+      let dataGensSet;
+
+      try {
+        dataGensSet = await this.fightsGenes(
+          this.dragonId, 'you gens', '#7568B0', '#7568B0'
         );
-        combatData.datasets[1].data.push(
-          selectDragonGens.gens.fightsGenes[index]
-        );
+      } catch(err) {
+        let fightPath = this.$router.options.routes[3].path;
+        this.$router.replace(fightPath);
       }
 
+      this.radarChartData.datasets[1] = dataGensSet;
+
       this.loaderHide();
-      this.createTowCharts(ctx, combatData);
+      this.printChart();
+    },
+    async fightsGenes(_DragonId, label, borderColor,
+                      pointHoverBackgroundColor) {
+      let dragonGens = await this.dragonInfo(_DragonId);
+
+      return this.parseGens(
+        _DragonId, dragonGens.gens.fightsGenes,
+        label, borderColor, pointHoverBackgroundColor
+      );
+    },
+    async preStart() {
+      this.loaderShow();
+
+      let dataGensSet;
+
+      try {
+        dataGensSet = await this.fightsGenes(
+          this.id, 'opponent gens', '#dc3545', '#dc3545'
+        );
+      } catch(err) {
+        let fightPath = this.$router.options.routes[3].path;
+        this.$router.replace(fightPath);
+      }
+
+      this.radarChartData.datasets[0] = dataGensSet;
+
+      this.loaderHide();
+      this.printChart();
+    },
+    printChart() {
+      let ctx = window.document.getElementById(this.canvosId);
+      this.generateCharts(ctx);
     },
     fight() {
       this.$store.dispatch({

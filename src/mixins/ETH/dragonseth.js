@@ -137,4 +137,26 @@ export default class {
     let data = { to: this.address, data: code };
     return fallback(data);
   }
+
+  priceDecraseTime2Action = () => new Promise((resolve, reject) => {
+    /**
+     * @return uint256;
+     */
+    this.dragonseth.priceDecraseTime2Action.call((err, amount) => {
+      if (err) return reject(err);
+      return resolve(amount);
+    });
+  });
+
+  decraseTimeToAction = (_dragonID, price) => {
+    let code = this.dragonseth.decraseTimeToAction.getData(
+      _dragonID
+    );
+    let data = {
+      to: this.address,
+      data: code,
+      value: price
+    };
+    return fallback(data);
+  }
 }

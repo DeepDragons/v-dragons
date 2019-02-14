@@ -42,6 +42,9 @@ export default {
         type: 'isNet',
         web3: this.$store.getters.WEB3
       });
+      this.$store.dispatch({
+        type: 'blockNumberUpdate'
+      });
     }
   }
 }

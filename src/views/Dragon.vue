@@ -64,9 +64,7 @@ export default {
   mixins: [Charts, DragonMixin, DefUtils, Table],
   filters: { fromWei },
   data() {
-    return {
-      keyStore: 'DRAGON'
-    }
+    return { keyStore: 'DRAGON' }
   },
   computed: {
     values() {
@@ -123,7 +121,14 @@ export default {
   methods: {
     paintChart(values) {
       let ctx = window.document.getElementById('combat');
-      this.createCombatChart(ctx, values);
+      let label = 'Combat gens';
+      let dataSet = this.parseGens(
+        this.id, values, label,
+        '#7568B0', '#f261ee'
+      );
+
+      this.radarChartData.datasets[0] = dataSet;      
+      this.generateCharts(ctx);
     },
     async preStart() {
       let data;
@@ -140,7 +145,7 @@ export default {
       this.stat.lab.items[0] = stats;
       this.tableShow = true;
       console.log(this.values);
-    } 
+    }
   }
 }
 </script>

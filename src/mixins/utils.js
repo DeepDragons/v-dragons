@@ -16,6 +16,7 @@ export default {
         4: 'breed auction',
         5: 'random breed',
         6: 'market place',
+        99: 'sleep',
         255: 'Necropolis'
       }
     }

@@ -2,7 +2,8 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 
 import {
-  isAddress, enable, isNet
+  isAddress, enable, isNet,
+  getBlockNumber
 } from './mixins/ETH/web3'
 import Crowdsale from './mixins/ETH/crowdsale'
 import MarketPlace from './mixins/ETH/marketPlace'
@@ -56,13 +57,25 @@ export default new Vuex.Store({
     contentShow: true,
     MetaMask: {
       netID: null,
+      currentBlockNUmber: null,
       currentAddress: '',
       msg: ''
     }
   },
   actions: {
     isAddress, enable, isNet,
-    buyEgg: ({ state, getters }) => {
+    async blockNumberUpdate({ getters, state }, { number }) {
+      let web3 = getters.WEB3;
+
+      if (number) {
+        state.MetaMask.currentBlockNUmber = number;
+      } else {
+        state.MetaMask.currentBlockNUmber = await getBlockNumber(web3);
+      }
+
+      return state.MetaMask.currentBlockNUmber;
+    },
+    buyEgg({ state, getters }) {
       let payload = state.buyForm;
       let crowdsale = new Crowdsale(getters.WEB3);
 
@@ -126,6 +139,24 @@ export default new Vuex.Store({
       let fightPlace = new FightPlace(getters.WEB3);
       let price = await fightPlace.priceToFight();
       fightPlace.fightWithDragon(youId, oponentId, price);
+    },
+    async wakeUp({ getters, state }) {
+      let { nextBlock2Action, tokenId } = getters.DRAGON;
+      let dragonseth = new Dragonseth(getters.WEB3);
+      let price = await dragonseth.priceDecraseTime2Action();
+      let currentBlockNUmber = await getBlockNumber(getters.WEB3);
+
+      state.MetaMask.currentBlockNUmber = currentBlockNUmber;
+
+      if (nextBlock2Action < currentBlockNUmber) return null;
+
+      price = price.mul(nextBlock2Action - currentBlockNUmber);
+      price = price.toString();
+    
+      let hash = await dragonseth.decraseTimeToAction(
+        tokenId, price
+      );
+      console.log(hash);
     }
   },
   getters: {

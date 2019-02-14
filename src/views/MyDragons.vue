@@ -40,12 +40,14 @@ export default {
     cards() {
       let tokensOwner = this.sortElements();
       return this.pageChanged(tokensOwner);
+    },
+    isNotDragons() {
+      return this.cards.length < 1;
     }
   },
   data() {
     return {
-      storeKey: 'MYDRAGON',
-      isNotDragons: null
+      storeKey: 'MYDRAGON'
     }
   },
   mounted() {
@@ -58,7 +60,6 @@ export default {
       await this.tokensOf();
       setTimeout(() => {
         this.loaderHide();
-        if (this.cards.length < 1)  this.isNotDragons = true;
       }, 500);
     }
   }

@@ -160,14 +160,13 @@ export default {
   right: 0;
   z-index: 99;
 }
-.none {
+.none  {
   animation: shadow 2s infinite alternate;
   cursor: default;
-  height: 400px;
-  width: 400px;
+  height: 400px !important;
+  width: 400px !important;
   img { margin: 4%; }
 }
-
 .fightplace {
   border: 2px solid $red;
   -webkit-box-shadow: 0px 0px 40px $red;

@@ -19,19 +19,19 @@ export default new Router({
     },
     {
       path: '/market',
-      name: 'Market Place',
+      name: 'Market',
       component: () => import('./views/MarketPlace')
     },
     {
-      path: '/fightingground',
-      name: 'Fighting Ground',
+      path: '/fighting',
+      name: 'Fighting',
       component: () => import('./views/FightingGround')
     },
-    {
-      path: '/cemetery',
-      name: 'Cemetery',
-      component: () => import('./views/Cemetery')
-    },
+    // {
+    //   path: '/cemetery',
+    //   name: 'Cemetery',
+    //   component: () => import('./views/Cemetery')
+    // },
     // ******** selected dragon ************ //
     {
       path: '/dragon/:id',

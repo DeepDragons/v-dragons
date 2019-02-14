@@ -39,10 +39,16 @@
         </template>
       </vue-glide>
 
+    <div class="container">
+      <None v-if="isNotDragons">
+        <p class="load">You need a dragon to join the fight!</p>
+      </None>
+    </div>
   </div>
 </template>
 
 <script>
+import None from '../components/UI/None'
 import { Glide, GlideSlide } from 'vue-glide-js'
 import Card from '../components/UI/Card'
 import DefUtils from '../mixins/utils'
@@ -55,7 +61,7 @@ export default {
   components: {
     'vue-glide': Glide,
     'vue-glide-slide': GlideSlide,
-    Card
+    Card, None
   },
   data() {
     return {
@@ -94,6 +100,13 @@ export default {
       
       slideAmount = screenWidth / numberOfDiv;
       return +slideAmount.toFixed() || 1;
+    },
+    isNotDragons() {
+      if (this.cards.length < 1) {
+        return true;
+      } else {
+        return false;
+      }
     }
   },
   mounted() {

@@ -48,7 +48,7 @@
       
       <div class="form-group col-lg">
         <input type="text"
-               class="form-control text-ightindigo w-100 p-2"
+               class="indigo text-ightindigo w-100 p-2"
                v-model="gift.giftAddress">
         <br>
         <small class="form-text text-muted">
@@ -76,7 +76,7 @@
 
       <div class="form-group col-lg">
         <input type="number"
-               class="form-control text-ightindigo w-100 p-2"
+               class="text-ightindigo w-100 p-2 indigo"
                v-model="sell.price">
         <br>
         <small class="form-text text-muted">
@@ -137,5 +137,10 @@ export default {
 </script>
 
 <style lang="scss">
+@import "../styles/colors";
 
+
+input.indigo {
+  border: 1px solid $lightviolet;
+}
 </style>

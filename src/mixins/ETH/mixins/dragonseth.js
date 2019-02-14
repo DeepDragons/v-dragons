@@ -58,6 +58,7 @@ export default {
         return null;
       }
 
+      currentBlockNUmber += 2;
       payload.tokenId = _DragonId;
       payload.stage = dragonData.gens.stage;
       payload.nextBlock2Action = dragonData.gens.nextBlock2Action;

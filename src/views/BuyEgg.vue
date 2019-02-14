@@ -67,7 +67,7 @@
 
         <div class="row">
           <div class="col"></div>
-          <button v-btn="'warning col-lg btn-buy'"
+          <button v-btn="'success col-lg btn-buy'"
                   @click="$store.dispatch('buyEgg')">
             BUY
           </button>
@@ -191,10 +191,6 @@ export default {
 div.eggglow {
   margin-top: 10%;
   margin-bottom: 30%;
-}
-input {
-  background-color: transparent;
-  border: 1px solid $shade-10;
 }
 button.btn-buy {
   min-width: 200px;

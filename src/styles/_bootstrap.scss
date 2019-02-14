@@ -60,10 +60,16 @@ ul.pagination {
     line-height: 1.25;
     color: $lightviolet;
   }
+  a:hover {
+    border: 1px solid $lightviolet;
+    background-color: $indigo;
+    color: $violet;
+  }
   .active {
     a {
-      color: #000000;
-      background-color: $lightviolet;
+      color: $white;
+      background-color: $violet;
+      border: 1px solid $cyan;
     }
   }
   li {
@@ -82,3 +88,8 @@ ul.pagination {
   box-shadow: inset 0px 0px 40px $red;
 }
 // cards hover // 
+
+input {
+  background-color: transparent;
+  border: 1px solid $shade-10;
+}

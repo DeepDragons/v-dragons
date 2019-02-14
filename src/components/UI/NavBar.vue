@@ -9,7 +9,7 @@
       </a>
       <div class="col-lg"></div>
 
-      <router-link tag="button"
+      <router-link tag="a"
                    class="btn btn-outline-warning"
                    v-for="link of routers"
                    :key="link.name"

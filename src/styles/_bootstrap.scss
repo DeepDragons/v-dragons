@@ -25,7 +25,7 @@
 
 @import "../../node_modules/bootstrap-scss/navbar";
 
-@import "../../node_modules/bootstrap-scss/card";
+// @import "../../node_modules/bootstrap-scss/card";
 // @import "../../node_modules/bootstrap-scss/breadcrumb";
 // @import "../../node_modules/bootstrap-scss/pagination";
 // @import "../../node_modules/bootstrap-scss/badge";
@@ -78,13 +78,13 @@ ul.pagination {
 }
 
 // cards hover // 
-.default:hover {
+.v-hover:hover {
   box-shadow: inset 0px 0px 40px $lightviolet;
 }
-.pinck:hover {
+.v-pinck:hover {
   box-shadow: inset 0px 0px 40px $lightping;
 }
-.red:hover {
+.v-red:hover {
   box-shadow: inset 0px 0px 40px $red;
 }
 // cards hover // 

@@ -1,8 +1,8 @@
 <template>
   <div>
     <div class="row justify-content-md-center m-auto">
-      <img height="600" :src="urlOpponent" class="col-xs-auto">
-      <div class="col-lg-auto btn-group">
+      <img height="600" :src="urlOpponent" class="col-auto col-xs-auto">
+      <div class="col-auto col-xs-auto btn-group">
         <button v-if="urlMe"
                 @click="fight"
                 type="button"
@@ -11,7 +11,7 @@
           <span class="b-menu__item-name"></span>
         </button>
       </div>
-      <img v-if="urlMe" height="600" :src="urlMe" class="col-md-auto flip">
+      <img v-if="urlMe" height="600" :src="urlMe" class="col-auto col-xs-auto flip">
     </div>
 
     <div class="row justify-content-md-center m-auto">
@@ -24,10 +24,11 @@
                  :perView="slideAmount"
                  :rewind="true"
                  :keyboard="true"
-                 :peek="peek">
+                 :peek="peek"
+                 class="glide">
         <vue-glide-slide v-for="el of cards"
                          :key="el.id">
-          <Card :hover="hover"
+          <Card :classContent="hover"
                 :url="el.url"
                 @click.native="dragonGens(el.id)">
             <h3 class="text-lightviolet">#{{el.id}}</h3>
@@ -67,7 +68,7 @@ export default {
     return {
       storeKey: 'MYDRAGON',
       peek: 200,
-      hover: 'red',
+      hover: 'v-red',
       dragonId: false,
       canvosId: 'gens'
     }
@@ -241,4 +242,5 @@ img[data-glide-dir="<"] {
     transition: .3s ease;
     transform: scale(1.5, 1.5);
 }
+
 </style>

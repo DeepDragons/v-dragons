@@ -1,7 +1,7 @@
 <template>
-  <div class="row p-5 text-center">
+  <div class="row text-center">
     <div class="col-sm jumbotron text-ightindigo p-5 mt-5">
-      <h1>{{title}}</h1>
+      <h1 class="">{{title}}</h1>
       <hr class="my-4 bg-lightviolet">
       
       <slot/>

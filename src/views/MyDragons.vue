@@ -1,13 +1,14 @@
 <template>
   <div class="container broader pt-5">
     <div class="row justify-content-md-center m-auto">
-      <Card class="col col-xl-3 p-auto"
-            v-for="el of cards"
-            :key="el.id"
-            :paramPath="'/dragon/' + el.id"
-            :url="el.url">
+      <Card class="col-xs-3 col mx-auto"
+               v-for="el of cards"
+               :classContent="'v-hover'"
+               :key="el.id"
+               :paramPath="'/dragon/' + el.id"
+               :url="el.url">
         <h3 class="text-lightviolet">#{{el.id}}</h3>
-      </card>
+      </Card>
     </div>
 
     <paginate v-if="isShow"
@@ -25,7 +26,6 @@
 
 <script>
 import Card from '../components/UI/Card'
-// import newCard from '../components/UI/newCard'
 import None from '../components/UI/None'
 import Paginate from '../mixins/paginate'
 import DefUtils from '../mixins/utils'

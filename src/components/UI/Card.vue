@@ -1,27 +1,35 @@
 <template>
-  <div class="s-myeggs__item">
-    <div class="s-myeggs__circle bg-violet"
-         @click="goTo"
-         :class="[hover]">
-    <img :src="url"
-         onerror="this.onerror=null; this.src='https://res.cloudinary.com/dragonseth/image/upload/sub.png'"
-         class="s-myeggs__eggpic">
+  <div class="card">
+    <div class="card-content bg-violet"
+         :class="[classContent]"
+         @click="goTo">
+      <img :src="url"
+          class="card-img-top"
+          :height="imgHeight"
+          :width="imgWidth"
+          onerror="this.onerror=null; this.src='https://res.cloudinary.com/dragonseth/image/upload/sub.png'">
     </div>
-
-    <div class="card-body">
-      <slot></slot>
+    <div class="card-body text-center p-2">
+      <slot/>
     </div>
   </div>
 </template>
 
 <script>
-
 export default {
   name: 'Card',
   props: {
-    hover: {
+    classContent: {
       type: String,
-      default: 'default'
+      default: ''
+    },
+    imgHeight: {
+      type: Number,
+      default: 250
+    },
+    imgWidth: {
+      type: Number,
+      default: 250
     },
     url: String,
     paramPath: String
@@ -39,40 +47,29 @@ export default {
 </script>
 
 <style lang="scss">
-
-.s-myeggs__item {
-  margin: 10px;
+.card {
   flex-direction: column;
 }
-.s-myeggs__circle {
-  width: 250px;
-  height: 250px;
-  // border: 3px solid #382435;
+
+.card-content {
   border-radius: 100%;
+  -moz-border-radius: 100%;
+  -webkit-border-radius: 100%;
+  -khtml-border-radius: 100%;
   position: relative;
   transition: 0.5s;
   cursor: pointer;
+  width: 250px;
+  height: 250px;
 }
 
-.s-myeggs__eggpic {
-  position: relative;
-  top: 21px;
-  left: 22px;
+.card-img-top {
   z-index: 2;
 }
-.s-myeggs__eggpic img {
-  z-index: 2;
-  position: relative;
-}
-img.s-myeggs__eggpic { width: 82%; }
 
 div.card-body {
-  text-align: center;
   width: 250px;
   height: 120px;
-
-  h1 {
-    color: #382435;
-  }
 }
+
 </style>

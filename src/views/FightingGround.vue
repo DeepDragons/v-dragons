@@ -1,10 +1,10 @@
 <template>
   <div class="container pt-5">
-    <div class="row justify-content-md-center">
-      <Card class="col col-xl-3 p-auto"
+    <div class="row justify-content-md-center m-auto">
+      <Card class="col-xs-3 col mx-auto"
             v-for="el of cards"
             :key="el.id"
-            :hover="hover"
+            :classContent="hover"
             :paramPath="'/dragon/' + el.id"
             :url="el.url">
         <h3 class="text-lightviolet">#{{el.id}}</h3>
@@ -41,7 +41,7 @@ export default {
   data() {
     return {
       storeKey: 'FIGHTINGGROUND',
-      hover: 'red'
+      hover: 'v-red'
     }
   },
   computed: {

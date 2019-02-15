@@ -49,12 +49,21 @@ export default {
     },
     async getAllTheTokenData(_DragonId) {
       let dragonData;
-      let currentBlockNUmber;
-      let web3 = this.$store.getters.WEB3;
+      let { currentBlockNUmber } = this.$store.getters.METAMASK;
       let payload = this.$store.getters.DRAGON;
 
       try {
-        currentBlockNUmber = await getBlockNumber(web3);
+        if (!currentBlockNUmber) {
+          let web3 = this.$store.getters.WEB3;
+
+          currentBlockNUmber = await getBlockNumber(web3);
+          
+          this.$store.dispatch({
+            type: 'blockNumberUpdate',
+            number: currentBlockNUmber
+          });
+        }
+        
         dragonData = await this.dragonInfo(_DragonId);
       } catch (err) {
         window.location.reload();

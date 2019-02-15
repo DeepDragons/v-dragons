@@ -1,10 +1,10 @@
 
-@media screen and (max-width: 989px) {
-  .col {
-    margin-left: 25%;
+@media screen and (max-width: 1024px) {
+  div.eggglow {
+    margin-left: 20%;
   }
   footer {
-    margin-top: 20%;
+    margin-top: 30%;
   }
   .socials {
     filter: grayscale(0);
@@ -13,5 +13,11 @@
 @media screen and (min-width: 992px) {
   .navbar-brand {
     padding: 0 5%;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .glide {
+    display: none;
   }
 }

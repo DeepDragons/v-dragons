@@ -1,8 +1,8 @@
 <template>
   <div class="container pt-5 px-lg-12">
-    <div class="row">
+    <div class="row justify-content-md-center m-auto">
 
-      <div class="col col-md eggglow">
+      <div class="col eggglow">
         <div class="glow">
           <img src="/img/buy-egg-q.png"
                class="rounded float-left">   

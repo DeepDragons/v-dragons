@@ -22,13 +22,23 @@
       <div class="row">
         <button v-if="!values.isOwner && values.price"
                 v-btn
-                @click="buyFromMarket(values.tokenId)">
+                @click="buyFromMarket">
           BUY {{values.price | fromWei($store.getters.CURRENCY)}}
         </button>
-        <button v-if="values.currentAction == actions[99]"
-                v-btn
+        <button v-if="values.isOwner && values.currentAction == actions[99]"
+                v-btn="warning"
                 @click="wakeUp">
           WAKE UP
+        </button>
+        <button v-if="values.isOwner && values.currentAction == actions[1]"
+                v-btn="warning"
+                @click="returnFight">
+          RETURN
+        </button>
+        <button v-if="values.isOwner && values.currentAction == actions[6]"
+                v-btn="warning"
+                @click="returnMarket">
+          RETURN
         </button>
         <router-link v-if="!isEgg && values.currentAction == actions[1]"
                      tag="a"
@@ -121,6 +131,11 @@ export default {
   directives: { btn },
   filters: { fromWei },
   props: { keyStore: String },
+  data() {
+    return {
+      warning: 'warning'
+    }
+  },
   computed: {
     values() {
       return this.$store.getters[this.keyStore];

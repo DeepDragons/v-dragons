@@ -72,5 +72,19 @@
     "payable": false,
     "stateMutability": "view",
     "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+        {
+            "name": "_dragonID",
+            "type": "uint256"
+        }
+    ],
+    "name": "delFromFightPlace",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
   }
 ]

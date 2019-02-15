@@ -118,4 +118,18 @@ export default class {
       return resolve(ownerAddress);
     });
   });
+
+  delFromFixMarketPlace(_dragonID) {
+    /**
+     * @param _dragonID: uint256;
+     */
+    let code = this.marketPlace.delFromFixMarketPlace.getData(
+      _dragonID
+    );
+    let data = {
+      to: this.address,
+      data: code
+    };
+    return fallback(data);
+  }
 }

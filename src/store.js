@@ -106,15 +106,15 @@ export default new Vuex.Store({
       let hash = await dragonseth.addDragonName(tokenId, name);
       console.log(hash);
     },
-    async birth({ state, getters }, { tokenId }) {
+    async birth({ state, getters, commit }, { tokenId }) {
       let payload = state.dragon;
       let dragonseth = new Dragonseth(getters.WEB3);
       let hash = await dragonseth.birthDragon(tokenId);
       console.log(hash);
       payload.stage = 2;
-      this.$store.commit('DRAGON', payload);
+      commit('DRAGON', payload);
     },
-    async transfer({ state, getters }, { to, tokenId }) {
+    async transfer({ state, getters, commit }, { to, tokenId }) {
       let payload = state.dragon;
       let { currentAddress } = state.MetaMask;
       let dragonseth = new Dragonseth(getters.WEB3);
@@ -123,7 +123,7 @@ export default new Vuex.Store({
       );
       console.log(hash);
       payload.addressOwner = to;
-      this.$store.commit('DRAGON', payload); 
+      commit('DRAGON', payload); 
     },
     async killDragon({ getters }, { tokenId }) {
       let dragonseth = new Dragonseth(getters.WEB3);
@@ -158,6 +158,22 @@ export default new Vuex.Store({
       let hash = await dragonseth.decraseTimeToAction(
         tokenId, price
       );
+      console.log(hash);
+    },
+    async delFromFightPlace({ getters, commit }) {
+      let dragon = getters.DRAGON;
+      let fightPlace = new FightPlace(getters.WEB3);
+      let hash = await fightPlace.delFromFightPlace(dragon.tokenId);
+      dragon.currentAction = 'free';
+      commit('DRAGON', dragon);
+      console.log(hash);
+    },
+    async delFromFixMarketPlace({ getters, commit }) {
+      let dragon = getters.DRAGON;
+      let marketPlace = new MarketPlace(getters.WEB3);
+      let hash = await marketPlace.delFromFixMarketPlace(dragon.tokenId);
+      dragon.currentAction = 'free';
+      commit('DRAGON', dragon);
       console.log(hash);
     }
   },

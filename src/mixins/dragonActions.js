@@ -75,14 +75,20 @@ export default {
         tokenId: this.id
       });
     },
-    buyFromMarket(id) {
+    buyFromMarket() {
       this.$store.dispatch({
         type: 'buyFromMarket',
-        tokenId: id
+        tokenId: this.id
       });
     },
     wakeUp() {
       this.$store.dispatch('wakeUp');
+    },
+    returnFight() {
+      this.$store.dispatch('delFromFightPlace');
+    },
+    returnMarket() {
+      this.$store.dispatch('delFromFixMarketPlace');
     }
   }
 }

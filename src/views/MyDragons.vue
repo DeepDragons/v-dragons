@@ -1,7 +1,7 @@
 <template>
   <div class="container broader pt-5">
     <div class="row justify-content-md-center m-auto">
-      <Card class="col-xs-3 col mx-auto"
+      <Card class="col-auto col-xl-auto p-auto"
                v-for="el of cards"
                :classContent="'v-hover'"
                :key="el.id"

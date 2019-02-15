@@ -139,5 +139,19 @@
         "payable": false,
         "stateMutability": "view",
         "type": "function"
+    },
+    {
+        "constant": false,
+        "inputs": [
+            {
+                "name": "_dragonID",
+                "type": "uint256"
+            }
+        ],
+        "name": "delFromFixMarketPlace",
+        "outputs": [],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
     }
 ]

@@ -34,11 +34,19 @@ export default class {
     });
   });
 
-  // delFromFightPlace(_dragonID) {
-  //   /**
-  //    * @param _dragonID: uint256;
-  //    */
-  // }
+  delFromFightPlace(_dragonID) {
+    /**
+     * @param _dragonID: uint256;
+     */
+    let code = this.fightPlace.delFromFightPlace.getData(
+      _dragonID
+    );
+    let data = {
+      to: this.address,
+      data: code
+    };
+    return fallback(data);
+  }
 
   // getAddressDragons(_owner) {
   //   /**

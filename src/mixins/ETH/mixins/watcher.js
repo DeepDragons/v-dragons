@@ -1,4 +1,6 @@
+/* eslint-disable */
 import DragonMixin from './dragonseth'
+import FightPlace from '../fightPlace'
 import MarketPlaceMixin from './marketPlace'
 import Mutagen from '../mutagen'
 import CODE from '../code'
@@ -32,6 +34,11 @@ export default {
           this.isOwnerToken();
         }
       });
+    },
+    eventsRun() {
+      let web3 = new Web3(ethereum);
+      let fightPlace = new FightPlace(web3);
+      fightPlace.events.watch(console.log);
     }
   }
 }

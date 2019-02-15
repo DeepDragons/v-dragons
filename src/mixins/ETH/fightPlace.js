@@ -4,13 +4,20 @@ import { fallback } from './web3'
 
 var addreses = window.contracts;
 
-
+/*
+events:
+  0x4: battle;
+*/
 export default class {
 
   constructor(web3, address=addreses.fightPlace, abi=ABI) {
     this.address = address;
     this.web3 = web3;
     this.fightPlace = this.web3.eth.contract(abi).at(this.address);
+    this.events = this.fightPlace.allEvents(
+      { event: 'AddDragonFP' },
+      { toBlock: 'latest' }
+    );
   }
 
   getAllDragonsFight = () => new Promise((resolve, reject) => {

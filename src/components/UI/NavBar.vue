@@ -2,7 +2,7 @@
   <nav class="navbar navbar-expand-lg navbar-violet bg-violet">
     <div class="collapse navbar-collapse row navbar-nav mt-2 mt-lg-0">
       
-      <a class="navbar-brand col-xs logo_text ml-5"
+      <a class="navbar-brand col-xs logo_text"
          href="https://dragoneth.com/">
         <img src="/img/logo_img.png" height="50">
         Dragon {{$store.getters.CURRENCY}}

@@ -192,24 +192,24 @@ export default {
   to {text-shadow: 0 0 40px 10px $lightping }
 }
 
-@media screen and (max-width: 991px) {
-  div.selected .none {
-      height: 200px;
-      width: 200px;
-      margin: 35%;
-      img { margin: -3%; }
-  }
-}
-@media screen and (max-width: 414px) {
-  div.selected .none {
-      margin: 20%;
-      img { margin: -3%; }
-  }
-}
-@media screen and (max-width: 980px) {
-  #combat {
-    position: relative;
-    left: 0;
-  }
-}
+// @media screen and (max-width: 991px) {
+//   div.selected .none {
+//       height: 200px;
+//       width: 200px;
+//       margin: 35%;
+//       img { margin: -3%; }
+//   }
+// }
+// @media screen and (max-width: 414px) {
+//   div.selected .none {
+//       margin: 20%;
+//       img { margin: -3%; }
+//   }
+// }
+// @media screen and (max-width: 980px) {
+//   #combat {
+//     position: relative;
+//     left: 0;
+//   }
+// }
 </style>

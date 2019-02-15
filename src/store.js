@@ -148,7 +148,9 @@ export default new Vuex.Store({
 
       state.MetaMask.currentBlockNUmber = currentBlockNUmber;
 
-      if (nextBlock2Action < currentBlockNUmber) return null;
+      if (nextBlock2Action < currentBlockNUmber) {
+        throw new Error('nexBN < currentBN');
+      }
 
       price = price.mul(nextBlock2Action - currentBlockNUmber);
       price = price.toString();

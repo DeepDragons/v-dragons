@@ -1,7 +1,7 @@
 <template>
   <div class="container broader pt-5">
-    <div class="row justify-content-sm-center">
-      <Card class="col-md-3 pl-auto"
+    <div class="row justify-content-md-center m-auto">
+      <Card class="col col-xl-3 p-auto"
             v-for="el of cards"
             :key="el.id"
             :paramPath="'/dragon/' + el.id"
@@ -25,6 +25,7 @@
 
 <script>
 import Card from '../components/UI/Card'
+// import newCard from '../components/UI/newCard'
 import None from '../components/UI/None'
 import Paginate from '../mixins/paginate'
 import DefUtils from '../mixins/utils'

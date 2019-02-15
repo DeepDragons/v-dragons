@@ -2,6 +2,7 @@ import Dragonseth from '../dragonseth'
 import MarketPlaceMixin from './marketPlace'
 import Stat from '../stat'
 import DefUtils from '../../utils'
+import { getBlockNumber } from '../web3'
 
 
 export default {
@@ -48,11 +49,13 @@ export default {
     },
     async getAllTheTokenData(_DragonId) {
       let dragonData;
-      let { currentBlockNUmber } = this.$store.getters.METAMASK;
+      let currentBlockNUmber;
+      let web3 = this.$store.getters.WEB3;
       let payload = this.$store.getters.DRAGON;
 
       try {
-        dragonData = await this.dragonInfo(_DragonId); 
+        currentBlockNUmber = await getBlockNumber(web3);
+        dragonData = await this.dragonInfo(_DragonId);
       } catch (err) {
         window.location.reload();
         return null;

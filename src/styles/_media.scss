@@ -6,9 +6,12 @@
   footer {
     margin-top: 20%;
   }
+  .socials {
+    filter: grayscale(0);
+  }
 }
-@media screen and (max-width: 750px) {
-  .col-sm, .col-md {
-    margin-left: 10% !important;
+@media screen and (min-width: 992px) {
+  .navbar-brand {
+    padding: 0 5%;
   }
 }

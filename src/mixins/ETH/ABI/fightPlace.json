@@ -86,5 +86,25 @@
     "payable": false,
     "stateMutability": "nonpayable",
     "type": "function"
+  },
+
+
+
+  {
+    "anonymous": false,
+    "inputs": [
+        {
+            "indexed": false,
+            "name": "_winnerId",
+            "type": "uint256"
+        },
+        {
+            "indexed": false,
+            "name": "_loseerId",
+            "type": "uint256"
+        }
+    ],
+    "name": "FightFP",
+    "type": "event"
   }
 ]

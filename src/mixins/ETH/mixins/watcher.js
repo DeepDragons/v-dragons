@@ -36,9 +36,27 @@ export default {
       });
     },
     eventsRun() {
+      let metaMaskt = this.$store.getters.METAMASK;
       let web3 = new Web3(ethereum);
       let fightPlace = new FightPlace(web3);
-      fightPlace.events.watch(console.log);
+      // let address = metaMaskt.currentAddress;
+
+      fightPlace.events.watch((err, event) => {
+        /**
+         * @addToFightPlace: 0x3;
+         * @fightFP: fightWithDragon;
+         */
+        
+        metaMaskt.currentBlockNUmber = event.blockNumber;
+        
+        // let fightFP = event;
+        // fightFP.args._loseerId = fightFP.args._loseerId.toString();
+        // fightFP.args._winnerId = fightFP.args._winnerId.toString();
+        console.log(event);
+        this.updateBalanceMutagen();
+
+        this.$store.commit('METAMASK', metaMaskt);
+      });
     }
   }
 }

@@ -17,17 +17,18 @@
       Current action: <span class="text-pink">{{values.currentAction}}</span>
     </h3>
     
-    <div class="row pt-2 pb-2">
-      <canvas id="combat"
-              width="800" height="300"></canvas>
-
-      <Card class="col-lg selected d-block mx-auto"
-            :hover="cardHover"
+    <div class="d-flex bd-highlight">
+      <Card class="p-2 flex-fill bd-highlight"
+            :classContent="cardHover"
+            :imgHeight="card.imgHeight"
+            :imgWidth="card.imgWidth"
             :url="url">
         <h2 class="text-pink">
           #{{id}}
         </h2>
       </card>
+      <canvas id="combat"
+              width="800" height="300"></canvas>
     </div>
 
     <ActionPanel :id="id" :keyStore="keyStore"/>
@@ -64,7 +65,13 @@ export default {
   mixins: [Charts, DragonMixin, DefUtils, Table],
   filters: { fromWei },
   data() {
-    return { keyStore: 'DRAGON' }
+    return {
+      keyStore: 'DRAGON',
+      card: {
+        imgHeight: 400,
+        imgWidth: 400
+      }
+    }
   },
   computed: {
     values() {
@@ -126,9 +133,24 @@ export default {
         this.id, values, label,
         '#7568B0', '#f261ee'
       );
+      let options = {
+        legend: {
+          display: true
+        },
+        scale:{
+          pointLabels:{
+            fontColor:"#d528d0",
+          }
+        },
+        layout: {
+          padding: {
+            left: 300
+          }
+        }
+      };
 
       this.radarChartData.datasets[0] = dataSet;      
-      this.generateCharts(ctx);
+      this.generateCharts(ctx, options);
     },
     async preStart() {
       let data;
@@ -154,18 +176,17 @@ export default {
 #dragon-name {
   background: #2125290c;
   border: #2125290c;
+  width: 50%;
 }
 #combat {
   position: absolute;
   right: 0;
-  z-index: 99;
 }
 .none  {
   animation: shadow 2s infinite alternate;
   cursor: default;
   height: 400px !important;
   width: 400px !important;
-  img { margin: 4%; }
 }
 .fightplace {
   border: 2px solid $red;
@@ -191,25 +212,4 @@ export default {
   from {box-shadow: 0 0 40px 5px $lightviolet}
   to {text-shadow: 0 0 40px 10px $lightping }
 }
-
-// @media screen and (max-width: 991px) {
-//   div.selected .none {
-//       height: 200px;
-//       width: 200px;
-//       margin: 35%;
-//       img { margin: -3%; }
-//   }
-// }
-// @media screen and (max-width: 414px) {
-//   div.selected .none {
-//       margin: 20%;
-//       img { margin: -3%; }
-//   }
-// }
-// @media screen and (max-width: 980px) {
-//   #combat {
-//     position: relative;
-//     left: 0;
-//   }
-// }
 </style>

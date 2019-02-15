@@ -122,7 +122,7 @@ export default {
 
       try {
         dataGensSet = await this.fightsGenes(
-          this.dragonId, 'you gens', '#7568B0', '#7568B0'
+          this.dragonId, 'you', '#7568B0', '#7568B0'
         );
       } catch(err) {
         let fightPath = this.$router.options.routes[3].path;
@@ -137,6 +137,10 @@ export default {
     async fightsGenes(_DragonId, label, borderColor,
                       pointHoverBackgroundColor) {
       let dragonGens = await this.dragonInfo(_DragonId);
+      
+      if (dragonGens.dragonName) {
+        label = dragonGens.dragonName;
+      }
 
       return this.parseGens(
         _DragonId, dragonGens.gens.fightsGenes,
@@ -150,7 +154,7 @@ export default {
 
       try {
         dataGensSet = await this.fightsGenes(
-          this.id, 'opponent gens', '#dc3545', '#dc3545'
+          this.id, 'Enemy', '#dc3545', '#dc3545'
         );
       } catch(err) {
         let fightPath = this.$router.options.routes[3].path;

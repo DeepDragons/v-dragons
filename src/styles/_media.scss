@@ -14,10 +14,14 @@
   .navbar-brand {
     padding: 0 5%;
   }
+  .none  {
+    height: 250px !important;
+    width: 250px !important;
+  }
 }
 
 @media screen and (max-width: 600px) {
-  .glide {
-    display: none;
+  .glide, canvas {
+    display: none !important;
   }
 }

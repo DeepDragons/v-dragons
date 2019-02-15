@@ -20,7 +20,7 @@
       </div>
 
       <div class="row">
-        <button v-if="!values.isOwner && values.price"
+        <button v-if="!values.isOwner && values.price > 0"
                 v-btn
                 @click="buyFromMarket">
           BUY {{values.price | fromWei($store.getters.CURRENCY)}}

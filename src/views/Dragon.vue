@@ -4,7 +4,7 @@
     <h3 class="text-left text-ightindigo">
       Name:
       <input type="text" id="dragon-name"
-             :disabled="!values.isOwner"
+             :disabled="!values.isOwner && values.currentAction != actions[0]"
              class="form-control text-pink"
              value="test" v-model.lazy="dragonName">
     </h3>
@@ -32,7 +32,6 @@
     </div>
 
     <ActionPanel :id="id" :keyStore="keyStore"/>
-
 
     <div v-if="tableShow" class="row">
       <b-table class="text-ightindigo text-center col-sm-12"

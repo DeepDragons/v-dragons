@@ -25,7 +25,7 @@
               :container-class="'pagination'">
     </paginate>
 
-    <None v-if="isNotDragons"
+    <None v-show="cards.length < 1"
           :title="noneTitle"
           :btns="false">
       <p class="load text-lightviolet">You can add it yourself!</p>
@@ -55,9 +55,6 @@ export default {
     cards() {
       let tokensForSale = this.sortElements();
       return this.pageChanged(tokensForSale);
-    },
-    isNotDragons() {
-      return this.cards.length < 1;
     }
   },
   mounted() {

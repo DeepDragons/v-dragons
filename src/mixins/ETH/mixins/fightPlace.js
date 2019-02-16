@@ -12,6 +12,8 @@ export default {
   },
   methods: {
     AddElementById(id) {
+      if (!id) return null;
+      
       return {
         stage: 2,
         id: id.toString(),
@@ -27,6 +29,7 @@ export default {
     },
     dragonFightListAdd(element) {
       let payload = this.$store.getters.FIGHTINGGROUND;
+      payload.elements = payload.elements.filter(el => +el.id != +element.id);
       payload.elements.push(element);
       this.$store.commit('FIGHTINGGROUND', payload);
       return payload.elements;
@@ -54,14 +57,14 @@ export default {
     battleHistory({ blockNumber, args }) {
       let payload = this.$store.getters.BATTLE;
       let object = {
-        ownerWiner: '0x1',
-        ownerLose: '0x2',
+        ownerWiner: args._ownerWinner,
+        ownerLose: args._onwerLoser,
         blockNumber: blockNumber,
         dragonWiner: '#' + args._winnerId.toString(),
-        dragonLose: '#' + args._loseerId.toString()
+        dragonLose: '#' + args._loserId.toString()
       };
 
-      if (payload.items.length > 2) {
+      if (payload.items.length > 10) {
         payload.items.shift();
       }
 

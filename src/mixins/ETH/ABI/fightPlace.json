@@ -100,8 +100,18 @@
         },
         {
             "indexed": false,
-            "name": "_loseerId",
+            "name": "_loserId",
             "type": "uint256"
+        },
+        {
+            "indexed": false,
+            "name": "_ownerWinner",
+            "type": "address"
+        },
+        {
+            "indexed": false,
+            "name": "_onwerLoser",
+            "type": "address"
         }
     ],
     "name": "FightFP",

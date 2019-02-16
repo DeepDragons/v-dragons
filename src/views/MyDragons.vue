@@ -43,7 +43,7 @@ export default {
       return this.pageChanged(tokensOwner);
     },
     isNotDragons() {
-      return this.cards.length < 1;
+      return this.$store.getters[this.storeKey].elements.length < 1
     }
   },
   data() {

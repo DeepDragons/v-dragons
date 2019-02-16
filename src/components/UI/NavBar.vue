@@ -2,7 +2,7 @@
   <nav class="navbar navbar-expand-lg navbar-violet bg-violet">
     <div class="collapse navbar-collapse row navbar-nav mt-2 mt-lg-0">
       
-      <a class="navbar-brand col-xs logo_text"
+      <a class="navbar-brand col-xs logo_text mx-5"
          href="https://dragoneth.com/">
         <img src="/img/logo_img.png" height="50">
         Dragon {{$store.getters.CURRENCY}}
@@ -17,7 +17,7 @@
         {{link.name | uperCase}}
       </router-link>
     
-      <div class="mutagen text-pink mx-auto">
+      <div class="mutagen text-pink mx-auto pr-3">
         {{$store.getters.MUTAGEN}}
       </div>
     </div>
@@ -47,9 +47,6 @@ export default {
 </script>
 
 <style lang="scss">
-.navbar-collapse {
-  padding: 0 3%;
-}
 .btn {
   margin: 0.5%;
 }

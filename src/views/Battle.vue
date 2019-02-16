@@ -44,12 +44,15 @@
       <None v-if="isNotDragons">
         <p class="load">You need a dragon to join the fight!</p>
       </None>
+
+      <WatcherFight/>
     </div>
   </div>
 </template>
 
 <script>
 import None from '../components/UI/None'
+import WatcherFight from '../components/WatcherFight'
 import { Glide, GlideSlide } from 'vue-glide-js'
 import Card from '../components/UI/Card'
 import DefUtils from '../mixins/utils'
@@ -62,7 +65,7 @@ export default {
   components: {
     'vue-glide': Glide,
     'vue-glide-slide': GlideSlide,
-    Card, None
+    Card, None, WatcherFight
   },
   data() {
     return {

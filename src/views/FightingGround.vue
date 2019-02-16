@@ -25,29 +25,39 @@
               :container-class="'pagination'">
     </paginate>
 
+    <None v-if="isNotDragons"
+          :title="noneTitle"
+          :btns="false">
+      <p class="load text-lightviolet">You can add it yourself!</p>
+    </None>
   </div>
 </template>
 
 <script>
 import Card from '../components/UI/Card'
+import None from '../components/UI/None'
 import Paginate from '../mixins/paginate'
 import DefUtils from '../mixins/utils'
 import FightPlaceMixin from '../mixins/ETH/mixins/fightPlace'
 
 export default {
   name: 'FightingGround',
-  components: { Card },
+  components: { Card, None },
   mixins: [Paginate, DefUtils, FightPlaceMixin],
   data() {
     return {
       storeKey: 'FIGHTINGGROUND',
-      hover: 'v-red'
+      hover: 'v-red',
+      noneTitle: `it's empty here!`
     }
   },
   computed: {
     cards() {
       let tokensForSale = this.sortElements();
       return this.pageChanged(tokensForSale);
+    },
+    isNotDragons() {
+      return this.cards.length < 1;
     }
   },
   mounted() {

@@ -36,6 +36,22 @@ export default {
           },
           items: []
         }
+      },
+      watcherFight: {
+        fields: {
+          ownerWiner: {
+            tdClass: tdClass
+          },
+          ownerLose: {
+            tdClass: tdClass
+          },
+          dragonWiner: {
+            tdClass: tdClass
+          },
+          dragonLose: {
+            tdClass: tdClass
+          }
+        }
       }
     }
   }

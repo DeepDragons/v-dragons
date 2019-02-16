@@ -2,26 +2,24 @@
 import DragonMixin from './dragonseth'
 import FightPlace from '../fightPlace'
 import MarketPlaceMixin from './marketPlace'
+import FightPlaceMixin from './fightPlace'
 import Mutagen from '../mutagen'
 import CODE from '../code'
+import { getBlockNumber } from '../web3'
 
 
 export default {
-  mixins: [DragonMixin, MarketPlaceMixin],
-  computed: {
-    mutagen() {
-      let web3 = this.$store.getters.WEB3;
-      return new Mutagen(web3);
-    }
-  },
+  mixins: [DragonMixin, MarketPlaceMixin, FightPlaceMixin],
   methods: {
     async updateBalanceMutagen() {
+      let web3 = this.$store.getters.WEB3;
+      let mutagen = new Mutagen(web3);
       let balance;
       let { currentAddress } = this.$store.getters.METAMASK;
       
       if (!currentAddress) return null;
 
-      balance = await this.mutagen.balanceOf(currentAddress);
+      balance = await mutagen.balanceOf(currentAddress);
       balance = balance.toString();
 
       this.$store.commit('MUTAGEN', balance);
@@ -35,25 +33,66 @@ export default {
         }
       });
     },
-    eventsRun() {
-      let metaMaskt = this.$store.getters.METAMASK;
+    async eventsRun() {
       let web3 = new Web3(ethereum);
       let fightPlace = new FightPlace(web3);
-      // let address = metaMaskt.currentAddress;
+      let mutagen = new Mutagen(web3);
+      let { currentBlockNUmber } = this.$store.getters.METAMASK;
 
-      fightPlace.events.watch((err, event) => {
+      if (currentBlockNUmber <= 0) {
+        currentBlockNUmber = await getBlockNumber(web3);
+        currentBlockNUmber -= 50;
+      }
+
+      fightPlace.events({ fromBlock: currentBlockNUmber }).watch((err, event) => {
         /**
-         * @addToFightPlace: 0x3;
          * @fightFP: fightWithDragon;
+         * @AddDragonFP: add to fightplace.
+         * @RemoveDragonFP: remove from fightPlace.
          */
+        let element;
+        let metaMaskt = this.$store.getters.METAMASK;
+
+        switch (event.event) {
+          case 'AddDragonFP':
+            element = this.AddElementById(event.args._tokenId);
+            this.dragonFightListAdd(element);
+            break;
+
+          case 'RemoveDragonFP':
+            element = this.AddElementById(event.args._tokenId);
+            this.dragonFightListRm(element);
+            break;
+          
+          case 'FightFP':
+            this.battleHistory(event);
+            element = this.AddElementById(event.args._loseerId);
+            this.dragonFightListRm(element);
+            element = this.AddElementById(event.args._winnerId);
+            this.dragonFightListRm(element);
+            break;
+
+          default: break;
+        }
         
         metaMaskt.currentBlockNUmber = event.blockNumber;
-        
-        // let fightFP = event;
-        // fightFP.args._loseerId = fightFP.args._loseerId.toString();
-        // fightFP.args._winnerId = fightFP.args._winnerId.toString();
-        console.log(event);
-        this.updateBalanceMutagen();
+        this.$store.commit('METAMASK', metaMaskt);
+      });
+
+      mutagen.mutagen.Transfer().watch((err, event) => {
+        if (err) return null;
+        let metaMaskt = this.$store.getters.METAMASK;
+
+        if (+metaMaskt.currentBlockNUmber == +event.blockNumber) {
+          return null;
+        } else {
+          metaMaskt.currentBlockNUmber = event.blockNumber;
+        }
+        if (metaMaskt.currentAddress == event.args.to) {
+          let mutagenAmount = +this.$store.getters.MUTAGEN;
+          mutagenAmount += +event.args.value;
+          this.$store.commit('MUTAGEN', mutagenAmount);
+        }
 
         this.$store.commit('METAMASK', metaMaskt);
       });

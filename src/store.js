@@ -53,6 +53,9 @@ export default new Vuex.Store({
       gensFight: [],
       tokenId: null
     },
+    battle: {
+      items: []
+    },
     mutagen: 0,
     contentShow: true,
     MetaMask: {
@@ -184,6 +187,7 @@ export default new Vuex.Store({
     FIGHTINGGROUND: state => state.fightingGround,
     CEMETERY: state => state.cemetery,
     DRAGON: state => state.dragon,
+    BATTLE: state => state.battle,
     MUTAGEN: state => state.mutagen,
     CURRENTADDRESS: state => state.currentAddress,
     METAMASK: state => state.MetaMask,
@@ -207,6 +211,7 @@ export default new Vuex.Store({
     MUTAGEN: (state, payload) => state.mutagen = payload,
     CURRENTADDRESS: (state, payload) => state.currentAddress = payload,
     METAMASK: (state, payload) => state.MetaMask = payload,
-    CONTENTSHOW: (state, payload) => state.contentShow = payload
+    CONTENTSHOW: (state, payload) => state.contentShow = payload,
+    BATTLE: (state, payload) => state.contentShow = payload
   }
 })

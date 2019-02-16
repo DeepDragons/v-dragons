@@ -6,14 +6,16 @@
       
       <slot/>
 
-      <router-link tag="a"
-                    class="btn btn-lg btn-outline-success"
-                    :to="'/'">
+      <router-link v-if="btns"
+                   tag="a"
+                   class="btn btn-lg btn-outline-success"
+                   :to="'/'">
         BUY EGG
       </router-link>
-      <router-link tag="a"
-                    class="btn btn-lg btn-outline-success"
-                    :to="'/market'">
+      <router-link v-if="btns"
+                   tag="a"
+                   class="btn btn-lg btn-outline-success"
+                   :to="'/market'">
         MARKET
       </router-link>
     </div>
@@ -27,6 +29,10 @@ export default {
     title: {
       type: String,
       default: 'Unfortunately, you have no dragons yet.'
+    },
+    btns: {
+      type: Boolean,
+      default: true
     }
   }
 }

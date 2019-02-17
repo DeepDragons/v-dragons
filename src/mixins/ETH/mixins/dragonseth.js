@@ -3,6 +3,7 @@ import MarketPlaceMixin from './marketPlace'
 import Stat from '../stat'
 import DefUtils from '../../utils'
 import { getBlockNumber } from '../web3'
+import Proxy from '../proxy'
 
 
 export default {
@@ -15,17 +16,24 @@ export default {
     dragonStat() {
       let web3 = this.$store.getters.WEB3;
       return new Stat(web3);
+    },
+    proxy() {
+      let web3 = this.$store.getters.WEB3;
+      return new Proxy(web3);
     }
   },
   methods: {
     async tokensOf() {
       let dragonsIds;
+      let object;
       let payload = this.$store.getters.MYDRAGON;
-      let { currentAddress } = this.$store.getters.METAMASK;
+      let metaMask = this.$store.getters.METAMASK;
       
-      dragonsIds = await this.dragonseth.tokensOf(currentAddress);
-      payload.elements = await this.marketPlace.getFewDragons(dragonsIds);
-
+      dragonsIds = await this.dragonseth.tokensOf(metaMask.currentAddress);
+      object = await this.proxy.getDragons(dragonsIds);
+      payload.elements = object.result;
+      
+      this.$store.commit('METAMASK', metaMask);
       this.$store.commit('MYDRAGON', payload);
 
       return payload.elements;

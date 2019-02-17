@@ -27,12 +27,12 @@
                 v-if="!isNotDragons"/>
     </div>
     
-    <vue-glide v-if="cards.length > 1"
-                :perView="slideAmount"
-                :rewind="true"
-                :keyboard="true"
-                :peek="peek"
-                class="glide">
+    <vue-glide v-if="cards.length >= 1"
+               :perView="slideAmount"
+               :rewind="true"
+               :keyboard="true"
+               :peek="peek"
+               class="glide">
       <vue-glide-slide v-for="el of cards"
                         :key="el.id">
         <Card :classContent="hover"
@@ -100,7 +100,9 @@ export default {
     },
     cards() {
       let tokensOwner = this.sortElements();
-      return tokensOwner.filter(el => el.stage > 1);
+      return tokensOwner.filter(el =>
+        el.stage > 1 && el.action == this.actions[0]
+      );
     },
     slideAmount() {
       let slideAmount;

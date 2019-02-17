@@ -59,7 +59,6 @@ const bTable = () => import('bootstrap-vue/es/components/table/table')
 const ActionPanel = () => import('../components/ActionPanel')
 
 
-
 export default {
   name: 'Dragon',
   components: { Card, ActionPanel, bTable },
@@ -89,7 +88,6 @@ export default {
       let { addressOwner } = this.values;
 
       if (currentAddress == addressOwner) {
-        // document.getElementById('dragon-name').disabled = false;
         return 'you';
       } else {
         return addressOwner.substr(0, 8) + '...';

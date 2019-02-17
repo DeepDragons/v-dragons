@@ -27,11 +27,12 @@ export default {
     goWachAddress() {
       this.$store.subscribe((mutation, state) => {
         if (mutation.type === 'METAMASK') {
-          if (state.MetaMask.msg === CODE[3]) {
+          if (state.MetaMask.msg === CODE[3] && state.MetaMask.currentAddress) {
             this.updateBalanceMutagen();
             this.tokensOf();
             this.isOwnerToken();
           }
+
           if (state.MetaMask.msg === CODE[6]) {
             this.$refs.metaMask.show();
           } else if (state.MetaMask.msg === CODE[5]) {

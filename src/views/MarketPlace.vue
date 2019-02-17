@@ -60,6 +60,9 @@ export default {
     cards() {
       let tokensForSale = this.sortElements();
       return this.pageChanged(tokensForSale);
+    },
+    isNotDragons() {
+      return this.$store.getters[this.storeKey].elements.length < 1;
     }
   },
   mounted() {

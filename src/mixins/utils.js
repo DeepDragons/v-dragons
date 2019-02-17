@@ -43,14 +43,16 @@ export default {
     },
     sortElements() {
       let { elements, filter } = this.$store.getters[this.storeKey];
+      let { currentBlockNUmber } = this.$store.getters.METAMASK;
       let mapingElements = elements.map(el => {
-        return {
-          id: el.id,
-          url: this.getUrl(el.stage, el.id),
-          price: el.price,
-          owner: el.owner,
-          stage: el.stage
-        };
+        if (+currentBlockNUmber < +el.nextBlock2Action) {
+          el['action'] = this.actions[99];
+        } else {
+          el['action'] = this.actions[+el.currentAction];
+        }
+
+        el['url'] = this.getUrl(el.stage, el.id);
+        return el;
       });
 
       if (filter.selected && filter.selected != 'all') {

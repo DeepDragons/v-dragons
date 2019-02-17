@@ -9,11 +9,14 @@
     <div class="row justify-content-md-center m-auto">
       <Card class="col-auto col-xl-auto p-auto"
                v-for="el of cards"
-               :classContent="'v-hover'"
+               :classContent="cardHover(el.action)"
                :key="el.id"
                :paramPath="'/dragon/' + el.id"
                :url="el.url">
-        <h3 class="text-lightviolet">#{{el.id}}</h3>
+        <h3 class="text-lightviolet">
+          #{{el.id}}
+        </h3>
+        <p class="text-lightviolet">{{el.action}}</p>
       </Card>
     </div>
 
@@ -64,13 +67,26 @@ export default {
     this.preStart();
   },
   methods: {
-    async preStart() {
-      if (this.cards.length > 0) return null;
+    preStart() {
       this.loaderShow();
-      await this.tokensOf();
       setTimeout(() => {
         this.loaderHide();
-      }, 500);
+      }, 1000);
+    },
+    cardHover(action) {
+      if (typeof action !== 'string') {
+        return '';
+      } else if (action == this.actions[0]) {
+        return 'v-hover';
+      } else if (action == this.actions[1]) {
+        return 'v-red';
+      } else if (action == this.actions[6]) {
+        return 'v-pinck';
+      } else if (action == this.actions[99]) {
+        return 'v-shade';
+      } else {
+        return '';
+      }
     }
   }
 }

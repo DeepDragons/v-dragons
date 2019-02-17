@@ -87,6 +87,9 @@ ul.pagination {
 .v-red:hover {
   box-shadow: inset 0px 0px 40px $red;
 }
+.v-shade:hover {
+  box-shadow: inset 0px 0px 40px $shade-10;
+}
 // cards hover // 
 
 input {

@@ -18,7 +18,8 @@
               </a>
             </li>
             <li class="list-inline-item pl-3">
-              <a href="#contracts" class="links-item">Contracts</a>
+              <a href="#contracts" @click="modalShow = !modalShow"
+                 class="links-item">Contracts</a>
             </li>
             <li class="list-inline-item pl-3">
               <a href="https://dragoneth.com/privacy"
@@ -83,12 +84,53 @@
     <div class="py-3 text-center text-lightgray">
       © Dragon{{$store.getters.CURRENCY}} 2018
     </div>
+
+<b-modal v-model="modalShow"
+         hide-footer
+         :title="title"
+         :header-bg-variant="headerBgVariant"
+         :header-text-variant="headerTextVariant"
+         :body-bg-variant="bodyBgVariant">
+
+      <ul class="list-inline">
+        <li v-for="key of Object.keys(items)" :key="key"
+            class="row list-inline-item pl-5">
+          <a class="links-item col pl-5"
+             :href="viewAddressUrl(items[key])"
+             target="_blanck">{{key}} => view on etherscan</a>
+        </li>
+      </ul>
+  
+      <button v-btn="'lightviolet col-xs-12 p-2'"
+              @click="modalShow = !modalShow">CLOSE</button>
+      
+    </b-modal>
   </footer>
 </template>
-
+blockExplorer
 <script>
+import btn from '../../directives/btn'
+import DragonActions from '../../mixins/dragonActions'
+import UtilsMixin from '../../mixins/utils'
+
+const contracts = window.contracts;
+
+
 export default {
-  name: 'Footer'
+  name: 'Footer',
+  directives: { btn },
+  mixins: [DragonActions, UtilsMixin],
+  data() {
+    return {
+      modalShow: false,
+      title: 'Contracts'
+    }
+  },
+  computed: {
+    items() {
+      return contracts;
+    }
+  }
 }
 </script>
 

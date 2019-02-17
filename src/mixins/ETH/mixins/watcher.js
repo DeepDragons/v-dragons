@@ -26,10 +26,17 @@ export default {
     },
     goWachAddress() {
       this.$store.subscribe((mutation, state) => {
-        if (mutation.type === 'METAMASK' && state.MetaMask.msg === CODE[3]) {
-          this.updateBalanceMutagen();
-          this.tokensOf();
-          this.isOwnerToken();
+        if (mutation.type === 'METAMASK') {
+          if (state.MetaMask.msg === CODE[3]) {
+            this.updateBalanceMutagen();
+            this.tokensOf();
+            this.isOwnerToken();
+          }
+          if (state.MetaMask.msg === CODE[6]) {
+            this.$refs.metaMask.show();
+          } else if (state.MetaMask.msg === CODE[5]) {
+            this.$refs.metaMask.hide();
+          }
         }
       });
     },

@@ -5,22 +5,43 @@
     <img class="smoke-right" src="/img/bc_cloud_right.png">
     <router-view v-show="$store.getters.CONTENTSHOW"/>
     <Footer v-show="$store.getters.CONTENTSHOW"/>
+
+    <b-modal ref="metaMask"
+             hide-footer
+             :title="'MetaMask'"
+             :header-bg-variant="headerBgVariant"
+             :header-text-variant="headerTextVariant"
+             :body-bg-variant="bodyBgVariant">
+
+         <div class="d-block text-center p-3">
+           <p class="lead text-lightviolet">
+             Please select main network!
+           </p>
+           <img height="250" src="/img/net.png">
+         </div>
+      <button v-btn="'lightviolet col-xs-12 p-2'"
+              @click="$refs.metaMask.hide()">CLOSE</button>
+      
+    </b-modal>
   </div>
 </template>
 
 <script>
 import NavBar from './components/UI/NavBar'
 import Footer from './components/UI/Footer'
-import MutagenMixin from './mixins/ETH/mixins/watcher'
+import Watcher from './mixins/ETH/mixins/watcher'
+import ModalVaribles from './mixins/dragonActions'
+import btn from './directives/btn'
+
 
 export default {
   components: { NavBar, Footer },
-  mixins: [MutagenMixin],
+  mixins: [Watcher, ModalVaribles],
+  directives: { btn },
   mounted() {
     setTimeout(() => this.showApp(), 500);
-    this.web3Detect();
-    this.goWachAddress();
     this.eventsRun();
+    this.web3Detect();
   },
   methods: {
     showApp() {
@@ -37,12 +58,10 @@ export default {
             .remove();
     },
     web3Detect() {
+      this.goWachAddress();
       this.$store.dispatch('enable');
       this.$store.dispatch('isAddress');
-      this.$store.dispatch({
-        type: 'isNet',
-        web3: this.$store.getters.WEB3
-      });
+      this.$store.dispatch('isNet');
       this.$store.dispatch({
         type: 'blockNumberUpdate'
       });

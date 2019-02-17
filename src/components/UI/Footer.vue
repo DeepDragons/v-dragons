@@ -85,7 +85,7 @@
       © Dragon{{$store.getters.CURRENCY}} 2018
     </div>
 
-<b-modal v-model="modalShow"
+    <b-modal v-model="modalShow"
          hide-footer
          :title="title"
          :header-bg-variant="headerBgVariant"

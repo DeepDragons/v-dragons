@@ -2,7 +2,6 @@ import Dragonseth from '../dragonseth'
 import MarketPlaceMixin from './marketPlace'
 import Stat from '../stat'
 import DefUtils from '../../utils'
-import { getBlockNumber } from '../web3'
 import Proxy from '../proxy'
 
 
@@ -32,63 +31,72 @@ export default {
       dragonsIds = await this.dragonseth.tokensOf(metaMask.currentAddress);
       object = await this.proxy.getDragons(dragonsIds);
       payload.elements = object.result;
-      
+      metaMask.currentBlockNUmber = object.blockNumber;
+
       this.$store.commit('METAMASK', metaMask);
       this.$store.commit('MYDRAGON', payload);
 
       return payload.elements;
     },
     async dragonInfo(_dragonID) {
+      let metaMask = this.$store.getters.METAMASK;
       let dragonName = await this.dragonseth.dragonName(_dragonID);
-      let owner = await this.dragonseth.ownerOf(_dragonID);
-      let dragonInfo = await this.dragonseth.dragons(_dragonID);
+      let object = await this.proxy.getDragons([_dragonID]);
+
+      metaMask.currentBlockNUmber = object.blockNumber;
+      
+      this.$store.commit('METAMASK', metaMask);
+      
+      object = object.result[0];
 
       return {
+        blockNumber: metaMask.currentBlockNUmber,
         dragonName: dragonName,
-        owner: owner,
+        owner: object.owner,
+        lastActionDragonID: object.lastActionDragonID,
+        lastActionID: object.lastActionID,
+        currentAction: object.currentAction,
+        stage: object.stage,
+        nextBlock2Action: object.nextBlock2Action,
         gens: {
-          faceGenes: this.genParse(dragonInfo[0], 65),
-          fightsGenes: this.genParse(dragonInfo[3], 62),
-          currentAction: this.actions[dragonInfo[2]],
-          stage: dragonInfo[1].toString(),
-          nextBlock2Action: +dragonInfo[4]
+          // faceGenes: this.genParse(dragonInfo[0], 65),
+          fightsGenes: this.genParse(object.gen2, 62)
+        },
+        stat: {
+          fightLose: object.fightLose,
+          fightToDeathWin: object.fightToDeathWin,
+          fightWin: object.fightWin,
+          genLabFace: object.genLabFace,
+          genLabFight: object.genLabFight,
+          mutagenFace: object.mutagenFace,
+          mutagenFight: object.mutagenFight
         }
       };
     },
     async getAllTheTokenData(_DragonId) {
       let dragonData;
-      let { currentBlockNUmber } = this.$store.getters.METAMASK;
       let payload = this.$store.getters.DRAGON;
 
-      try {
-        if (!currentBlockNUmber) {
-          let web3 = this.$store.getters.WEB3;
-
-          currentBlockNUmber = await getBlockNumber(web3);
-          
-          this.$store.dispatch({
-            type: 'blockNumberUpdate',
-            number: currentBlockNUmber
-          });
-        }
-        
+      try {        
         dragonData = await this.dragonInfo(_DragonId);
       } catch (err) {
         window.location.reload();
         return null;
       }
 
-      currentBlockNUmber += 2;
       payload.tokenId = _DragonId;
-      payload.stage = dragonData.gens.stage;
-      payload.nextBlock2Action = dragonData.gens.nextBlock2Action;
-      payload.currentAction = dragonData.gens.currentAction;
+      payload.stage = dragonData.stage;
+      payload.nextBlock2Action = dragonData.nextBlock2Action;
+      payload.currentAction = this.actions[+dragonData.currentAction];
       payload.gensFight = dragonData.gens.fightsGenes;
       payload.addressOwner = dragonData.owner;
       payload.dragonName = dragonData.dragonName;
+      payload.stat = dragonData.stat;
 
-      if (currentBlockNUmber < payload.nextBlock2Action) {
-        payload.currentAction = this.actions[99];
+      if (+dragonData.blockNumber < +payload.nextBlock2Action) {
+        payload.currentAction = this.actions[99];   
+      } else {
+        // payload.currentAction = this.actions[+currentAction];
       }
 
       this.$store.commit('DRAGON', payload);

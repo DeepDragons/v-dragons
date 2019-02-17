@@ -14,41 +14,6 @@
       "type": "function"
   },
   {
-    "constant": true,
-    "inputs": [
-        {
-            "name": "",
-            "type": "uint256"
-        }
-    ],
-    "name": "dragons",
-    "outputs": [
-        {
-            "name": "gen1",
-            "type": "uint256"
-        },
-        {
-            "name": "stage",
-            "type": "uint8"
-        },
-        {
-            "name": "currentAction",
-            "type": "uint8"
-        },
-        {
-            "name": "gen2",
-            "type": "uint240"
-        },
-        {
-            "name": "nextBlock2Action",
-            "type": "uint256"
-        }
-    ],
-    "payable": false,
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
     "constant": false,
     "inputs": [
         {
@@ -116,25 +81,6 @@
 			{
 				"name": "",
 				"type": "string"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-    },
-    {
-		"constant": true,
-		"inputs": [
-			{
-				"name": "_tokenId",
-				"type": "uint256"
-			}
-		],
-		"name": "ownerOf",
-		"outputs": [
-			{
-				"name": "",
-				"type": "address"
 			}
 		],
 		"payable": false,

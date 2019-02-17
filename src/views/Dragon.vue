@@ -153,7 +153,6 @@ export default {
     },
     async preStart() {
       let data;
-      let stats;
       this.loaderShow();
       data = await this.getAllTheTokenData(this.id);
       this.loaderHide();
@@ -161,9 +160,8 @@ export default {
       if (this.values.dragonName) {
         this.dragonName = this.values.dragonName;
       }
-      stats = await this.dragonStat.dragonStats(this.id);
-      this.stat.fight.items[0] = stats;
-      this.stat.lab.items[0] = stats;
+      this.stat.fight.items[0] = data.stat;
+      this.stat.lab.items[0] = data.stat;
       this.tableShow = true;
     }
   }

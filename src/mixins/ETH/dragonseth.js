@@ -57,29 +57,6 @@ export default class {
     return fallback(data);
   }
 
-  dragons = _dragonID => new Promise((resolve, reject) => {
-    /**
-     * @parma _dragonID: uint256;
-     * @return [gen1:uint256, stage:uint8,
-     *          currentAction:uint8, gen2:uint240,
-     *          nextBlock2Action:uint256]
-     *  color: A string gens color.
-     *  combat: A string gens combat.
-     *  stage: Dragon stage. 1: egg, 2: dragon.
-     *  currentAction: 0 => 255.
-     *                            0: free
-     *                            1: fightPlace
-     *                            2: random fight
-     *                            3: breed market
-     *                            4: breed auction
-     *                            5: random breed
-     */
-    this.dragonseth.dragons.call(_dragonID, (err, dragonInfo) => {
-      if (err) return reject(err);
-      return resolve(dragonInfo);
-    });
-  });
-
   birthDragon = _dragonID => {
     /**
      * @param _dragonID: uint256;
@@ -103,17 +80,6 @@ export default class {
     let data = { to: this.address, data: code };
     return fallback(data);
   };
-
-  ownerOf = _tokenId => new Promise((resolve, reject) => {
-    /**
-     * @param _tokenId: uint256;
-     * @return owner: address;
-     */
-    this.dragonseth.ownerOf.call(_tokenId, (err, address) => {
-      if (err) return reject(err);
-      return resolve(address);
-    });
-  });
 
   addDragonName = (_dragonID, _newName) => {
     /**

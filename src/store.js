@@ -62,7 +62,8 @@ export default new Vuex.Store({
       currentAction: '',
       price: 0,
       gensFight: [],
-      tokenId: null
+      tokenId: null,
+      stat: null
     },
     battle: {
       items: [],

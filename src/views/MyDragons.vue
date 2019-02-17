@@ -26,11 +26,13 @@
 
 <script>
 import Card from '../components/UI/Card'
-import None from '../components/UI/None'
 import Paginate from '../mixins/paginate'
 import DefUtils from '../mixins/utils'
 import DragonMixin from '../mixins/ETH/mixins/dragonseth'
 import btn from '../directives/btn'
+
+const None = () => import('../components/UI/None')
+
 
 export default {
   name: 'MyDragons',

@@ -90,13 +90,13 @@
 
 <script>
 import { toBigNumber, toWei } from 'web3/lib/utils/utils'
-
-import Range from '../components/UI/Range'
-import SwitchMT from '../components/UI/SwitchMT'
 import Crowdsale from '../mixins/ETH/mixins/crowdsale'
 import fromWei from '../filters/fromWei'
 import btn from '../directives/btn'
 import DefUtils from '../mixins/utils'
+
+const Range = () => import('../components/UI/Range')
+const SwitchMT = () => import('../components/UI/SwitchMT')
 
 
 export default {

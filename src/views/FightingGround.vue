@@ -35,10 +35,12 @@
 
 <script>
 import Card from '../components/UI/Card'
-import None from '../components/UI/None'
 import Paginate from '../mixins/paginate'
 import DefUtils from '../mixins/utils'
 import FightPlaceMixin from '../mixins/ETH/mixins/fightPlace'
+
+const None = () => import('../components/UI/None')
+
 
 export default {
   name: 'FightingGround',

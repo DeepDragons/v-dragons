@@ -35,6 +35,7 @@ import MarketPlaceMixin from '../mixins/ETH/mixins/marketPlace'
 import fromWei from '../filters/fromWei'
 import btn from '../directives/btn'
 
+
 export default {
   name: 'MarketPlace',
   components: { Card },

@@ -8,7 +8,9 @@
 
 <script>
 import TableMixin from '../mixins/table'
-import bTable from 'bootstrap-vue/es/components/table/table';
+
+const bTable = () => import('bootstrap-vue/es/components/table/table')
+
 
 export default {
   name: 'WatcherFight',

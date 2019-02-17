@@ -51,13 +51,15 @@
 </template>
 
 <script>
-import None from '../components/UI/None'
-import WatcherFight from '../components/WatcherFight'
 import { Glide, GlideSlide } from 'vue-glide-js'
 import Card from '../components/UI/Card'
 import DefUtils from '../mixins/utils'
 import DragonMixin from '../mixins/ETH/mixins/dragonseth'
 import Charts from '../mixins/charts'
+
+const None = () => import('../components/UI/None')
+const WatcherFight = () => import('../components/WatcherFight')
+
 
 export default {
   name: 'Battle',

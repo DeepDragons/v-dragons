@@ -125,6 +125,7 @@ import DefUtils from '../mixins/utils'
 import btn from '../directives/btn'
 import fromWei from '../filters/fromWei'
 
+
 export default {
   name: 'ActionPanel',
   mixins: [DragonActions, DefUtils],

@@ -48,14 +48,16 @@
 </template>
 
 <script>
-import bTable from 'bootstrap-vue/es/components/table/table';
 import Card from '../components/UI/Card'
 import Charts from '../mixins/charts'
-import ActionPanel from '../components/ActionPanel'
 import DragonMixin from '../mixins/ETH/mixins/dragonseth'
 import DefUtils from '../mixins/utils'
 import fromWei from '../filters/fromWei'
 import Table from '../mixins/table'
+
+const bTable = () => import('bootstrap-vue/es/components/table/table')
+const ActionPanel = () => import('../components/ActionPanel')
+
 
 
 export default {

@@ -29,7 +29,7 @@
               :container-class="'pagination'">
     </paginate>
 
-    <None v-if="isNotDragons"/>
+    <None v-if="this.cards.length < 1"/>
   </div>
 </template>
 
@@ -70,7 +70,6 @@ export default {
       this.loaderShow();
       setTimeout(() => {
         this.loaderHide();
-        this.isNotDragons = this.cards.length < 1;
       }, 2000);
     },
     cardHover(action) {

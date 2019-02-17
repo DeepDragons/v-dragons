@@ -28,7 +28,7 @@ export default {
       let payload = this.$store.getters.MYDRAGON;
       let metaMask = this.$store.getters.METAMASK;
       
-      dragonsIds = await this.dragonseth.tokensOf(metaMask.currentAddress);
+      dragonsIds = await this.proxy.tokensOf(metaMask.currentAddress);
       object = await this.proxy.getDragons(dragonsIds);
       payload.elements = object.result;
       metaMask.currentBlockNUmber = object.blockNumber;

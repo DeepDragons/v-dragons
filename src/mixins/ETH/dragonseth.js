@@ -33,17 +33,6 @@ export default class {
     });
   });
 
-  tokensOf = _owner => new Promise((resolve, reject) => {
-    /**
-     * @param _owner: address;
-     * @return uint256[];
-     */
-    this.dragonseth.tokensOf.call(_owner, (err, dragons) => {
-      if (err) return reject(err);
-      return resolve(dragons);
-    });
-  });
-
   add2MarketPlace = (_dragonID, _dragonPrice) => {
     /**
      * @param _dragonID: uint256;

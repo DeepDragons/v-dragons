@@ -10,6 +10,17 @@ export default class {
     this.proxy = this.web3.eth.contract(abi).at(this.address);
   }
 
+  tokensOf = _owner => new Promise((resolve, reject) => {
+    /**
+     * @param _owner: address;
+     * @return uint256[];
+     */
+    this.proxy.tokensOf.call(_owner, (err, dragons) => {
+      if (err) return reject(err);
+      return resolve(dragons);
+    });
+  });
+
   getDragons = _dragonIDs => new Promise((resolve, reject) => {
     /**
      * @param uint256[];

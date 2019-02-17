@@ -53,14 +53,12 @@ export default {
     cards() {
       let tokensOwner = this.sortElements();
       return this.pageChanged(tokensOwner);
-    },
-    isNotDragons() {
-      return this.$store.getters[this.storeKey].elements.length < 1;
     }
   },
   data() {
     return {
-      storeKey: 'MYDRAGON'
+      storeKey: 'MYDRAGON',
+      isNotDragons: false
     }
   },
   mounted() {
@@ -68,10 +66,12 @@ export default {
   },
   methods: {
     preStart() {
+      if (this.cards.length > 1) return null;
       this.loaderShow();
       setTimeout(() => {
         this.loaderHide();
-      }, 1000);
+        this.isNotDragons = this.cards.length < 1;
+      }, 2000);
     },
     cardHover(action) {
       if (typeof action !== 'string') {

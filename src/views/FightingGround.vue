@@ -1,5 +1,12 @@
 <template>
   <div class="container pt-5">
+
+    <div class="row justify-content-md-center m-auto">
+      <FilterBy class="col-auto col-xl-auto p-auto"
+                :storeKey="storeKey"
+                :isDrop="false"
+                v-if="!isNotDragons"/>
+    </div>
     <div class="row justify-content-md-center m-auto">
       <Card class="col-auto col-xl-auto p-auto"
             v-for="el of cards"
@@ -40,11 +47,12 @@ import DefUtils from '../mixins/utils'
 import FightPlaceMixin from '../mixins/ETH/mixins/fightPlace'
 
 const None = () => import('../components/UI/None')
+const FilterBy = () => import('../components/UI/FilterBy')
 
 
 export default {
   name: 'FightingGround',
-  components: { Card, None },
+  components: { Card, None, FilterBy },
   mixins: [Paginate, DefUtils, FightPlaceMixin],
   data() {
     return {

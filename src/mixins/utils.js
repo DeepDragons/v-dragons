@@ -42,8 +42,8 @@ export default {
       return `${this.cloud}${stage}_${_dragonId}.png`;
     },
     sortElements() {
-      let { elements } = this.$store.getters[this.storeKey];
-      return elements.map(el => {
+      let { elements, filter } = this.$store.getters[this.storeKey];
+      let mapingElements = elements.map(el => {
         return {
           id: el.id,
           url: this.getUrl(el.stage, el.id),
@@ -52,6 +52,19 @@ export default {
           stage: el.stage
         };
       });
+
+      if (filter.selected && filter.selected != 'all') {
+        mapingElements = mapingElements.filter(el => 
+          this.getStage(el.stage) == filter.selected
+        );
+      }
+      if (filter.filterById) {
+        mapingElements = mapingElements.filter(el => 
+          el.id.includes(filter.filterById)
+        );
+      }
+
+      return mapingElements;
     },
     genParse(_genNumber, _padLeft) {
       /**

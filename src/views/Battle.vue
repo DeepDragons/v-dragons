@@ -19,26 +19,33 @@
               class="mr-auto p-2 bd-highlight"
               id="gens"></canvas>
     </div>
-      
-      <vue-glide v-if="cards.length > 1"
-                 :perView="slideAmount"
-                 :rewind="true"
-                 :keyboard="true"
-                 :peek="peek"
-                 class="glide">
-        <vue-glide-slide v-for="el of cards"
-                         :key="el.id">
-          <Card :classContent="hover"
-                :url="el.url"
-                @click.native="dragonGens(el.id)">
-            <h3 class="text-lightviolet">#{{el.id}}</h3>
-          </card>
-        </vue-glide-slide>
-        <template slot="control">
-          <img src="/img/arrow.png" class="arrow flip" data-glide-dir="<">
-          <img src="/img/arrow.png" class="arrow" data-glide-dir=">">
-        </template>
-      </vue-glide>
+
+    <div class="row justify-content-md-center m-auto">
+      <FilterBy class="col col-sm-6 p-auto"
+                :storeKey="storeKey"
+                :isDrop="false"
+                v-if="!isNotDragons"/>
+    </div>
+    
+    <vue-glide v-if="cards.length > 1"
+                :perView="slideAmount"
+                :rewind="true"
+                :keyboard="true"
+                :peek="peek"
+                class="glide">
+      <vue-glide-slide v-for="el of cards"
+                        :key="el.id">
+        <Card :classContent="hover"
+              :url="el.url"
+              @click.native="dragonGens(el.id)">
+          <h3 class="text-lightviolet">#{{el.id}}</h3>
+        </card>
+      </vue-glide-slide>
+      <template slot="control">
+        <img src="/img/arrow.png" class="arrow flip" data-glide-dir="<">
+        <img src="/img/arrow.png" class="arrow" data-glide-dir=">">
+      </template>
+    </vue-glide>
 
     <div class="container">
       <None v-if="isNotDragons">
@@ -59,6 +66,7 @@ import Charts from '../mixins/charts'
 
 const None = () => import('../components/UI/None')
 const WatcherFight = () => import('../components/WatcherFight')
+const FilterBy = () => import('../components/UI/FilterBy')
 
 
 export default {
@@ -67,7 +75,8 @@ export default {
   components: {
     'vue-glide': Glide,
     'vue-glide-slide': GlideSlide,
-    Card, None, WatcherFight
+    Card, None, WatcherFight,
+    FilterBy
   },
   data() {
     return {
@@ -108,11 +117,7 @@ export default {
       return +slideAmount.toFixed() || 1;
     },
     isNotDragons() {
-      if (this.cards.length < 1) {
-        return true;
-      } else {
-        return false;
-      }
+      return this.$store.getters[this.storeKey].elements.length < 1;
     }
   },
   mounted() {
@@ -155,7 +160,10 @@ export default {
     async preStart() {
       this.loaderShow();
 
+      let payload = this.$store.getters[this.storeKey];
       let dataGensSet;
+
+      payload.filter.selected = 'all';
 
       try {
         dataGensSet = await this.fightsGenes(
@@ -166,6 +174,7 @@ export default {
         this.$router.replace(fightPath);
       }
 
+      this.$store.commit(this.storeKey, payload);
       this.radarChartData.datasets[0] = dataGensSet;
 
       this.loaderHide();

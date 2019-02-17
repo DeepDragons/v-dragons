@@ -1,5 +1,11 @@
 <template>
   <div class="container broader pt-5">
+
+    <div class="row justify-content-md-center m-auto">
+      <FilterBy class="col-auto col-xl-auto p-auto"
+                :storeKey="storeKey"
+                v-if="!isNotDragons"/>
+    </div>
     <div class="row justify-content-md-center m-auto">
       <Card class="col-auto col-xl-auto p-auto"
                v-for="el of cards"
@@ -31,12 +37,13 @@ import DefUtils from '../mixins/utils'
 import DragonMixin from '../mixins/ETH/mixins/dragonseth'
 import btn from '../directives/btn'
 
+const FilterBy = () => import('../components/UI/FilterBy')
 const None = () => import('../components/UI/None')
 
 
 export default {
   name: 'MyDragons',
-  components: { Card, None },
+  components: { Card, None, FilterBy },
   mixins: [Paginate, DragonMixin, DefUtils],
   directives: { btn },
   computed: {
@@ -45,7 +52,7 @@ export default {
       return this.pageChanged(tokensOwner);
     },
     isNotDragons() {
-      return this.$store.getters[this.storeKey].elements.length < 1
+      return this.$store.getters[this.storeKey].elements.length < 1;
     }
   },
   data() {

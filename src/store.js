@@ -27,20 +27,31 @@ export default new Vuex.Store({
     myDragon: {
       currentPage: 1,
       elements: [],
-      totalItems: 0
+      totalItems: 0,
+      filter: {
+        selected: 'all',
+        options: [ 'all', 'dragon', 'egg' ],
+        filterById: null
+      }
     },
     market: {
       currentPage: 1,
       elements: [],
-      totalItems: 0
+      totalItems: 0,
+      filter: {
+        selected: 'all',
+        options: [ 'all', 'dragon', 'egg' ],
+        filterById: null
+      }
     },
     fightingGround: {
       currentPage: 1,
       elements: [],
-      totalItems: 0
-    },
-    cemetery: {
-      currentPage: 1
+      totalItems: 0,
+      filter: {
+        selected: null,
+        filterById: null
+      }
     },
     dragon: {
       dragonName: 'no name',
@@ -54,7 +65,11 @@ export default new Vuex.Store({
       tokenId: null
     },
     battle: {
-      items: []
+      items: [],
+      filter: {
+        selected: null,
+        filterById: null
+      }
     },
     mutagen: 0,
     contentShow: true,
@@ -185,7 +200,6 @@ export default new Vuex.Store({
     MYDRAGON: state => state.myDragon,
     MARKET: state => state.market,
     FIGHTINGGROUND: state => state.fightingGround,
-    CEMETERY: state => state.cemetery,
     DRAGON: state => state.dragon,
     BATTLE: state => state.battle,
     MUTAGEN: state => state.mutagen,
@@ -206,7 +220,6 @@ export default new Vuex.Store({
     MYDRAGON: (state, payload) => state.myDragon = payload,
     MARKET: (state, payload) => state.market = payload,
     FIGHTINGGROUND: (state, payload) => state.fightingGround = payload,
-    CEMETERY: (state, payload) => state.cemetery = payload,
     DRAGON: (state, payload) => state.dragon = payload,
     MUTAGEN: (state, payload) => state.mutagen = payload,
     CURRENTADDRESS: (state, payload) => state.currentAddress = payload,

@@ -1,5 +1,11 @@
 <template>
   <div class="container pt-5">
+
+    <div class="row justify-content-md-center m-auto">
+      <FilterBy class="col-auto col-xl-auto p-auto"
+                :storeKey="storeKey"
+                v-if="!isNotDragons"/>
+    </div>
     <div class="row justify-content-md-center m-auto">
       <Card class="col-auto col-xl-auto p-auto"
             v-for="el of cards"
@@ -35,10 +41,12 @@ import MarketPlaceMixin from '../mixins/ETH/mixins/marketPlace'
 import fromWei from '../filters/fromWei'
 import btn from '../directives/btn'
 
+const FilterBy = () => import('../components/UI/FilterBy')
+
 
 export default {
   name: 'MarketPlace',
-  components: { Card },
+  components: { Card, FilterBy },
   mixins: [Paginate, DragonActions, DefUtils, MarketPlaceMixin],
   filters: { fromWei },
   directives: { btn },

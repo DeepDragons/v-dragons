@@ -34,23 +34,23 @@ export default {
       this.$store.commit('MUTAGEN', balance);
     },
     goWachAddress() {
+      let isModalNet = true;
       this.$store.subscribe((mutation, state) => {
-        if (mutation.type === 'METAMASK') {
-          if (state.MetaMask.msg === CODE[3] && state.MetaMask.currentAddress) {
-            this.updateBalanceMutagen();
-            this.tokensOf();
-            this.isOwnerToken();
-            this.storeKey = 'MYDRAGON';
-            this.currentPage = 1;
-          }
+        let metaMask = mutation.type === 'METAMASK';
 
-          try {
-            if (state.MetaMask.msg === CODE[6]) {
-              this.$refs.metaMask.show();
-            } else if (state.MetaMask.msg === CODE[5]) {
-              this.$refs.metaMask.hide();
-            }
-          } catch { }         
+        if (metaMask && state.MetaMask.msg === CODE[3] && state.MetaMask.currentAddress) {
+          this.updateBalanceMutagen();
+          this.tokensOf();
+          this.isOwnerToken();
+          this.storeKey = 'MYDRAGON';
+          this.currentPage = 1;
+        }
+
+        if (metaMask && state.MetaMask.msg === CODE[6] && isModalNet) {
+          state.MetaMask.modal.wrongNetId = true;
+          isModalNet = false;
+        } else if (state.MetaMask.msg === CODE[5]) {
+          state.MetaMask.modal.wrongNetId = false;
         }
       });
     },
@@ -65,9 +65,9 @@ export default {
 
       if (currentBlockNUmber <= 0) {
         currentBlockNUmber = await getBlockNumber(web3);
-        currentBlockNUmber -= 50;
       }
 
+      currentBlockNUmber -= 50;
       filter = { fromBlock: currentBlockNUmber };
 
       fightPlace.events(filter).watch((err, event) => {

@@ -1,4 +1,8 @@
+import UtilsMixin from './utils'
+
+
 export default {
+  mixin: [UtilsMixin],
   data() {
     return {
       perPage: 6,
@@ -21,8 +25,8 @@ export default {
       }
     },
     totalRows() {
-      let { elements } = this.$store.getters[this.storeKey];
-      let count = elements.length;
+      let tokensOwner = this.sortElements();
+      let count = tokensOwner.length;
 
       if (count < 1) {
         return null;

@@ -6,7 +6,7 @@
     <router-view v-show="$store.getters.CONTENTSHOW"/>
     <Footer v-show="$store.getters.CONTENTSHOW"/>
 
-    <b-modal ref="metaMask"
+    <b-modal v-model="wrongNet"
              hide-footer
              :title="'MetaMask'"
              :header-bg-variant="headerBgVariant"
@@ -18,10 +18,7 @@
              Please select main network!
            </p>
            <img height="250" src="/img/net.png">
-         </div>
-      <button v-btn="'lightviolet col-xs-12 p-2'"
-              @click="$refs.metaMask.hide()">CLOSE</button>
-      
+         </div>      
     </b-modal>
   </div>
 </template>
@@ -38,6 +35,20 @@ export default {
   components: { NavBar, Footer },
   mixins: [Watcher, ModalVaribles],
   directives: { btn },
+  computed: {
+    wrongNet: {
+      get: function() {
+        console.log(this.$store.getters.METAMASK.modal.wrongNetId);
+        return this.$store.getters.METAMASK.modal.wrongNetId;
+      },
+      set: function(value) {
+        let key = 'METAMASK';
+        let payload = this.$store.getters[key];
+        payload.modal.wrongNetId = value;
+        this.$store.commit(key, payload);
+      }
+    }
+  },
   mounted() {
     setTimeout(() => this.showApp(), 500);
     this.eventsRun();

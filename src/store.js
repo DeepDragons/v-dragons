@@ -78,7 +78,10 @@ export default new Vuex.Store({
       netID: null,
       currentBlockNUmber: null,
       currentAddress: '',
-      msg: ''
+      msg: '',
+      modal: {
+        wrongNetId: false
+      }
     }
   },
   actions: {
@@ -94,17 +97,32 @@ export default new Vuex.Store({
 
       return state.MetaMask.currentBlockNUmber;
     },
-    buyEgg({ state, getters }) {
-      let payload = state.buyForm;
+    buyEgg({ getters, commit }) {
+      let payload = getters.BUYFORM;
+      let metaMask = getters.METAMASK;
       let crowdsale = new Crowdsale(getters.WEB3);
+
+      if (metaMask.netID !== window.config.netID) {
+        metaMask.modal.wrongNetId = true;
+        commit('METAMASK', metaMask);
+        return null;
+      }
 
       crowdsale.buy(
         payload.range,
         payload.isCheck
       );
     },
-    async buyFromMarket({ getters }, { tokenId }) {
+    async buyFromMarket({ getters, commit }, { tokenId }) {
       let ownersPrice;
+      let metaMask = getters.METAMASK;
+
+      if (metaMask.netID !== window.config.netID) {
+        metaMask.modal.wrongNetId = true;
+        commit('METAMASK', metaMask);
+        return null;
+      }
+
       let marketPlace = new MarketPlace(getters.WEB3);
       let priceForToken = await marketPlace.dragonPrices(tokenId);
       let ownersPercent = await marketPlace.ownersPercent();

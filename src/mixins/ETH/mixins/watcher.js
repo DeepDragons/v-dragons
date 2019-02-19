@@ -59,6 +59,7 @@ export default {
       let fightPlace = new FightPlace(web3);
       let mutagen = new Mutagen(web3);
       let { currentBlockNUmber } = this.$store.getters.METAMASK;
+      let filter;
       let transactionHashFightPlace;
       let transactionHashMutagen;
 
@@ -67,7 +68,9 @@ export default {
         currentBlockNUmber -= 50;
       }
 
-      fightPlace.events({ fromBlock: currentBlockNUmber }).watch((err, event) => {
+      filter = { fromBlock: currentBlockNUmber };
+
+      fightPlace.events(filter).watch((err, event) => {
         /**
          * @fightFP: fightWithDragon;
          * @AddDragonFP: add to fightplace.
@@ -110,7 +113,7 @@ export default {
         transactionHashFightPlace = event.transactionHash;
       });
 
-      mutagen.mutagen.Transfer({ fromBlock: currentBlockNUmber }).watch((err, event) => {
+      mutagen.mutagen.Transfer(filter).watch((err, event) => {
         if (err) return null;
 
         let metaMaskt = this.$store.getters.METAMASK;

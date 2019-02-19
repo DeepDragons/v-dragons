@@ -14,10 +14,17 @@ export default {
   computed: {
     currentPage: {
       get: function() {
-        return this.$store.getters[this.storeKey].currentPage;
+        let { currentPage } = this.$store.getters[this.storeKey];
+        
+        if (currentPage > this.totalRows) {
+          return this.totalRows;
+        } else {
+          return currentPage;
+        }
       },
       set: function(value) {
         let payload = this.$store.getters[this.storeKey];
+        
         if (payload) {
           payload.currentPage = value;
           this.$store.commit(this.storeKey, payload);

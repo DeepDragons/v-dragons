@@ -27,11 +27,18 @@ export default {
       this.$store.commit('FIGHTINGGROUND', payload);
       return payload.elements;
     },
-    dragonFightListAdd(element) {
+    async dragonFightListAdd(element) {
       let payload = this.$store.getters.FIGHTINGGROUND;
+
+      if (payload.elements.length < 1) {
+        payload.elements = await this.getDragonsTofight();
+      }
+      
       payload.elements = payload.elements.filter(el => +el.id != +element.id);
       payload.elements.push(element);
+
       this.$store.commit('FIGHTINGGROUND', payload);
+      
       return payload.elements;
     },
     dragonFightListRm(element) {

@@ -134,9 +134,18 @@ export default new Vuex.Store({
 
       await marketPlace.buyDragon(tokenId, priceForToken);
     },
-    async toSell({ getters }, { tokenId, dragonPrice }) {
+    async toSell({ getters, commit }, { tokenId, dragonPrice }) {
       let dragonseth = new Dragonseth(getters.WEB3);
-      dragonseth.add2MarketPlace(tokenId, dragonPrice);
+      let hash = await dragonseth.add2MarketPlace(tokenId, dragonPrice);
+      console.log(hash);
+      let myDragon = getters.MYDRAGON;
+      myDragon.elements = myDragon.elements.map(el => {
+        if (el.id == tokenId) {
+          el.currentAction = 6;
+        }
+        return el;
+      });
+      commit('MYDRAGON', myDragon);
     },
     async addDragonName({ getters }, { tokenId, name }) {
       let dragonseth = new Dragonseth(getters.WEB3);
@@ -145,11 +154,20 @@ export default new Vuex.Store({
     },
     async birth({ state, getters, commit }, { tokenId }) {
       let payload = state.dragon;
+      let nextStage = 2;
       let dragonseth = new Dragonseth(getters.WEB3);
       let hash = await dragonseth.birthDragon(tokenId);
       console.log(hash);
-      payload.stage = 2;
+      payload.stage = nextStage;
       commit('DRAGON', payload);
+      let myDragon = getters.MYDRAGON;
+      myDragon.elements = myDragon.elements.map(el => {
+        if (el.id == tokenId) {
+          el.stage = nextStage;
+        }
+        return el;
+      });
+      commit('MYDRAGON', myDragon);
     },
     async transfer({ state, getters, commit }, { to, tokenId }) {
       let payload = state.dragon;
@@ -160,24 +178,38 @@ export default new Vuex.Store({
       );
       console.log(hash);
       payload.addressOwner = to;
-      commit('DRAGON', payload); 
+      commit('DRAGON', payload);
+      let myDragon = getters.MYDRAGON;
+      myDragon.elements = myDragon.elements.map(el => el.id != tokenId);
+      commit('MYDRAGON', myDragon);
     },
-    async killDragon({ getters }, { tokenId }) {
+    async killDragon({ getters, commit }, { tokenId }) {
       let dragonseth = new Dragonseth(getters.WEB3);
       let hash = await dragonseth.killDragon(tokenId);
       console.log(hash);
+      let myDragon = getters.MYDRAGON;
+      myDragon.elements = myDragon.elements.map(el => el.id != tokenId);
+      commit('MYDRAGON', myDragon);
     },
     async addToFight({ getters }, { tokenId }) {
       let fightPlace = new FightPlace(getters.WEB3);
       let price = await fightPlace.priceToAdd();
       fightPlace.addToFightPlace(tokenId, price);
     },
-    async fightWithDragon({ getters }, { youId, oponentId }) {
+    async fightWithDragon({ getters, commit }, { youId, oponentId }) {
       let fightPlace = new FightPlace(getters.WEB3);
       let price = await fightPlace.priceToFight();
       fightPlace.fightWithDragon(youId, oponentId, price);
+      let myDragon = getters.MYDRAGON;
+      myDragon.elements = myDragon.elements.map(el => {
+        if (el.id == youId) {
+          el.nextBlock2Action *= 2;
+        }
+        return el;
+      });
+      commit('MYDRAGON', myDragon);
     },
-    async wakeUp({ getters, state }) {
+    async wakeUp({ getters, state, commit }) {
       let { nextBlock2Action, tokenId } = getters.DRAGON;
       let dragonseth = new Dragonseth(getters.WEB3);
       let price = await dragonseth.priceDecraseTime2Action();
@@ -195,6 +227,15 @@ export default new Vuex.Store({
       let hash = await dragonseth.decraseTimeToAction(
         tokenId, price
       );
+      let myDragon = getters.MYDRAGON;
+
+      myDragon.elements = myDragon.elements.map(el => {
+        if (el.id == tokenId) {
+          el.nextBlock2Action = currentBlockNUmber;
+        }
+        return el;
+      });
+      commit('MYDRAGON', myDragon);
       console.log(hash);
     },
     async delFromFightPlace({ getters, commit }) {

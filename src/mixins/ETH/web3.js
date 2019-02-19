@@ -95,3 +95,15 @@ export function getBlockNumber(web3) {
     });
  }); 
 }
+
+export async function blockNumberUpdate({ getters, state }, { number }) {
+  let web3 = getters.WEB3;
+
+  if (number) {
+    state.MetaMask.currentBlockNUmber = number;
+  } else {
+    state.MetaMask.currentBlockNUmber = await getBlockNumber(web3);
+  }
+
+  return state.MetaMask.currentBlockNUmber;
+}

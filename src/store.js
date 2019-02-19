@@ -3,17 +3,33 @@ import Vuex from 'vuex'
 
 import {
   isAddress, enable, isNet,
-  getBlockNumber
+  blockNumberUpdate
 } from './mixins/ETH/web3'
-import Crowdsale from './mixins/ETH/crowdsale'
-import MarketPlace from './mixins/ETH/marketPlace'
-import Dragonseth from './mixins/ETH/dragonseth'
-import FightPlace from './mixins/ETH/fightPlace'
+
+import {
+  toSell, addDragonName,
+  birth, transfer, killDragon,
+  wakeUp
+} from './actions/dragonseth'
+
+import {
+  addToFight, fightWithDragon,
+  delFromFightPlace
+} from './actions/fightPlace'
+
+import {
+  buyFromMarket,
+  delFromFixMarketPlace
+} from './actions/marketPlace'
+
+import { buyEgg } from './actions/crowdsale'
 
 
 var CONFIG = window.config;
 
+
 Vue.use(Vuex)
+
 
 export default new Vuex.Store({
   state: {
@@ -85,175 +101,36 @@ export default new Vuex.Store({
     }
   },
   actions: {
-    isAddress, enable, isNet,
-    async blockNumberUpdate({ getters, state }, { number }) {
-      let web3 = getters.WEB3;
+    // web3 work //
+    isAddress,
+    enable,
+    isNet,
+    blockNumberUpdate,
+    // web3 work //
 
-      if (number) {
-        state.MetaMask.currentBlockNUmber = number;
-      } else {
-        state.MetaMask.currentBlockNUmber = await getBlockNumber(web3);
-      }
+    // main dragonETH contract //
+    toSell,
+    addDragonName,
+    birth,
+    transfer,
+    killDragon,
+    wakeUp,
+    // main dragonETH contract //
 
-      return state.MetaMask.currentBlockNUmber;
-    },
-    buyEgg({ getters, commit }) {
-      let payload = getters.BUYFORM;
-      let metaMask = getters.METAMASK;
-      let crowdsale = new Crowdsale(getters.WEB3);
+    // crowdsale contract // 
+    buyEgg,
+    // crowdsale contract // 
 
-      if (metaMask.netID !== window.config.netID) {
-        metaMask.modal.wrongNetId = true;
-        commit('METAMASK', metaMask);
-        return null;
-      }
+    // marketPlace contract //
+    buyFromMarket,
+    delFromFixMarketPlace,
+    // marketPlace contract //
 
-      crowdsale.buy(
-        payload.range,
-        payload.isCheck
-      );
-    },
-    async buyFromMarket({ getters, commit }, { tokenId }) {
-      let ownersPrice;
-      let metaMask = getters.METAMASK;
-
-      if (metaMask.netID !== window.config.netID) {
-        metaMask.modal.wrongNetId = true;
-        commit('METAMASK', metaMask);
-        return null;
-      }
-
-      let marketPlace = new MarketPlace(getters.WEB3);
-      let priceForToken = await marketPlace.dragonPrices(tokenId);
-      let ownersPercent = await marketPlace.ownersPercent();
-
-      ownersPercent = ownersPercent.div(10);
-      ownersPrice = priceForToken.mul(ownersPercent).div(100);
-      ownersPrice = ownersPrice.toFixed();
-      priceForToken = priceForToken.add(ownersPrice).toString();
-
-      await marketPlace.buyDragon(tokenId, priceForToken);
-    },
-    async toSell({ getters, commit }, { tokenId, dragonPrice }) {
-      let dragonseth = new Dragonseth(getters.WEB3);
-      let hash = await dragonseth.add2MarketPlace(tokenId, dragonPrice);
-      console.log(hash);
-      let myDragon = getters.MYDRAGON;
-      myDragon.elements = myDragon.elements.map(el => {
-        if (el.id == tokenId) {
-          el.currentAction = 6;
-        }
-        return el;
-      });
-      commit('MYDRAGON', myDragon);
-    },
-    async addDragonName({ getters }, { tokenId, name }) {
-      let dragonseth = new Dragonseth(getters.WEB3);
-      let hash = await dragonseth.addDragonName(tokenId, name);
-      console.log(hash);
-    },
-    async birth({ state, getters, commit }, { tokenId }) {
-      let payload = state.dragon;
-      let nextStage = 2;
-      let dragonseth = new Dragonseth(getters.WEB3);
-      let hash = await dragonseth.birthDragon(tokenId);
-      console.log(hash);
-      payload.stage = nextStage;
-      commit('DRAGON', payload);
-      let myDragon = getters.MYDRAGON;
-      myDragon.elements = myDragon.elements.map(el => {
-        if (el.id == tokenId) {
-          el.stage = nextStage;
-        }
-        return el;
-      });
-      commit('MYDRAGON', myDragon);
-    },
-    async transfer({ state, getters, commit }, { to, tokenId }) {
-      let payload = state.dragon;
-      let { currentAddress } = state.MetaMask;
-      let dragonseth = new Dragonseth(getters.WEB3);
-      let hash = await dragonseth.safeTransferFrom(
-        currentAddress, to, tokenId
-      );
-      console.log(hash);
-      payload.addressOwner = to;
-      commit('DRAGON', payload);
-      let myDragon = getters.MYDRAGON;
-      myDragon.elements = myDragon.elements.map(el => el.id != tokenId);
-      commit('MYDRAGON', myDragon);
-    },
-    async killDragon({ getters, commit }, { tokenId }) {
-      let dragonseth = new Dragonseth(getters.WEB3);
-      let hash = await dragonseth.killDragon(tokenId);
-      console.log(hash);
-      let myDragon = getters.MYDRAGON;
-      myDragon.elements = myDragon.elements.map(el => el.id != tokenId);
-      commit('MYDRAGON', myDragon);
-    },
-    async addToFight({ getters }, { tokenId }) {
-      let fightPlace = new FightPlace(getters.WEB3);
-      let price = await fightPlace.priceToAdd();
-      fightPlace.addToFightPlace(tokenId, price);
-    },
-    async fightWithDragon({ getters, commit }, { youId, oponentId }) {
-      let fightPlace = new FightPlace(getters.WEB3);
-      let price = await fightPlace.priceToFight();
-      fightPlace.fightWithDragon(youId, oponentId, price);
-      let myDragon = getters.MYDRAGON;
-      myDragon.elements = myDragon.elements.map(el => {
-        if (el.id == youId) {
-          el.nextBlock2Action *= 2;
-        }
-        return el;
-      });
-      commit('MYDRAGON', myDragon);
-    },
-    async wakeUp({ getters, state, commit }) {
-      let { nextBlock2Action, tokenId } = getters.DRAGON;
-      let dragonseth = new Dragonseth(getters.WEB3);
-      let price = await dragonseth.priceDecraseTime2Action();
-      let currentBlockNUmber = await getBlockNumber(getters.WEB3);
-
-      state.MetaMask.currentBlockNUmber = currentBlockNUmber;
-
-      if (nextBlock2Action < currentBlockNUmber) {
-        throw new Error('nexBN < currentBN');
-      }
-
-      price = price.mul(nextBlock2Action - currentBlockNUmber);
-      price = price.toString();
-    
-      let hash = await dragonseth.decraseTimeToAction(
-        tokenId, price
-      );
-      let myDragon = getters.MYDRAGON;
-
-      myDragon.elements = myDragon.elements.map(el => {
-        if (el.id == tokenId) {
-          el.nextBlock2Action = currentBlockNUmber;
-        }
-        return el;
-      });
-      commit('MYDRAGON', myDragon);
-      console.log(hash);
-    },
-    async delFromFightPlace({ getters, commit }) {
-      let dragon = getters.DRAGON;
-      let fightPlace = new FightPlace(getters.WEB3);
-      let hash = await fightPlace.delFromFightPlace(dragon.tokenId);
-      dragon.currentAction = 'free';
-      commit('DRAGON', dragon);
-      console.log(hash);
-    },
-    async delFromFixMarketPlace({ getters, commit }) {
-      let dragon = getters.DRAGON;
-      let marketPlace = new MarketPlace(getters.WEB3);
-      let hash = await marketPlace.delFromFixMarketPlace(dragon.tokenId);
-      dragon.currentAction = 'free';
-      commit('DRAGON', dragon);
-      console.log(hash);
-    }
+    // fightPlace contract //
+    addToFight,
+    fightWithDragon,
+    delFromFightPlace
+    // fightPlace contract //
   },
   getters: {
     BUYFORM: state => state.buyForm,

@@ -45,17 +45,16 @@ export default {
   },
   methods: {
     showApp() {
-      window.document
-            .getElementById('fountainG')
-            .style
-            .display = 'none';
-      window.document
-            .getElementById('app')
-            .style
-            .display = 'block';
-      window.document
-            .getElementById('loaderlogo')
-            .remove();
+      let fountainG = window.document.querySelector('#fountainG');
+      let app = window.document.querySelector('#app');
+      let loaderh1 = window.document.querySelector('#loaderlogo');
+
+      fountainG.style.display = 'none';
+      app.style.display = 'block';
+
+      if (loaderh1) {
+        loaderh1.remove();
+      }
     },
     web3Detect() {
       this.goWachAddress();

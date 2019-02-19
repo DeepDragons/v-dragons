@@ -4,12 +4,21 @@ import FightPlace from '../fightPlace'
 import MarketPlaceMixin from './marketPlace'
 import FightPlaceMixin from './fightPlace'
 import Mutagen from '../mutagen'
+import PaginateMixin from '../../paginate'
 import CODE from '../code'
 import { getBlockNumber } from '../web3'
 
 
 export default {
-  mixins: [DragonMixin, MarketPlaceMixin, FightPlaceMixin],
+  mixins: [
+    DragonMixin, MarketPlaceMixin,
+    FightPlaceMixin, PaginateMixin
+  ],
+  data() {
+    return {
+      storeKey: ''
+    };
+  },
   methods: {
     async updateBalanceMutagen() {
       let web3 = this.$store.getters.WEB3;
@@ -31,13 +40,17 @@ export default {
             this.updateBalanceMutagen();
             this.tokensOf();
             this.isOwnerToken();
+            this.storeKey = 'MYDRAGON';
+            this.currentPage = 1;
           }
 
-          if (state.MetaMask.msg === CODE[6]) {
-            this.$refs.metaMask.show();
-          } else if (state.MetaMask.msg === CODE[5]) {
-            this.$refs.metaMask.hide();
-          }
+          try {
+            if (state.MetaMask.msg === CODE[6]) {
+              this.$refs.metaMask.show();
+            } else if (state.MetaMask.msg === CODE[5]) {
+              this.$refs.metaMask.hide();
+            }
+          } catch { }         
         }
       });
     },
@@ -46,6 +59,8 @@ export default {
       let fightPlace = new FightPlace(web3);
       let mutagen = new Mutagen(web3);
       let { currentBlockNUmber } = this.$store.getters.METAMASK;
+      let transactionHashFightPlace;
+      let transactionHashMutagen;
 
       if (currentBlockNUmber <= 0) {
         currentBlockNUmber = await getBlockNumber(web3);
@@ -58,8 +73,17 @@ export default {
          * @AddDragonFP: add to fightplace.
          * @RemoveDragonFP: remove from fightPlace.
          */
+        if (err) return null;
+
         let element;
         let metaMaskt = this.$store.getters.METAMASK;
+
+        metaMaskt.currentBlockNUmber = event.blockNumber;
+        this.$store.commit('METAMASK', metaMaskt);
+
+        if (transactionHashFightPlace == event.transactionHash) {
+          return null;
+        }
 
         switch (event.event) {
           case 'AddDragonFP':
@@ -82,27 +106,29 @@ export default {
 
           default: break;
         }
-        
-        metaMaskt.currentBlockNUmber = event.blockNumber;
-        this.$store.commit('METAMASK', metaMaskt);
+
+        transactionHashFightPlace = event.transactionHash;
       });
 
-      mutagen.mutagen.Transfer().watch((err, event) => {
+      mutagen.mutagen.Transfer({ fromBlock: currentBlockNUmber }).watch((err, event) => {
         if (err) return null;
+
         let metaMaskt = this.$store.getters.METAMASK;
 
-        if (+metaMaskt.currentBlockNUmber == +event.blockNumber) {
+        metaMaskt.currentBlockNUmber = event.blockNumber;
+        this.$store.commit('METAMASK', metaMaskt);
+
+        if (transactionHashMutagen == event.transactionHash) {
           return null;
-        } else {
-          metaMaskt.currentBlockNUmber = event.blockNumber;
         }
+
         if (metaMaskt.currentAddress == event.args.to) {
           let mutagenAmount = +this.$store.getters.MUTAGEN;
           mutagenAmount += +event.args.value;
           this.$store.commit('MUTAGEN', mutagenAmount);
         }
 
-        this.$store.commit('METAMASK', metaMaskt);
+        transactionHashMutagen = event.transactionHash;
       });
     }
   }

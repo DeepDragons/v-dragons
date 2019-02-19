@@ -101,7 +101,9 @@ export default {
     cards() {
       let tokensOwner = this.sortElements();
       return tokensOwner.filter(el =>
-        el.stage > 1 && el.action == this.actions[0]
+        el.stage > 1 &&
+        (el.action == this.actions[0] || el.action == this.actions[1]) &&
+        this.id != el.id
       );
     },
     slideAmount() {

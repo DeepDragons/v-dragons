@@ -1,16 +1,25 @@
 export default {
   data() {
     return {
-      currentPage: 1,
       perPage: 6,
       prevText: '<',
       nextText: '>'
     }
   },
-  mounted() {
-    this.currentPage = this.$store.getters[this.storeKey].currentPage;
-  },
+  mounted() { },
   computed: {
+    currentPage: {
+      get: function() {
+        return this.$store.getters[this.storeKey].currentPage;
+      },
+      set: function(value) {
+        let payload = this.$store.getters[this.storeKey];
+        if (payload) {
+          payload.currentPage = value;
+          this.$store.commit(this.storeKey, payload);
+        }
+      }
+    },
     totalRows() {
       let { elements } = this.$store.getters[this.storeKey];
       let count = elements.length;
@@ -27,13 +36,6 @@ export default {
     isShow() {
       let { elements } = this.$store.getters[this.storeKey];
       return elements.length > this.perPage;
-    }
-  },
-  watch: {
-    currentPage() {
-      let payload = this.$store.getters[this.storeKey];
-      payload.currentPage = this.currentPage;
-      this.$store.commit(this.storeKey, payload);
     }
   },
   methods: {

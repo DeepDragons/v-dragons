@@ -37,7 +37,6 @@ export default {
       return this.stages[_stage];
     },
     getUrl(_stage, _dragonId) {
-      if (!_stage) return null; 
       let stage = this.getStage(_stage);
       return `${this.cloud}${stage}_${_dragonId}.png`;
     },

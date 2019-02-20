@@ -77,7 +77,7 @@ export default {
       let dragonData;
       let payload = this.$store.getters.DRAGON;
 
-      try {        
+      try {
         dragonData = await this.dragonInfo(_DragonId);
       } catch (err) {
         window.location.reload();
@@ -86,17 +86,21 @@ export default {
 
       payload.tokenId = _DragonId;
       payload.stage = dragonData.stage;
-      payload.nextBlock2Action = dragonData.nextBlock2Action;
-      payload.currentAction = this.actions[+dragonData.currentAction];
       payload.gensFight = dragonData.gens.fightsGenes;
       payload.addressOwner = dragonData.owner;
       payload.dragonName = dragonData.dragonName;
       payload.stat = dragonData.stat;
 
+      if (+dragonData.currentAction == 255) {
+        payload.nextBlock2Action = 0;
+      } else {
+        payload.nextBlock2Action = dragonData.nextBlock2Action;
+      }
+      
       if (+dragonData.blockNumber < +payload.nextBlock2Action) {
         payload.currentAction = this.actions[99];   
       } else {
-        // payload.currentAction = this.actions[+currentAction];
+        payload.currentAction = this.actions[+dragonData.currentAction];
       }
 
       this.$store.commit('DRAGON', payload);

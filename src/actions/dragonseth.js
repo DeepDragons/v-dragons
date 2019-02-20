@@ -51,7 +51,7 @@ export async function transfer({ state, getters, commit }, { to, tokenId }) {
   payload.addressOwner = to;
   commit('DRAGON', payload);
   let myDragon = getters.MYDRAGON;
-  myDragon.elements = myDragon.elements.map(el => el.id != tokenId);
+  myDragon.elements = myDragon.elements.filter(el => el.id != tokenId);
   commit('MYDRAGON', myDragon);
 }
 
@@ -60,7 +60,7 @@ export async function killDragon({ getters, commit }, { tokenId }) {
   let hash = await dragonseth.killDragon(tokenId);
   console.log(hash);
   let myDragon = getters.MYDRAGON;
-  myDragon.elements = myDragon.elements.map(el => el.id != tokenId);
+  myDragon.elements = myDragon.elements.filter(el => el.id != tokenId);
   commit('MYDRAGON', myDragon);
 }
 

@@ -27,9 +27,17 @@ export async function buyFromMarket({ getters, commit }, { tokenId }) {
 
 export async function delFromFixMarketPlace({ getters, commit }) {
   let dragon = getters.DRAGON;
+  let myDragon = getters.MYDRAGON;
   let marketPlace = new MarketPlace(getters.WEB3);
   let hash = await marketPlace.delFromFixMarketPlace(dragon.tokenId);
   dragon.currentAction = 'free';
   commit('DRAGON', dragon);
   console.log(hash);
+  myDragon.elements = myDragon.elements.map(el => {
+    if (el.id == dragon.tokenId) {
+      el.currentAction = 0;
+    }
+    return el;
+  });
+  commit('MYDRAGON', myDragon);
 }

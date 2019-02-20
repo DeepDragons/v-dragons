@@ -27,14 +27,14 @@
                 v-if="!isNotDragons"/>
     </div>
     
-    <vue-glide v-if="cards.length >= 1"
+    <vue-glide v-if="cards.length > 0"
                :perView="slideAmount"
                :rewind="true"
                :keyboard="true"
                :peek="peek"
                class="glide">
       <vue-glide-slide v-for="el of cards"
-                        :key="el.id">
+                       :key="el.id">
         <Card :classContent="hover"
               :url="el.url"
               @click.native="dragonGens(el.id)">

@@ -37,11 +37,11 @@ export default {
   },
   data() {
     return {
-      text: ''
+      text: null
     };
   },
   mounted() {
-    this.text = this.filterValues.filterById;
+    this.text = null;
   },
   computed: {
     filterValues() {

@@ -1,9 +1,12 @@
 <template>
   <div>
-    <div class="row justify-content-md-center m-auto">
-      <img height="600" :src="urlOpponent" class="col-auto col-xs-auto">
+    <div class="row justify-content-md-center m-auto text-center">
+      <div class="col-auto col-xs-auto">
+        <img height="600"
+             :src="urlOpponent">
+      </div>
       <div class="col-auto col-xs-auto btn-group">
-        <button v-if="urlMe"
+        <button v-if="urlMe && isFight"
                 @click="fight"
                 type="button"
                 class="btn b-menu__item b-menu__item--reverse pt-5">
@@ -11,7 +14,12 @@
           <span class="b-menu__item-name"></span>
         </button>
       </div>
-      <img v-if="urlMe" height="600" :src="urlMe" class="col-auto col-xs-auto flip">
+      <div v-if="urlMe"
+           class="col-auto col-xs-auto">
+        <img height="600"
+             :src="urlMe"
+             class="flip">
+      </div>
     </div>
 
     <div class="row justify-content-md-center m-auto">
@@ -84,7 +92,8 @@ export default {
       peek: 200,
       hover: 'v-red',
       dragonId: false,
-      canvosId: 'gens'
+      canvosId: 'gens',
+      isFight: true
     }
   },
   computed: {
@@ -194,6 +203,7 @@ export default {
         youId: this.dragonId,
         oponentId: this.id
       });
+      this.isFight = false;
     }
   }
 }

@@ -164,6 +164,11 @@ export default {
       if (dragonGens.dragonName) {
         label = dragonGens.dragonName;
       }
+      if (+dragonGens.currentAction <= 1) {
+        this.isFight = true;
+      } else {
+        this.isFight = false;
+      }
 
       return this.parseGens(
         _DragonId, dragonGens.gens.fightsGenes,

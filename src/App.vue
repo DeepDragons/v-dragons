@@ -63,6 +63,7 @@ export default {
           p: 'Please select main network!'
         };
       }
+      
       return { url: null, p: null };
     }
   },

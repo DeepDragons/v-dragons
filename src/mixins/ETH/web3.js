@@ -3,7 +3,6 @@ import CODE from './code'
 
 const CONFIG = window.config;
 
-
 function log(msg) {
   console.warn('WEB3:', msg);
 }
@@ -11,19 +10,30 @@ function log(msg) {
 export function isAddress({ commit, state }) {
   let payload = state.MetaMask;
   let interval = setInterval(() => {
-    if (!window.ethereum) {
+    if (!window.ethereum && !window.web3) {
       payload.msg = CODE[2];
       log(payload.msg);
       payload.currentAddress = null;
       clearInterval(interval);
       commit('METAMASK', payload);
-    } else if (window.ethereum['selectedAddress']) {
+    } else if (window.ethereum && window.ethereum['selectedAddress']) {
       if (payload.currentAddress !== window.ethereum['selectedAddress']) {
         payload.msg = CODE[3];
         payload.currentAddress = window.ethereum['selectedAddress'];
         log(payload.msg);
         commit('METAMASK', payload);
       }
+    } else if (window.web3 && window.web3.eth.coinbase) {
+      if (payload.currentAddress !== window.web3.eth.coinbase) {
+        payload.msg = CODE[3];
+        payload.currentAddress = window.web3.eth.coinbase;
+        log(payload.msg);
+        commit('METAMASK', payload);
+      }
+    } else {
+      payload.msg = CODE[7];
+      log(payload.msg);
+      commit('METAMASK', payload);
     }
   }, 1000);
 }
@@ -41,6 +51,8 @@ export async function enable({ commit, state }) {
         // User denied account access
         payload.msg = CODE[1];
     }
+  } else if (window.web3) {
+    web3 = window.web3;
   } else {
     payload.msg = CODE[2];
   }
@@ -55,6 +67,8 @@ export function isNet({ commit, state }) {
 
   if (window.ethereum) {
     web3 = new Web3(ethereum);
+  } else if (window.web3) {
+    web3 = window.web3;
   }
 
   setInterval(() => {
@@ -82,7 +96,14 @@ export function fallback(_data) {
    * @param _data: transaction object;
    */
   return new Promise((resolve, reject) => {
-    let web3 = new Web3(ethereum);
+    let web3;
+
+    if (window.ethereum) {
+      web3 = new Web3(ethereum);
+    } else if (window.web3) {
+      web3 = window.web3;
+    }
+
     web3.eth.sendTransaction(_data, (err, hash) => {
       if (err) return reject(err); 
       return resolve(hash);

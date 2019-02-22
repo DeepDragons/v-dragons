@@ -10,10 +10,9 @@
     filter: grayscale(0);
   }
 }
-@media screen and (min-width: 992px) {
+@media screen and (max-width: 992px) {
   .none  {
-    height: 250px !important;
-    width: 250px !important;
+    transform: scale(0.7, 0.7);
   }
 }
 

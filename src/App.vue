@@ -6,7 +6,7 @@
     <router-view v-show="$store.getters.CONTENTSHOW"/>
     <Footer v-show="$store.getters.CONTENTSHOW"/>
 
-    <b-modal v-model="wrongNet"
+    <b-modal v-model="wrong"
              hide-footer
              :title="'MetaMask'"
              :header-bg-variant="headerBgVariant"
@@ -15,9 +15,9 @@
 
          <div class="d-block text-center p-3">
            <p class="lead text-lightviolet">
-             Please select main network!
+             {{wrongModal.p}}
            </p>
-           <img height="250" src="/img/net.png">
+           <img height="250" :src="wrongModal.url">
          </div>      
     </b-modal>
   </div>
@@ -29,6 +29,7 @@ import Footer from './components/UI/Footer'
 import Watcher from './mixins/ETH/mixins/watcher'
 import ModalVaribles from './mixins/dragonActions'
 import btn from './directives/btn'
+import CODE from './mixins/ETH/code'
 
 
 export default {
@@ -36,9 +37,8 @@ export default {
   mixins: [Watcher, ModalVaribles],
   directives: { btn },
   computed: {
-    wrongNet: {
+    wrong: {
       get: function() {
-        console.log(this.$store.getters.METAMASK.modal.wrongNetId);
         return this.$store.getters.METAMASK.modal.wrongNetId;
       },
       set: function(value) {
@@ -47,6 +47,23 @@ export default {
         payload.modal.wrongNetId = value;
         this.$store.commit(key, payload);
       }
+    },
+    wrongModal() {
+      let { msg } = this.$store.getters.METAMASK;
+
+      if (msg == CODE[2]) {
+        return {
+          url: '/img/metamask.png',
+          p: 'Please install metaMask!'
+        };
+      }
+      if (msg == CODE[6]) {
+        return {
+          url: '/img/net.png',
+          p: 'Please select main network!'
+        };
+      }
+      return { url: null, p: null };
     }
   },
   mounted() {

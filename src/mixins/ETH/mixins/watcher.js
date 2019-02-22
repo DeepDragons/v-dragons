@@ -55,6 +55,7 @@ export default {
       });
     },
     async eventsRun() {
+      if (!window.ethereum) return null;
       let web3 = new Web3(ethereum);
       let fightPlace = new FightPlace(web3);
       let mutagen = new Mutagen(web3);

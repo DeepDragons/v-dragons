@@ -1,7 +1,7 @@
 /* eslint-disable */
 import CODE from './code'
 
-const config = window.config;
+const CONFIG = window.config;
 
 
 function log(msg) {
@@ -42,7 +42,6 @@ export async function enable({ commit, state }) {
         payload.msg = CODE[1];
     }
   } else {
-    // window.web3 = new window.Web3(CONFIG.providers);
     payload.msg = CODE[2];
   }
 
@@ -51,8 +50,12 @@ export async function enable({ commit, state }) {
 }
 
 export function isNet({ commit, state }) {
+  let web3;
   let payload = state.MetaMask;
-  let web3 = new Web3(ethereum);
+
+  if (window.ethereum) {
+    web3 = new Web3(ethereum);
+  }
 
   setInterval(() => {
     if (!web3) {
@@ -61,7 +64,7 @@ export function isNet({ commit, state }) {
       web3.version.getNetwork((err, netID) => {
         let code;
         payload.netID = err ? err : netID;
-        if (config.netID != netID) {
+        if (CONFIG.netID != netID) {
           code = CODE[6];
         } else {
           code = CODE[5];

@@ -152,8 +152,11 @@ export default {
         this.$router.replace(fightPath);
       }
 
-      this.radarChartData.datasets[1] = dataGensSet;
+      if (this.radarChartData.datasets.length > 1) {
+        this.radarChartData.datasets.pop();
+      }
 
+      this.radarChartData.datasets.push(dataGensSet);
       this.loaderHide();
       this.printChart();
     },
@@ -185,7 +188,9 @@ export default {
 
       try {
         dataGensSet = await this.fightsGenes(
-          this.id, 'Enemy', '#dc3545', '#dc3545'
+          this.id, 'Enemy',
+          'rgba(255, 0, 85, 0.877)',
+          'rgba(255, 0, 85, 0.877)'
         );
       } catch(err) {
         let fightPath = this.$router.options.routes[3].path;
@@ -279,5 +284,7 @@ img[data-glide-dir="<"] {
     transition: .3s ease;
     transform: scale(1.5, 1.5);
 }
-
+.gens {
+  z-index: 2;
+}
 </style>

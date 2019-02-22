@@ -90,7 +90,7 @@ export default {
       if (currentAddress == addressOwner) {
         return 'you';
       } else {
-        return addressOwner.substr(0, 8) + '...';
+        return this.subHex(addressOwner);
       }
     },
     cardHover() {

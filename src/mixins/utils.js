@@ -1,4 +1,4 @@
-import { fromDecimal, padLeft } from 'web3/lib/utils/utils'
+import { fromDecimal, padLeft, isAddress } from 'web3/lib/utils/utils'
 
 export default {
   data() {
@@ -95,6 +95,13 @@ export default {
     loaderHide() {
       window.document.getElementById('fountainG').style.display = 'none';
       this.$store.commit('CONTENTSHOW', true);
+    },
+    subHex(hex) {
+      if (!isAddress(hex)) return hex;
+      
+      let part0 = hex.substr(0, 6)
+      let part1 = hex.substr(-6);
+      return `${part0}...${part1}`;
     }
   }
 }

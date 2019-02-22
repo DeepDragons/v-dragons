@@ -8,6 +8,7 @@
 
 <script>
 import TableMixin from '../mixins/table'
+import UtilsMixin from '../mixins/utils'
 
 const bTable = () => import('bootstrap-vue/es/components/table/table')
 
@@ -15,11 +16,27 @@ const bTable = () => import('bootstrap-vue/es/components/table/table')
 export default {
   name: 'WatcherFight',
   components: { bTable },
-  mixins: [TableMixin],
+  mixins: [TableMixin, UtilsMixin],
   computed: {
     items() {
+      let you = 'you';
+      let { currentAddress } = this.$store.getters.METAMASK;
       let { items } = this.$store.getters.BATTLE;
-      return items.reverse();
+      
+      return items.map(el => {
+        if (el.ownerLose == currentAddress) {
+          el.ownerLose = you;
+        } else {
+          el.ownerLose = this.subHex(el.ownerLose);
+        }
+        if (el.ownerWiner == currentAddress) {
+          el.ownerWiner = you;
+        } else {
+          el.ownerWiner = this.subHex(el.ownerWiner);
+        }
+
+        return el;
+      }).reverse();
     }
   }
 }

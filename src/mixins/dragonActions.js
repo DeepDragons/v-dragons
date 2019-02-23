@@ -75,10 +75,10 @@ export default {
         tokenId: this.id
       });
     },
-    buyFromMarket() {
+    buyFromMarket(id) {
       this.$store.dispatch({
         type: 'buyFromMarket',
-        tokenId: this.id
+        tokenId: id
       });
     },
     wakeUp() {

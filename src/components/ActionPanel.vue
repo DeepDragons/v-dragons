@@ -22,7 +22,7 @@
       <div class="row">
         <button v-if="!values.isOwner && values.currentAction == actions[6]"
                 v-btn
-                @click="buyFromMarket">
+                @click="buyFromMarket(id)">
           BUY {{values.price | fromWei($store.getters.CURRENCY)}}
         </button>
         <button v-if="values.isOwner && values.currentAction == actions[99]"

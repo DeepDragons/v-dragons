@@ -19,9 +19,9 @@ export async function buyFromMarket({ getters, commit }, { tokenId }) {
 
   ownersPercent = ownersPercent.div(10);
   ownersPrice = priceForToken.mul(ownersPercent).div(100);
-  ownersPrice = ownersPrice.toFixed();
+  ownersPrice = (+ownersPrice).toFixed();
   priceForToken = priceForToken.add(ownersPrice).toString();
-
+  
   await marketPlace.buyDragon(tokenId, priceForToken);
 }
 

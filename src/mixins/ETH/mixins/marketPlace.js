@@ -20,7 +20,7 @@ export default {
 
       totalDragonIds = await this.marketPlace.getSlicedDragonsSale(0, totalDragonsToSale++);
       payload.elements = await this.marketPlace.getFewDragons(totalDragonIds);
-      console.log(payload.elements);
+
       this.$store.commit('MARKET', payload);
 
       return payload.elements;

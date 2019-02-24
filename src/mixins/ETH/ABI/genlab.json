@@ -1,0 +1,60 @@
+[
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "returnPrices",
+    "outputs": [
+        {
+            "name": "",
+            "type": "uint256"
+        },
+        {
+            "name": "",
+            "type": "uint256"
+        },
+        {
+            "name": "",
+            "type": "uint256"
+        }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+        {
+            "name": "_dragonID",
+            "type": "uint256"
+        },
+        {
+            "name": "_genNum",
+            "type": "uint256"
+        }
+    ],
+    "name": "setMaxGen",
+    "outputs": [],
+    "payable": true,
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+        {
+            "name": "_dragonID",
+            "type": "uint256"
+        },
+        {
+            "name": "_genNum",
+            "type": "uint256"
+        }
+    ],
+    "name": "mutateFightGenRandom",
+    "outputs": [],
+    "payable": true,
+    "stateMutability": "payable",
+    "type": "function"
+  }
+]

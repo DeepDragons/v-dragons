@@ -1,4 +1,7 @@
-let tdClass = 'text-pink';
+let tdClassPink = 'text-lightviolet';
+let tdClassWarning = 'text-warning';
+let tdClassRed = 'text-danger';
+
 
 export default {
   data() {
@@ -8,16 +11,16 @@ export default {
         fight: {
           fields: {
             fightWin: {
-              tdClass: tdClass
+              tdClass: tdClassPink
             },
             fightLose: {
-              tdClass: tdClass
+              tdClass: tdClassPink
             },
             fightToDeathWin: {
-              tdClass: tdClass
+              tdClass: tdClassPink
             },
             mutagenFight: {
-              tdClass: tdClass
+              tdClass: tdClassPink
             }
           },
           items: []
@@ -25,13 +28,13 @@ export default {
         lab: {
           fields: {
             mutagenFace: {
-              tdClass: tdClass
+              tdClassPink: tdClassPink
             },
             genLabFace: {
-              tdClass: tdClass
+              tdClassPink: tdClassPink
             },
             genLabFight: {
-              tdClass: tdClass
+              tdClassPink: tdClassPink
             }
           },
           items: []
@@ -40,18 +43,37 @@ export default {
       watcherFight: {
         fields: {
           ownerWiner: {
-            tdClass: tdClass
+            tdClass: tdClassPink
           },
           ownerLose: {
-            tdClass: tdClass
+            tdClass: tdClassPink
           },
           dragonWiner: {
-            tdClass: tdClass
+            tdClass: tdClassPink
           },
           dragonLose: {
-            tdClass: tdClass
+            tdClass: tdClassPink
           }
         }
+      },
+      gensTable: {
+        fields: [
+          {
+            key: 'action',
+            label: 'change gene'
+          },
+          {
+            key: 'attack',
+            label: 'Attacking gene',
+            tdClass: tdClassRed
+          },
+          {
+            key: 'protect',
+            label: 'Protecting gene',
+            tdClass: tdClassWarning
+          },
+        ],
+        items: []
       }
     }
   }

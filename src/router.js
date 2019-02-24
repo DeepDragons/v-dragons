@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
+
 Vue.use(Router)
 
 export default new Router({
@@ -27,11 +28,6 @@ export default new Router({
       name: 'Fighting',
       component: () => import('./views/FightingGround')
     },
-    // {
-    //   path: '/cemetery',
-    //   name: 'Cemetery',
-    //   component: () => import('./views/Cemetery')
-    // },
     // ******** selected dragon ************ //
     {
       path: '/dragon/:id',
@@ -42,6 +38,11 @@ export default new Router({
       path: '/battle/:id',
       name: false,
       component: () => import('./views/Battle')
+    },
+    {
+      path: '/lab/:id',
+      name: false,
+      component: () => import('./views/GenLab')
     }
     // ******** selected dragon ************ //
   ]

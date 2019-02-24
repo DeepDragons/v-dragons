@@ -15,9 +15,16 @@
     transform: scale(0.7, 0.7);
   }
 }
-
+@media screen and (max-width: 1199px) {
+  img.bottle {
+    margin: 0 65%;
+  }
+}
 @media screen and (max-width: 600px) {
   .glide, canvas {
     display: none !important;
+  }
+  img.bottle {
+    margin: auto;
   }
 }

@@ -10,6 +10,12 @@
                   @click="toFight">TO FIGHT</button>
           <button v-btn
                   @click="isSellModal">TO SELL</button>
+          <router-link v-if="!isEgg && values.currentAction == actions[0]"
+                       tag="a"
+                       class="btn btn-outline-success"
+                       :to="'/lab/' + id">
+            GENE LAB
+          </router-link>
           <button v-if="!isEgg"
                   v-btn="'danger'"
                   @click="isShowSuicide">SUICIDE</button>
@@ -158,5 +164,12 @@ export default {
 
 input.indigo {
   border: 1px solid $lightviolet;
+}
+
+div.dnk {
+  height: 20px;
+  background-position: 0 -120px;
+  background-image: url('/img/icons.svg');
+  background-repeat: no-repeat;
 }
 </style>

@@ -51,12 +51,12 @@ export default {
   margin: 0.5%;
 }
 .mutagen {
-    margin-left: 16px;
-    background-position: 0 -90px;
-    padding-top: 3px;
-    padding-left: 44px;
-    background-image: url('/img/icons.svg');
-    background-repeat: no-repeat;
+  margin-left: 16px;
+  background-position: 0 -90px;
+  padding-top: 3px;
+  padding-left: 44px;
+  background-image: url('/img/icons.svg');
+  background-repeat: no-repeat;
 }
 .logo_text {
     position: relative;

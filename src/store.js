@@ -89,6 +89,11 @@ export default new Vuex.Store({
       }
     },
     mutagen: 0,
+    lab: {
+      toMaxPrice: null,
+      forMutagenPrice: null,
+      minMutagen: null
+    },
     contentShow: true,
     MetaMask: {
       netID: null,
@@ -142,6 +147,7 @@ export default new Vuex.Store({
     MUTAGEN: state => state.mutagen,
     CURRENTADDRESS: state => state.currentAddress,
     METAMASK: state => state.MetaMask,
+    LAB: state => state.lab,
     CONTENTSHOW: state => state.contentShow,
     CLOUD: () => CONFIG.cloud,
     BLOCKEXPLORERURL: () => CONFIG.blockExplorer,
@@ -162,6 +168,7 @@ export default new Vuex.Store({
     CURRENTADDRESS: (state, payload) => state.currentAddress = payload,
     METAMASK: (state, payload) => state.MetaMask = payload,
     CONTENTSHOW: (state, payload) => state.contentShow = payload,
-    BATTLE: (state, payload) => state.contentShow = payload
+    BATTLE: (state, payload) => state.contentShow = payload,
+    LAB: (state, payload) => state.lab = payload
   }
 })

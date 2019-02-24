@@ -3,6 +3,7 @@ import DragonMixin from './dragonseth'
 import FightPlace from '../fightPlace'
 import MarketPlaceMixin from './marketPlace'
 import FightPlaceMixin from './fightPlace'
+import GenLabMixin from './genLab'
 import Mutagen from '../mutagen'
 import PaginateMixin from '../../paginate'
 import CODE from '../code'
@@ -12,7 +13,8 @@ import { getBlockNumber } from '../web3'
 export default {
   mixins: [
     DragonMixin, MarketPlaceMixin,
-    FightPlaceMixin, PaginateMixin
+    FightPlaceMixin, PaginateMixin,
+    GenLabMixin
   ],
   data() {
     return {

@@ -13,7 +13,7 @@ export default class {
   }
 
   returnPrices = new Promise((resolve, reject) => {
-    this.genlab.returnPrices.call(_owner, (err, array) => {
+    this.genlab.returnPrices.call((err, array) => {
       if (err) return reject(err);
       return resolve(array);
     });

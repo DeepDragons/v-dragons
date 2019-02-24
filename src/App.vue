@@ -71,6 +71,7 @@ export default {
     setTimeout(() => this.showApp(), 500);
     this.eventsRun();
     this.web3Detect();
+    this.genLabCommonData();
   },
   methods: {
     showApp() {

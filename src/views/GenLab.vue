@@ -30,10 +30,32 @@
                :fields="gensTable.fields"
                :items="gensTable.items">
         <template slot="action" slot-scope="data">
-          <button v-btn="'success'">{{ data.value }}</button>
+          <button v-btn="'success'"
+                  @click="modalShow(data.value.genId)">
+            {{data.value.text}} {{data.value.genId}}
+          </button>
         </template>
       </b-table>
     </div>
+
+    <b-modal v-model="modalIsShow"
+             :title="'mutate ' + genForMutate + ' gen'"
+             :header-bg-variant="headerBgVariant"
+             :header-text-variant="headerTextVariant"
+             :body-bg-variant="bodyBgVariant"
+             :footer-bg-variant="footerBgVariant">
+      
+      <p class="col text-ightindigo">
+          Pump the gene to the maximum level, for 0.001
+          <b class="text-warning">{{$store.getters.CURRENCY}}</b>
+          <br>
+          Or you can give the dragon mutagen, and you will drop a random gene.
+      </p>
+      <div slot="modal-footer" class="w-100 justify-content-md-center">
+        <button v-btn="'success'">TO MAX</button>
+        <button v-btn="'success float-right'">RANDOM</button>
+      </div>
+    </b-modal>
   </div>
 </template>
 
@@ -41,6 +63,7 @@
 import Card from '../components/UI/Card'
 import UtilsMixin from '../mixins/utils'
 import TableMixin from '../mixins/table'
+import DragonActionsMixin from '../mixins/dragonActions'
 import DragonMixin from '../mixins/ETH/mixins/dragonseth'
 import Charts from '../mixins/charts'
 import btn from '../directives/btn'
@@ -50,7 +73,11 @@ const bTable = () => import('bootstrap-vue/es/components/table/table')
 
 export default {
   name: 'GenLab',
-  mixins: [UtilsMixin, DragonMixin, Charts, TableMixin],
+  mixins: [
+    UtilsMixin, DragonMixin,
+    Charts, TableMixin,
+    DragonActionsMixin
+  ],
   components: { Card, bTable },
   directives: { btn },
   data() {
@@ -60,7 +87,9 @@ export default {
         imgHeight: 300,
         imgWidth: 300
       },
-      cardHover: 'lab'
+      genForMutate: null,
+      cardHover: 'lab',
+      modalIsShow: false
     }
   },
   computed: {
@@ -83,7 +112,10 @@ export default {
           gens.push({
             attack: fightGens[index],
             protect: fightGens[index + slice],
-            action: 'CHANGE'
+            action: {
+              text: 'CHANGE',
+              genId: index
+            }
           });
         }
       }
@@ -100,7 +132,13 @@ export default {
       this.loaderHide();
       this.paintChart(data.gensFight);
     },
+    modalShow(genId) {
+      this.genForMutate = genId;
+      this.modalIsShow = !this.modalIsShow;
+      console.log('gen', genId);
+    },
     paintChart(values) {
+      let chartRadar;
       let ctx = window.document.getElementById('gens');
       let label = `#${this.id} gens`;
       let dataSet = this.parseGens(
@@ -109,8 +147,17 @@ export default {
       );
 
       this.radarChartData.datasets[0] = dataSet;
-      this.generateCharts(ctx);
       this.gensTable.items = this.sortGens;
+      chartRadar = this.generateCharts(ctx);
+
+      ctx.onclick = evt => {
+        let activePoints = chartRadar.getElementsAtEvent(evt);
+        
+        if (activePoints[0]) {
+          let idx = activePoints[0]['_index'];
+          this.modalShow(idx);
+        }
+      }
     }
   },
   mounted() {

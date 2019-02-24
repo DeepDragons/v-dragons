@@ -41,7 +41,7 @@ export default {
     };
   },
   mounted() {
-    this.text = null;
+    this.text = this.filterValues.filterById;
   },
   computed: {
     filterValues() {

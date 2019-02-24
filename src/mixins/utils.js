@@ -102,6 +102,14 @@ export default {
       let part0 = hex.substr(0, 6)
       let part1 = hex.substr(-6);
       return `${part0}...${part1}`;
+    },
+    appShadow(color='rgb(137, 115, 215)') {
+      let app = document.querySelector('#app');
+      if (!color) {
+        app.style.boxShadow = null;
+      } else {
+        app.style.boxShadow = `${color} 0 10px 90px inset`;
+      }
     }
   }
 }

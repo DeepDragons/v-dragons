@@ -180,22 +180,23 @@ export default {
   right: 0;
 }
 .none  {
-  animation: shadow 2s infinite alternate;
-  cursor: default;
   height: 400px !important;
   width: 400px !important;
 }
 .fightplace {
+  animation: redShadow 2s infinite alternate;
   border: 2px solid $red;
   -webkit-box-shadow: 0px 0px 40px $red;
   box-shadow: 0px 0px 40px $red;
 }
 .marketplace {
+  animation: lightpingShadow 2s infinite alternate;
   border: 2px solid $lightping;
-  -webkit-box-shadow: 0px 0px 40px $lightping;
-  box-shadow: 0px 0px 40px $lightping;
+  -webkit-box-shadow: 0px 60px 40px $lightping;
+  box-shadow: 0px 60px 40px $lightping;
 }
 .free {
+  animation: lightvioletShadow 2s infinite alternate;
   border: 2px solid $lightviolet;
   -webkit-box-shadow: 0px 0px 40px $lightviolet;
   box-shadow: 0px 0px 40px $lightviolet;
@@ -205,8 +206,16 @@ export default {
   filter: grayscale(100%);
 }
 
-@keyframes shadow {
+@keyframes lightvioletShadow {
   from {box-shadow: 0 0 40px 5px $lightviolet}
-  to {text-shadow: 0 0 40px 10px $lightping }
+  to {box-shadow: 0 0 60px 20px $lightviolet-1}
+}
+@keyframes lightpingShadow {
+  from {box-shadow: 0 0 40px 5px $lightping}
+  to {box-shadow: 0 0 60px 20px $lightping}
+}
+@keyframes redShadow {
+  from {box-shadow: 0 0 40px 5px $red}
+  to {box-shadow: 0 0 60px 20px $red}
 }
 </style>

@@ -7,7 +7,7 @@
               :imgWidth="card.imgWidth"
               :url="url">
           <h3 class="text-success text-lg-left">
-            #{{id}}
+            #{{idParam}}
           </h3>
         </card>
       </div>
@@ -49,8 +49,9 @@
           Pump the gene to the maximum level, for 0.001
           <b class="text-warning">{{$store.getters.CURRENCY}}</b>
           <br>
-          Or you can give the dragon mutagen, and you will drop a random gene.
+          Or you can give the dragon 100 mutagens and the gene will change randomly
       </p>
+
       <div slot="modal-footer" class="w-100 justify-content-md-center">
         <button v-btn="'success'">TO MAX</button>
         <button v-btn="'success float-right'">RANDOM</button>
@@ -94,9 +95,9 @@ export default {
   },
   computed: {
     url() {
-      return this.getUrl(2, this.id);
+      return this.getUrl(2, this.idParam);
     },
-    id() {
+    idParam() {
       return this.$router.history.current['params']['id'];
     },
     values() {
@@ -128,21 +129,20 @@ export default {
       let data;
 
       this.loaderShow();
-      data = await this.getAllTheTokenData(this.id);
+      data = await this.getAllTheTokenData(this.idParam);
       this.loaderHide();
       this.paintChart(data.gensFight);
     },
     modalShow(genId) {
       this.genForMutate = genId;
       this.modalIsShow = !this.modalIsShow;
-      console.log('gen', genId);
     },
     paintChart(values) {
       let chartRadar;
       let ctx = window.document.getElementById('gens');
-      let label = `#${this.id} gens`;
+      let label = 'gens';
       let dataSet = this.parseGens(
-        this.id, values, label,
+        this.idParam, values, label,
         'rgb(32, 201, 151)', 'rgb(32, 201, 151)'
       );
 
@@ -161,11 +161,15 @@ export default {
     }
   },
   mounted() {
-    if (!this.values.tokenId || this.values.tokenId != this.id) {
+    if (!this.values.tokenId || this.values.tokenId != this.idParam) {
       this.preStart();
     } else {
       this.paintChart(this.values.gensFight);
     }
+    this.appShadow('rgb(32, 201, 151)');
+  },
+  destroyed() {
+    this.appShadow(null);
   }
 }
 </script>
@@ -183,6 +187,7 @@ export default {
 
 @keyframes LabShadow {
   from {box-shadow: 0 0 40px 5px $teal}
-  to {text-shadow: 0 0 90px 30px $green }
+  to {box-shadow: 0 0 60px 20px $green }
 }
+
 </style>

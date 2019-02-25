@@ -91,9 +91,7 @@ export default {
       this.$store.dispatch('enable');
       this.$store.dispatch('isAddress');
       this.$store.dispatch('isNet');
-      this.$store.dispatch({
-        type: 'blockNumberUpdate'
-      });
+      this.$store.dispatch({ type: 'blockNumberUpdate' });
     }
   }
 }

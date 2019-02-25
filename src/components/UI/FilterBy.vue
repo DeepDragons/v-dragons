@@ -3,7 +3,7 @@
     <input v-model="text"
            type="text"
            :placeholder="placeholder"
-           class="form-control">
+           class="form-control text-ightindigo">
     
     <div v-if="isDrop" class="input-group-append">
       <Dropdown :options="filterValues.options"

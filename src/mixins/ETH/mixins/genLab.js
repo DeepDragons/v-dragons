@@ -10,8 +10,16 @@ export default {
   },
   methods: {
     async genLabCommonData() {
-      let data = await this.genLab.returnPrices;
-      console.log(data);
+      let payload = this.$store.getters.LAB;
+      let data = await this.genLab.returnPrices();
+
+      payload.toMaxPrice = data[2].toString();
+      payload.forMutagenPrice = data[1].toString();
+      payload.minMutagen = data[0].toString();
+
+      this.$store.commit('LAB', payload);
+
+      return payload;
     }
   }
 }

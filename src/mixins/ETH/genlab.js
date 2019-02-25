@@ -12,7 +12,7 @@ export default class {
     this.genlab = this.web3.eth.contract(abi).at(this.address);
   }
 
-  returnPrices = new Promise((resolve, reject) => {
+  returnPrices = () => new Promise((resolve, reject) => {
     this.genlab.returnPrices.call((err, array) => {
       if (err) return reject(err);
       return resolve(array);

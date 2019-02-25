@@ -59,10 +59,6 @@ export default {
       gensTable: {
         fields: [
           {
-            key: 'action',
-            label: 'change gene'
-          },
-          {
             key: 'attack',
             label: 'Attacking gene',
             tdClass: tdClassRed

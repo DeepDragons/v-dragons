@@ -89,6 +89,12 @@ export default {
     },
     returnMarket() {
       this.$store.dispatch('delFromFixMarketPlace');
+    },
+    genToMax(genNumber) {
+      this.$store.dispatch({ type: 'genToMax', genNumber });
+    },
+    genRand(genNumber) {
+      this.$store.dispatch({ type: 'genRand', genNumber });
     }
   }
 }

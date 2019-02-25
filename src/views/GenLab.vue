@@ -29,10 +29,16 @@
       <b-table class="text-ightindigo text-center col-sm-12"
                :fields="gensTable.fields"
                :items="gensTable.items">
-        <template slot="action" slot-scope="data">
+        <template slot="attack" slot-scope="data">
+          <button v-btn="'danger'"
+                  @click="modalShow(data.value.genId)">
+            {{data.value.value}}
+          </button>
+        </template>
+        <template slot="protect" slot-scope="data">
           <button v-btn="'success'"
                   @click="modalShow(data.value.genId)">
-            {{data.value.text}} {{data.value.genId}}
+            {{data.value.value}}
           </button>
         </template>
       </b-table>
@@ -46,15 +52,22 @@
              :footer-bg-variant="footerBgVariant">
       
       <p class="col text-ightindigo">
-          Pump the gene to the maximum level, for 0.001
+          Pump the gene to the maximum level, for {{labValue.toMaxPrice | fromWei}}
           <b class="text-warning">{{$store.getters.CURRENCY}}</b>
           <br>
-          Or you can give the dragon 100 mutagens and the gene will change randomly
+          Or you can give the dragon
+          {{labValue.minMutagen}} and {{labValue.forMutagenPrice | fromWei}}
+          <b class="text-warning">{{$store.getters.CURRENCY}}</b>
+          mutagens and the gene will change randomly
       </p>
 
       <div slot="modal-footer" class="w-100 justify-content-md-center">
-        <button v-btn="'success'">TO MAX</button>
-        <button v-btn="'success float-right'">RANDOM</button>
+        <button v-btn="'success'"
+                @click="genToMax(genForMutate)">
+          TO MAX
+        </button>
+        <button v-btn="'success float-right'"
+                @click="genRand(genForMutate)">RANDOM</button>
       </div>
     </b-modal>
   </div>
@@ -68,6 +81,7 @@ import DragonActionsMixin from '../mixins/dragonActions'
 import DragonMixin from '../mixins/ETH/mixins/dragonseth'
 import Charts from '../mixins/charts'
 import btn from '../directives/btn'
+import fromWei from '../filters/fromWei'
 
 const bTable = () => import('bootstrap-vue/es/components/table/table')
 
@@ -79,6 +93,7 @@ export default {
     Charts, TableMixin,
     DragonActionsMixin
   ],
+  filters: { fromWei },
   components: { Card, bTable },
   directives: { btn },
   data() {
@@ -97,6 +112,9 @@ export default {
     url() {
       return this.getUrl(2, this.idParam);
     },
+    labValue() {
+      return this.$store.getters['LAB'];
+    },
     idParam() {
       return this.$router.history.current['params']['id'];
     },
@@ -111,11 +129,13 @@ export default {
       for (let index = 0; index < fightGens.length; index++) {
         if (index < slice) {
           gens.push({
-            attack: fightGens[index],
-            protect: fightGens[index + slice],
-            action: {
-              text: 'CHANGE',
+            attack: {
+              value: fightGens[index],
               genId: index
+            },
+            protect: {
+              value: fightGens[index + slice],
+              genId: index + slice
             }
           });
         }

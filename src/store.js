@@ -23,6 +23,7 @@ import {
 } from './actions/marketPlace'
 
 import { buyEgg } from './actions/crowdsale'
+import { genToMax, genRand } from './actions/genLab'
 
 
 var CONFIG = window.config;
@@ -134,8 +135,11 @@ export default new Vuex.Store({
     // fightPlace contract //
     addToFight,
     fightWithDragon,
-    delFromFightPlace
+    delFromFightPlace,
     // fightPlace contract //
+
+    genToMax,
+    genRand
   },
   getters: {
     BUYFORM: state => state.buyForm,

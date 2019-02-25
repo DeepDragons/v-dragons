@@ -65,31 +65,35 @@ export async function killDragon({ getters, commit }, { tokenId }) {
 }
 
 export async function wakeUp({ getters, state, commit }) {
-  let { nextBlock2Action, tokenId } = getters.DRAGON;
+  let dragon = getters.DRAGON;
   let dragonseth = new Dragonseth(getters.WEB3);
   let price = await dragonseth.priceDecraseTime2Action();
   let currentBlockNUmber = await getBlockNumber(getters.WEB3);
 
   state.MetaMask.currentBlockNUmber = currentBlockNUmber;
 
-  if (nextBlock2Action < currentBlockNUmber) {
-    throw new Error('nexBN < currentBN');
+  if (dragon.nextBlock2Action < currentBlockNUmber) {
+    throw new Error('nextBN < currentBN');
   }
 
-  price = price.mul(nextBlock2Action - currentBlockNUmber);
+  price = price.mul(dragon.nextBlock2Action - currentBlockNUmber);
   price = price.toString();
 
   let hash = await dragonseth.decraseTimeToAction(
-    tokenId, price
+    dragon.tokenId, price
   );
   let myDragon = getters.MYDRAGON;
 
   myDragon.elements = myDragon.elements.map(el => {
-    if (el.id == tokenId) {
+    if (el.id == dragon.tokenId) {
       el.nextBlock2Action = currentBlockNUmber;
     }
     return el;
   });
+  dragon.nextBlock2Action = currentBlockNUmber;
+  dragon.currentAction = 'free';
+
   commit('MYDRAGON', myDragon);
+  commit('DRAGON', dragon);
   console.log(hash);
 }

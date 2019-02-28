@@ -1,11 +1,11 @@
-body {
-  background: rgba(5, 15, 29, 0.949);
-  background: -webkit-gradient(linear, 0 0, 0% 100%, from(rgba(5, 15, 29, 0.949)), to(rgba(6, 18, 34, 0.949)));
-  background: -webkit-linear-gradient(to bottom right, rgba(5, 15, 29, 0.949), rgba(6, 18, 34, 0.949));
-  background: -moz-linear-gradient(to bottom right, rgba(5, 15, 29, 0.949), rgba(6, 18, 34, 0.949));
-  background: -o-linear-gradient(to bottom right, rgba(5, 15, 29, 0.949), rgba(6, 18, 34, 0.949));
-  background: -ms-linear-gradient(to bottom right, rgba(5, 15, 29, 0.949), rgba(6, 18, 34, 0.949));
-  background: linear-gradient(to bottom right, rgba(5, 15, 29, 0.949), rgba(6, 18, 34, 0.949));
+body, html {
+  background: rgb(5, 15, 29);
+  background: linear-gradient(45deg, rgb(5, 15, 29), rgba(6, 18, 34, 0.949) );
+  background: -webkit-gradient(45deg, rgb(5, 15, 29), rgba(6, 18, 34, 0.949) );
+  background: -webkit-linear-gradient(45deg, rgb(5, 15, 29), rgba(6, 18, 34, 0.949) );
+  background: -moz-linear-gradient(45deg, rgb(5, 15, 29), rgba(6, 18, 34, 0.949) );
+  background: -o-linear-gradient(45deg, rgb(5, 15, 29), rgba(6, 18, 34, 0.949) );
+  background: -ms-linear-gradient(45deg, rgb(5, 15, 29), rgba(6, 18, 34, 0.949) );
 }
 ::-webkit-scrollbar{ width: 10px;}
 ::-webkit-scrollbar:horizontal{ height: 10px; }

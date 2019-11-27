@@ -30,6 +30,7 @@ export async function birth({ state, getters, commit }, { tokenId }) {
   console.log(hash);
   payload.stage = nextStage;
   commit('DRAGON', payload);
+
   let myDragon = getters.MYDRAGON;
   myDragon.elements = myDragon.elements.map(el => {
     if (el.id == tokenId) {

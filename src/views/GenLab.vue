@@ -83,7 +83,7 @@ import Charts from '../mixins/charts'
 import btn from '../directives/btn'
 import fromWei from '../filters/fromWei'
 
-const bTable = () => import('bootstrap-vue/es/components/table/table')
+const bTable = () => import('bootstrap-vue/src/components/table')
 
 
 export default {

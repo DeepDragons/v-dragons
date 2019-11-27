@@ -55,7 +55,7 @@ import DefUtils from '../mixins/utils'
 import fromWei from '../filters/fromWei'
 import Table from '../mixins/table'
 
-const bTable = () => import('bootstrap-vue/es/components/table/table')
+const bTable = () => import('bootstrap-vue/src/components/table')
 const ActionPanel = () => import('../components/ActionPanel')
 
 

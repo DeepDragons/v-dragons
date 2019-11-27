@@ -10,7 +10,7 @@
 import TableMixin from '../mixins/table'
 import UtilsMixin from '../mixins/utils'
 
-const bTable = () => import('bootstrap-vue/es/components/table/table')
+const bTable = () => import('bootstrap-vue/src/components/table')
 
 
 export default {

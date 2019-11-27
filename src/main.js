@@ -4,14 +4,17 @@ import router from './router'
 import store from './store'
 
 import Paginate from 'vuejs-paginate'
-import { Modal } from 'bootstrap-vue/es/components';
+import BootstrapVue from 'bootstrap-vue';
 
 import VueGlide from 'vue-glide-js/dist/vue-glide.css'
 
-Vue.use(VueGlide)
+// import 'bootstrap/dist/css/bootstrap.css'
+// import 'bootstrap-vue/dist/bootstrap-vue.css'
 
+Vue.use(VueGlide)
 Vue.component('paginate', Paginate)
-Vue.use(Modal);
+Vue.use(BootstrapVue);
+
 Vue.config.productionTip = false
 
 new Vue({

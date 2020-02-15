@@ -70,7 +70,7 @@ export default {
         currentBlockNUmber = await getBlockNumber(web3);
       }
 
-      currentBlockNUmber -= 50;
+      currentBlockNUmber -= 200;
       filter = { fromBlock: currentBlockNUmber };
 
       fightPlace.events(filter).watch((err, event) => {
@@ -79,7 +79,9 @@ export default {
          * @AddDragonFP: add to fightplace.
          * @RemoveDragonFP: remove from fightPlace.
          */
-        if (err) return null;
+        if (err) {
+          throw new Error(err);
+        };
 
         let element;
         let metaMaskt = this.$store.getters.METAMASK;

@@ -10,19 +10,16 @@
 import TableMixin from '../mixins/table'
 import UtilsMixin from '../mixins/utils'
 
-const bTable = () => import('bootstrap-vue/src/components/table')
-
 
 export default {
   name: 'WatcherFight',
-  components: { bTable },
   mixins: [TableMixin, UtilsMixin],
   computed: {
     items() {
       let you = 'you';
       let { currentAddress } = this.$store.getters.METAMASK;
       let { items } = this.$store.getters.BATTLE;
-      
+
       return items.map(el => {
         if (el.ownerLose == currentAddress) {
           el.ownerLose = you;

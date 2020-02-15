@@ -63,7 +63,7 @@
                  target="_blank"></a>
             </li>
             <li class="list-inline-item">
-              <a href="https://gitlab.com/dragoneth/"
+              <a href="https://github.com/DeepDragons"
                  class="links-item gitlab socials"
                  target="_blank"></a>
             </li>

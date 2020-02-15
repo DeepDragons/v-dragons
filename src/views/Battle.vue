@@ -76,7 +76,6 @@ const None = () => import('../components/UI/None')
 const WatcherFight = () => import('../components/WatcherFight')
 const FilterBy = () => import('../components/UI/FilterBy')
 
-
 export default {
   name: 'Battle',
   mixins: [DefUtils, DragonMixin, Charts],

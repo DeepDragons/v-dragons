@@ -41,20 +41,24 @@ export default {
         }
       },
       watcherFight: {
-        fields: {
-          ownerWiner: {
+        fields: [
+          {
+            key: 'ownerWiner',
             tdClass: tdClassPink
           },
-          ownerLose: {
+          {
+            key: 'ownerLose',
             tdClass: tdClassPink
           },
-          dragonWiner: {
+          {
+            key: 'dragonWiner',
             tdClass: tdClassPink
           },
-          dragonLose: {
+          {
+            key: 'dragonLose',
             tdClass: tdClassPink
           }
-        }
+        ]
       },
       gensTable: {
         fields: [

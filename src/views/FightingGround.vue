@@ -63,7 +63,7 @@ export default {
   },
   computed: {
     cards() {
-      let tokensForSale = this.sortElements();
+      let tokensForSale = this.sortElements();      
       return this.pageChanged(tokensForSale);
     },
     isNotDragons() {
@@ -75,7 +75,7 @@ export default {
   },
   methods: {
     async preStart() {
-      if (this.cards.length > 0) return null;
+      if (this.cards.length === 0) return null;
       this.loaderShow();
       await this.getDragonsTofight();
       this.loaderHide()

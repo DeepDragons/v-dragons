@@ -57,7 +57,7 @@
           <div class="col"></div>
           <div class="form-group col-lg">
             <input v-model.lazy="priceAmount"
-                   :step="values.currentPrice | fromWei"
+                   :step="values.currentPrice | fromWei('none')"
                    type="number"
                    class="form-control text-ightindigo p-1">
             <br>
@@ -137,11 +137,11 @@ export default {
       set: function(value) {
         let payload = this.values;
         
-        value = (+value).toFixed();
-        value = +value;
+        value = Number(value).toFixed();
+        value = Number(value);
 
-        if (value > this.maxEgg) {
-          value = this.maxEgg;
+        if (Number(value) > Number(this.maxEgg)) {
+          value = Number(this.maxEgg);
         } else if (value < 1) {
           value = 1;
         }
@@ -164,7 +164,7 @@ export default {
 
         price = currentPrice.mul(payload.range);
 
-        return fromWei(price);
+        return String(fromWei(price, 'none'));
       },
       set: function(value) {
         let tokenAmount;

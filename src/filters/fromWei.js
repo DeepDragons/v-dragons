@@ -19,7 +19,7 @@ export default function (value, currency, toAdd) {
   }
 
   if (currency !== 'none') {
-    value = `${value} ${currency }`;
+    value = `${value} ${currency || ''}`;
   }
 
   return value;

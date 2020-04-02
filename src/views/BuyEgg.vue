@@ -49,6 +49,7 @@
           <div class="form-group col-lg">
             <input v-model.lazy="tokenAmount"
                    type="number"
+                   :max="maxEgg"
                    class="form-control text-ightindigo p-1">
             <br>
             <small class="form-text text-muted">Number of eggs</small>
@@ -107,7 +108,8 @@ export default {
   data() {
     return {
       switchTitle: 'Guarantee my order.',
-      storeKey: 'BUYFORM'
+      storeKey: 'BUYFORM',
+      maxEgg: 15
     }
   },
   computed: {
@@ -138,7 +140,9 @@ export default {
         value = Number(value).toFixed();
         value = Number(value);
 
-        if (value < 1) {
+        if (Number(value) > Number(this.maxEgg)) {
+          value = Number(this.maxEgg);
+        } else if (value < 1) {
           value = 1;
         }
 

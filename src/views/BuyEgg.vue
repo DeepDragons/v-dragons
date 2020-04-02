@@ -107,8 +107,7 @@ export default {
   data() {
     return {
       switchTitle: 'Guarantee my order.',
-      storeKey: 'BUYFORM',
-      maxEgg: 15
+      storeKey: 'BUYFORM'
     }
   },
   computed: {
@@ -139,9 +138,7 @@ export default {
         value = Number(value).toFixed();
         value = Number(value);
 
-        if (Number(value) > Number(this.maxEgg)) {
-          value = Number(this.maxEgg);
-        } else if (value < 1) {
+        if (value < 1) {
           value = 1;
         }
 

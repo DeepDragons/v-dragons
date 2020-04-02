@@ -49,7 +49,6 @@
           <div class="form-group col-lg">
             <input v-model.lazy="tokenAmount"
                    type="number"
-                   :max="maxEgg"
                    class="form-control text-ightindigo p-1">
             <br>
             <small class="form-text text-muted">Number of eggs</small>

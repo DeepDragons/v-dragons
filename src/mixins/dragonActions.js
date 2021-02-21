@@ -1,6 +1,7 @@
-import { toWei, isAddress } from 'web3/lib/utils/utils'
+import { utils } from 'web3/lib'
 import FightPlace from './ETH/mixins/fightPlace'
 
+const { toWei, isAddress } = utils;
 
 export default {
   mixins: [FightPlace],

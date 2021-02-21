@@ -1,4 +1,6 @@
-import { fromDecimal, padLeft, isAddress } from 'web3/lib/utils/utils';
+import { utils } from 'web3/lib'
+
+const { fromDecimal, padLeft, isAddress } = utils;
 
 export default {
   data() {

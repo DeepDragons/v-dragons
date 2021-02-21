@@ -89,7 +89,8 @@
 </template>
 
 <script>
-import { toBigNumber, toWei } from 'web3/lib/utils/utils'
+import { utils } from 'web3/lib'
+
 import Crowdsale from '../mixins/ETH/mixins/crowdsale'
 import fromWei from '../filters/fromWei'
 import btn from '../directives/btn'
@@ -97,7 +98,7 @@ import DefUtils from '../mixins/utils'
 
 const Range = () => import('../components/UI/Range')
 const SwitchMT = () => import('../components/UI/SwitchMT')
-
+const { toBN, toWei } = utils;
 
 export default {
   name: 'BuyEgg',
@@ -118,15 +119,15 @@ export default {
     },
     last() {
       let payload = this.$store.getters[this.storeKey];
-      let currentPrice = toBigNumber(payload.currentPrice);
-      let buyCost = toBigNumber(payload.buyCost);
+      let currentPrice = toBN(String(payload.currentPrice));
+      let buyCost = toBN(String(payload.buyCost));
       
       return currentPrice.sub(buyCost).toString();
     },
     next() {
       let payload = this.$store.getters[this.storeKey];
-      let currentPrice = toBigNumber(payload.currentPrice);
-      let buyCost = toBigNumber(payload.buyCost);
+      let currentPrice = toBN(String(payload.currentPrice));
+      let buyCost = toBN(String(payload.buyCost));
       
       return currentPrice.add(buyCost).toString();
     },
@@ -155,23 +156,24 @@ export default {
       get: function() {
         let price;
         let payload = this.values;
-        let buyCost = toBigNumber(payload.buyCost);
-        let currentPrice = toBigNumber(payload.currentPrice);
+        let buyCost = toBN(String(payload.buyCost || 0));
+        let currentPrice = toBN(String(payload.currentPrice || 0));
+        let range = toBN(String(payload.range || 1));
 
         if (payload.isCheck) {
           currentPrice = currentPrice.add(buyCost);
         }
 
-        price = currentPrice.mul(payload.range);
+        price = currentPrice.mul(range);
 
-        return String(fromWei(price, 'none'));
+        return String(fromWei(String(price), 'none'));
       },
       set: function(value) {
         let tokenAmount;
-        let currentPrice = toBigNumber(this.values.currentPrice);
+        let currentPrice = toBN(this.values.currentPrice);
 
         value = toWei(value);
-        value = toBigNumber(value);
+        value = toBN(value);
         tokenAmount = value.div(currentPrice);
         tokenAmount = tokenAmount.toString();
 

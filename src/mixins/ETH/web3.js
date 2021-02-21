@@ -103,6 +103,8 @@ export function fallback(_data) {
     } else if (window.web3) {
       web3 = window.web3;
     }
+    
+    console.log(_data);
 
     web3.eth.sendTransaction(_data, (err, hash) => {
       if (err) return reject(err); 
